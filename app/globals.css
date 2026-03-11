@@ -3048,3 +3048,111 @@ body::before {
         max-width: 100%;
     }
 }
+
+/* Contact form status messages */
+.form-success {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.form-error {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Nav auth */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-auth-btn {
+    padding: 8px 20px;
+    background: transparent;
+    color: #C9A961;
+    border: 1px solid rgba(201, 169, 97, 0.4);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.nav-auth-btn:hover {
+    background: rgba(201, 169, 97, 0.1);
+    border-color: #C9A961;
+}
+
+/* Auth pages */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(180deg, #0D1F0D 0%, #0A150A 50%, #000000 100%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 50px 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.auth-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 36px;
+    color: #C9A961;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 3px;
+}
+
+.auth-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-link {
+    color: #C9A961;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
