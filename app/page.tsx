@@ -18,6 +18,7 @@ import { products } from '@/data/products';
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
   const [productModalIndex, setProductModalIndex] = useState<number | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dutchieFormVisible, setDutchieFormVisible] = useState(false);
   const [productGridCategory, setProductGridCategory] = useState<string | null>(null);
 

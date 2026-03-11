@@ -21,7 +21,7 @@ export default async function AdminPage() {
         <p className="auth-subtitle">Welcome, {user.email}</p>
         <div style={{ marginTop: '30px', color: 'rgba(255,255,255,0.6)', textAlign: 'center' as const }}>
           <p>Admin dashboard coming soon.</p>
-          <a href="/" className="auth-link" style={{ marginTop: '20px', display: 'inline-block' }}>
+          <a href="/" className="auth-link" style={{ marginTop: '20px', display: 'inline-block' }}>{/* eslint-disable-line @next/next/no-html-link-for-pages */}
             Back to site
           </a>
         </div>

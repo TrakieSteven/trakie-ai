@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { products } from '@/data/products';
+import { useState, useRef, useCallback } from 'react';
 import IntroScreen from './demo/IntroScreen';
 import QrScreen from './demo/QrScreen';
 import InvoiceScreen from './demo/InvoiceScreen';

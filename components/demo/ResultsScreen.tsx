@@ -14,6 +14,7 @@ export default function ResultsScreen({
   elapsedTime,
   onOpenProductModal,
   onRestart,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onNavigate,
 }: ResultsScreenProps) {
   const [timerDisplay, setTimerDisplay] = useState('00:00');
