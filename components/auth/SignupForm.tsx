@@ -2,26 +2,55 @@
 
 import { useState, FormEvent } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 export default function SignupForm() {
+  const router = useRouter();
+  const [step, setStep] = useState<'form' | 'otp'>('form');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSignup(e: FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setLoading(true);
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({ email, password });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+      return;
+    }
+
+    setStep('otp');
+    setLoading(false);
+  }
+
+  async function handleVerifyOtp(e: FormEvent) {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.verifyOtp({
       email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+      token: otp,
+      type: 'signup',
     });
 
     if (error) {
@@ -30,24 +59,28 @@ export default function SignupForm() {
       return;
     }
 
-    setSuccess(true);
-    setLoading(false);
+    // Send welcome email
+    await fetch('/api/auth/welcome-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+
+    router.push('/');
   }
 
   return (
     <div className="auth-page">
       <div className="auth-card">
         <h1 className="auth-title">TRAKIE.AI</h1>
-        <p className="auth-subtitle">Create your account</p>
+        <p className="auth-subtitle">
+          {step === 'form' ? 'Create your account' : 'Check your email'}
+        </p>
 
         {error && <div className="form-error">{error}</div>}
 
-        {success ? (
-          <div className="form-success">
-            Check your email for a confirmation link to complete your signup.
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
+        {step === 'form' ? (
+          <form onSubmit={handleSignup}>
             <div className="form-group">
               <label className="form-label">Email</label>
               <input
@@ -71,8 +104,50 @@ export default function SignupForm() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <div className="form-group">
+              <label className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                className="form-input"
+                required
+                minLength={6}
+                placeholder="Re-enter your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
             <button type="submit" className="form-submit" disabled={loading}>
               {loading ? 'Creating account...' : 'Sign Up'}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleVerifyOtp}>
+            <p style={{ color: '#aaa', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+              We sent an 8-digit verification code to <strong style={{ color: '#C9A961' }}>{email}</strong>.
+              Enter it below to confirm your account.
+            </p>
+            <div className="form-group">
+              <label className="form-label">Verification Code</label>
+              <input
+                type="text"
+                className="form-input"
+                required
+                maxLength={8}
+                placeholder="00000000"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                style={{ letterSpacing: '0.3em', textAlign: 'center', fontSize: '1.4rem' }}
+              />
+            </div>
+            <button type="submit" className="form-submit" disabled={loading}>
+              {loading ? 'Verifying...' : 'Verify Code'}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setStep('form'); setOtp(''); setError(''); }}
+              style={{ background: 'none', border: 'none', color: '#C9A961', cursor: 'pointer', width: '100%', marginTop: '0.75rem', fontSize: '0.85rem' }}
+            >
+              ← Back
             </button>
           </form>
         )}
