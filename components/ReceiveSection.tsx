@@ -91,7 +91,7 @@ export default function ReceiveSection({ onNavigate, onOpenProductModal }: Recei
         <QrScreen
           stepNumber={1}
           stepLabel="SCAN QR CODE"
-          videoSrc="https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/camera0.mov"
+          videoSrc="/camera0.mov"
           onAdvance={advanceFromQr}
         />
       )}
@@ -114,7 +114,7 @@ export default function ReceiveSection({ onNavigate, onOpenProductModal }: Recei
         <QrScreen
           stepNumber={4}
           stepLabel="SCAN PRODUCTS"
-          videoSrc="https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/camera.mov"
+          videoSrc="/camera.mov"
           onAdvance={advanceFromProduct}
         />
       )}

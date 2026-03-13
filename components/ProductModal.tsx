@@ -1,6 +1,7 @@
 'use client';
 
 import { Product } from '@/data/products';
+import { EffectTag, parseEffects } from './icons';
 
 interface ProductModalProps {
   product: Product | null;
@@ -43,7 +44,11 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             </div>
           </div>
 
-          <div className="modal-effects">{product.effects}</div>
+          <div className="modal-effects">
+            {parseEffects(product.effects).map((effect, i) => (
+              <EffectTag key={i} effect={effect} />
+            ))}
+          </div>
 
           <div className="modal-description">{product.description}</div>
 

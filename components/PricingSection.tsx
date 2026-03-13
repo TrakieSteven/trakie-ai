@@ -1,5 +1,7 @@
 'use client';
 
+import { ZapIcon, LockIcon } from './icons';
+
 interface PricingSectionProps {
   onNavigate: (section: string) => void;
 }
@@ -14,7 +16,9 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
       </div>
 
       <div className="pricing-card">
-        <div className="popular-badge">⚡ FOUNDATION RATE</div>
+        <div className="popular-badge">
+          <ZapIcon size={16} color="#000" /> FOUNDATION RATE
+        </div>
         <h3 className="plan-name">First 21 Customers Only</h3>
 
         <div className="price-comparison">
@@ -24,7 +28,7 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
         </div>
 
         <div className="lifetime-lock">
-          🔒 Lifetime Price Lock - You&apos;ll never pay more, even when we raise prices
+          <LockIcon size={20} color="#C9A961" /> Lifetime Price Lock - You&apos;ll never pay more, even when we raise prices
         </div>
 
         <ul className="features">

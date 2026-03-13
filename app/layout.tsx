@@ -1,5 +1,21 @@
 import type { Metadata } from 'next';
+import { Outfit, Bodoni_Moda } from 'next/font/google';
 import './globals.css';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
+
+const bodoniModa = Bodoni_Moda({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  variable: '--font-bodoni',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Trakie.ai - Cannabis Retail Intelligence',
@@ -19,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${outfit.variable} ${bodoniModa.variable}`}>
       <head>
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-Frame-Options" content="DENY" />

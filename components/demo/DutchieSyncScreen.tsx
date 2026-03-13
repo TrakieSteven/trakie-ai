@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { AnimatedCheckbox } from '../icons';
 
 const syncItems = [
   'Inventory quantities updated',
@@ -63,7 +64,7 @@ export default function DutchieSyncScreen({ onComplete }: DutchieSyncScreenProps
               className={`dutchie-sync-item${completedItems.includes(i) ? ' completed' : ''}`}
             >
               <div className="dutchie-checkbox">
-                {completedItems.includes(i) ? '✓' : '☐'}
+                <AnimatedCheckbox checked={completedItems.includes(i)} color="#C9A961" />
               </div>
               <div className="dutchie-sync-label">{item}</div>
             </div>

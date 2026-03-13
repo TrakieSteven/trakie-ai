@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { products } from '@/data/products';
+import { CheckCircleIcon, ScanIcon, PackageIcon, ProductPlaceholder } from '../icons';
 
 interface ResultsScreenProps {
   elapsedTime: number;
@@ -21,7 +22,9 @@ export default function ResultsScreen({
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
   const [selectedAmounts, setSelectedAmounts] = useState<Record<number, number>>({});
   const [showComplete, setShowComplete] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Stable random SKU/batch IDs
   const productCodes = useMemo(() => {
@@ -45,8 +48,15 @@ export default function ResultsScreen({
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     };
   }, [elapsedTime]);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => setToast(null), 3500);
+  };
 
   const toggleProductSelection = (productIndex: number, amount: number) => {
     setSelectedProducts((prev) => {
@@ -68,8 +78,8 @@ export default function ResultsScreen({
 
   const moveAllSelected = () => {
     if (selectedProducts.size === 0) return;
-    alert(
-      `✅ Moved ${selectedProducts.size} product${selectedProducts.size > 1 ? 's' : ''} to sales floor!`
+    showToast(
+      `Moved ${selectedProducts.size} product${selectedProducts.size > 1 ? 's' : ''} to sales floor`
     );
     setSelectedProducts(new Set());
     setSelectedAmounts({});
@@ -78,8 +88,18 @@ export default function ResultsScreen({
 
   return (
     <div className="results-screen active">
+      {/* Toast notification */}
+      <div className={`toast-notification${toast ? ' show' : ''}`}>
+        <CheckCircleIcon size={20} color="#7fb800" />
+        <span>{toast}</span>
+      </div>
+
       <div className="step-indicator" style={{ top: '100px' }}>
-        <div className="step-number">✓</div>
+        <div className="step-number step-complete">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12l5 5L20 7" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
         <span className="step-arrow">→</span>
         <span>RECEIVING COMPLETE</span>
       </div>
@@ -109,7 +129,9 @@ export default function ResultsScreen({
 
         {/* Compliance Data Section */}
         <div className="compliance-data-section">
-          <h3 className="compliance-section-title">✓ METRC &amp; COMPLIANCE DATA CAPTURED</h3>
+          <h3 className="compliance-section-title">
+            <CheckCircleIcon size={22} color="#C9A961" /> METRC &amp; COMPLIANCE DATA CAPTURED
+          </h3>
 
           <div className="compliance-grid">
             <div className="compliance-field">
@@ -117,7 +139,7 @@ export default function ResultsScreen({
                 Product ID / Barcode <span className="required">*</span>
               </div>
               <div className="compliance-value">
-                <span className="scan-icon">📷</span>
+                <span className="scan-icon"><ScanIcon size={16} color="#C9A961" /></span>
                 <span>1A4060300002199000012345</span>
               </div>
             </div>
@@ -160,7 +182,9 @@ export default function ResultsScreen({
 
             <div className="compliance-field">
               <div className="compliance-label">Product Photo</div>
-              <div className="compliance-value">✓ Captured &amp; Uploaded</div>
+              <div className="compliance-value">
+                <CheckCircleIcon size={14} color="#7fb800" /> Captured &amp; Uploaded
+              </div>
             </div>
 
             <div className="compliance-field full-width">
@@ -197,8 +221,14 @@ export default function ResultsScreen({
                     alt={product.name}
                     className="product-main-image"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      (e.target as HTMLImageElement).parentElement!.textContent = '🌿';
+                      const img = e.target as HTMLImageElement;
+                      img.style.display = 'none';
+                      const parent = img.parentElement;
+                      if (parent && !parent.querySelector('.product-placeholder-icon')) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'product-placeholder-icon';
+                        parent.appendChild(wrapper);
+                      }
                     }}
                   />
                 </div>
@@ -282,7 +312,7 @@ export default function ResultsScreen({
           </button>
         </div>
         <button className="restart-demo-btn" onClick={onRestart}>
-          📦 Receive Another Delivery
+          <PackageIcon size={18} color="#C9A961" /> Receive Another Delivery
         </button>
       </div>
     </div>

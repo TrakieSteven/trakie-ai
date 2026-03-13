@@ -159,7 +159,7 @@ export default function ReceivingFormScreen({ onComplete }: ReceivingFormScreenP
                 <label>{field.label}</label>
                 <div className={`animated-input${fieldStates[i] === 'typing' ? ' typing' : ''}${fieldStates[i] === 'complete' ? ' complete' : ''}`}>
                   <span className="typing-text">{fieldTexts[i]}</span>
-                  <span className="checkmark-icon">✓</span>
+                  <span className="checkmark-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#7fb800" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                 </div>
               </div>
             ))}
@@ -171,7 +171,7 @@ export default function ReceivingFormScreen({ onComplete }: ReceivingFormScreenP
                 <label>{field.label}</label>
                 <div className={`animated-input${fieldStates[i + 2] === 'typing' ? ' typing' : ''}${fieldStates[i + 2] === 'complete' ? ' complete' : ''}`}>
                   <span className="typing-text">{fieldTexts[i + 2]}</span>
-                  <span className="checkmark-icon">✓</span>
+                  <span className="checkmark-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#7fb800" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                 </div>
               </div>
             ))}
@@ -186,7 +186,7 @@ export default function ReceivingFormScreen({ onComplete }: ReceivingFormScreenP
                   className={`product-item-animated${productStates[i] === 'visible' || productStates[i] === 'complete' ? ' visible' : ''}${productStates[i] === 'complete' ? ' complete' : ''}`}
                 >
                   <span className="product-text">{productTexts[i]}</span>
-                  <span className="product-check">✓</span>
+                  <span className="product-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#7fb800" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                 </div>
               ))}
             </div>
@@ -216,7 +216,7 @@ export default function ReceivingFormScreen({ onComplete }: ReceivingFormScreenP
             }}
             onClick={onComplete}
           >
-            ✓ Complete Receiving
+            Complete Receiving
           </button>
         </div>
       </div>

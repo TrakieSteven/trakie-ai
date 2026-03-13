@@ -31,7 +31,7 @@ export const products: Product[] = [
     priceAfterTax: 32.70,
     image: 'https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/product-photos/flower8.avif',
     description: 'Premium indoor-grown Sunset Sherbert featuring vibrant purple hues and a sweet, fruity aroma. Known for its uplifting and euphoric effects, perfect for daytime use.',
-    effects: '😊 Uplifted • 😄 Euphoric • 🎨 Creative',
+    effects: 'Uplifted • Euphoric • Creative',
     poweredBy: 'Powered by ChatGPT',
   },
   {
@@ -48,7 +48,7 @@ export const products: Product[] = [
     priceAfterTax: 65.40,
     image: 'https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/product-photos/vape3.avif',
     description: 'All-in-one vape cartridge with pure cannabis oil. Strawberry banana flavor profile with smooth, potent effects. No additives or cutting agents.',
-    effects: '😌 Relaxed • 🌟 Happy • 💭 Focused',
+    effects: 'Relaxed • Happy • Focused',
     poweredBy: 'Powered by ChatGPT',
   },
   {
@@ -65,7 +65,7 @@ export const products: Product[] = [
     priceAfterTax: 65.40,
     image: 'https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/product-photos/cart2.avif',
     description: 'Classic Durban Poison strain in premium vape form. Energizing sativa with sweet, earthy flavors. Perfect for creative projects and outdoor activities.',
-    effects: '⚡ Energized • 🎨 Creative • 🌞 Uplifted',
+    effects: 'Energized • Creative • Uplifted',
     poweredBy: 'Powered by ChatGPT',
   },
   {
@@ -82,7 +82,7 @@ export const products: Product[] = [
     priceAfterTax: 27.20,
     image: 'https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/product-photos/edible4.avif',
     description: 'Solventless live rosin gummies with real fruit flavor. 10 pieces per package, each containing 10mg THC. Made with premium cannabis extract and natural ingredients.',
-    effects: '😌 Calm • 😊 Happy • 💤 Sleepy',
+    effects: 'Calm • Happy • Sleepy',
     poweredBy: 'Powered by ChatGPT',
   },
   {
@@ -99,7 +99,7 @@ export const products: Product[] = [
     priceAfterTax: 21.60,
     image: 'https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/product-photos/edi9.avif',
     description: 'Fast-acting nano-emulsion gummies for quick onset. Blue raspberry flavor with relaxing indica effects. Effects typically felt within 15-30 minutes.',
-    effects: '😌 Relaxed • 💤 Sleepy • 🧘 Calm',
+    effects: 'Relaxed • Sleepy • Calm',
     poweredBy: 'Powered by ChatGPT',
   },
 ];

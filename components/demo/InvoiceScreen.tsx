@@ -31,8 +31,8 @@ export default function InvoiceScreen({ onAdvance }: InvoiceScreenProps) {
           playsInline
           preload="auto"
         >
-          <source src="https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/invoice1.mov" type="video/quicktime" />
-          <source src="https://raw.githubusercontent.com/dmtsteve/trakie-ai/main/invoice1.mov" type="video/mp4" />
+          <source src="/invoice1.mov" type="video/quicktime" />
+          <source src="/invoice1.mov" type="video/mp4" />
         </video>
       </div>
     </div>

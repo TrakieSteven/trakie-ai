@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 export default function SecurityLayer() {
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
+
     // 1. ANTI-IFRAME PROTECTION
     if (window.top !== window.self) {
       window.top!.location.href = window.self.location.href;

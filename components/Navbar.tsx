@@ -10,6 +10,7 @@ interface NavbarProps {
 
 export default function Navbar({ onNavigate }: NavbarProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -27,6 +28,12 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
   async function handleLogout() {
     const supabase = createClient();
     await supabase.auth.signOut();
@@ -34,41 +41,86 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     window.location.href = '/';
   }
 
+  const navigate = (section: string) => {
+    onNavigate(section);
+    setMenuOpen(false);
+  };
+
   return (
-    <nav className="nav">
-      <div className="nav-content">
-        <div className="nav-logo" onClick={() => onNavigate('home')}>
-          <div className="nav-logo-text">TRAKIE.AI</div>
+    <>
+      <nav className="nav">
+        <div className="nav-content">
+          <div className="nav-logo" onClick={() => navigate('home')}>
+            <div className="nav-logo-text">TRAKIE.AI</div>
+          </div>
+          <div className="nav-links">
+            <a onClick={() => navigate('home')}>Home</a>
+            <a onClick={() => navigate('receive')}>Receive Demo</a>
+            <a onClick={() => navigate('bubbles')}>Intelligent Inventory</a>
+            <a onClick={() => navigate('pricing')}>Pricing</a>
+            <a onClick={() => navigate('contact')}>Contact</a>
+          </div>
+          <div className="nav-right">
+            {user ? (
+              <button onClick={handleLogout} className="nav-auth-btn">
+                Logout
+              </button>
+            ) : (
+              <a href="/login" className="nav-auth-btn">
+                Login
+              </a>
+            )}
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('pricing');
+              }}
+              className="nav-cta"
+            >
+              Get Started
+            </a>
+            <button
+              className={`nav-hamburger${menuOpen ? ' open' : ''}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
         </div>
-        <div className="nav-links">
-          <a onClick={() => onNavigate('home')}>Home</a>
-          <a onClick={() => onNavigate('receive')}>Receive Demo</a>
-          <a onClick={() => onNavigate('bubbles')}>Intelligent Inventory</a>
-          <a onClick={() => onNavigate('pricing')}>Pricing</a>
-          <a onClick={() => onNavigate('contact')}>Contact</a>
+      </nav>
+
+      {/* Mobile full-screen menu */}
+      <div className={`nav-mobile-menu${menuOpen ? ' open' : ''}`}>
+        <div className="nav-mobile-links">
+          <a onClick={() => navigate('home')}>Home</a>
+          <a onClick={() => navigate('receive')}>Receive Demo</a>
+          <a onClick={() => navigate('bubbles')}>Intelligent Inventory</a>
+          <a onClick={() => navigate('pricing')}>Pricing</a>
+          <a onClick={() => navigate('contact')}>Contact</a>
         </div>
-        <div className="nav-right">
+        <div className="nav-mobile-actions">
           {user ? (
-            <button onClick={handleLogout} className="nav-auth-btn">
+            <button onClick={handleLogout} className="nav-mobile-auth-btn">
               Logout
             </button>
           ) : (
-            <a href="/login" className="nav-auth-btn">
+            <a href="/login" className="nav-mobile-auth-btn">
               Login
             </a>
           )}
           <a
             href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              onNavigate('pricing');
-            }}
-            className="nav-cta"
+            onClick={(e) => { e.preventDefault(); navigate('pricing'); }}
+            className="nav-mobile-cta-btn"
           >
             Get Started
           </a>
         </div>
       </div>
-    </nav>
+    </>
   );
 }

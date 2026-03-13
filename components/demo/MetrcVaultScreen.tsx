@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { AnimatedCheckbox } from '../icons';
 
 const metrcPackages = [
   'Sunset Sherbert (3.5g)',
@@ -61,7 +62,7 @@ export default function MetrcVaultScreen({ onComplete }: MetrcVaultScreenProps) 
               className={`metrc-package-item${completedItems.includes(i) ? ' completed' : ''}`}
             >
               <div className="metrc-checkbox">
-                {completedItems.includes(i) ? '✓' : '☐'}
+                <AnimatedCheckbox checked={completedItems.includes(i)} color="#7fb800" />
               </div>
               <div className="metrc-product-name">{pkg}</div>
               <div className="metrc-status">Vault Entry Complete</div>
