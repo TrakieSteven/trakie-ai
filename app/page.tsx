@@ -23,6 +23,10 @@ export default function Home() {
   const [productGridCategory, setProductGridCategory] = useState<string | null>(null);
 
   const showSection = useCallback((sectionName: string) => {
+    if (sectionName === 'demo') {
+      window.location.href = '/demo';
+      return;
+    }
     setActiveSection(sectionName);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);

@@ -3759,3 +3759,201 @@ body::before {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
+
+/* ─── Demo Autofill Page ──────────────────────────── */
+
+.demo-page {
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.demo-container {
+    max-width: 900px;
+    width: 100%;
+}
+
+.demo-title {
+    font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: #C9A961;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.demo-subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+.demo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.demo-form-section h3 {
+    font-size: 11px;
+    color: #8B7355;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-family: var(--font-outfit), sans-serif;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+.demo-form-section .form-row {
+    margin-bottom: 16px;
+}
+
+.demo-full-width {
+    grid-template-columns: 1fr !important;
+}
+
+/* Confidence indicator variants */
+.animated-input.confidence-high {
+    background: rgba(127, 184, 0, 0.05);
+    border-color: rgba(127, 184, 0, 0.3);
+}
+
+.animated-input.confidence-uncertain {
+    background: rgba(255, 193, 7, 0.05);
+    border-color: rgba(255, 193, 7, 0.4);
+}
+
+.animated-input.confidence-missing {
+    background: rgba(255, 82, 82, 0.05);
+    border-color: rgba(255, 82, 82, 0.4);
+}
+
+/* AI confidence badges */
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0;
+    transform: scale(0);
+    animation: badgeScaleIn 0.3s ease forwards;
+    flex-shrink: 0;
+}
+
+.ai-badge.high {
+    background: rgba(127, 184, 0, 0.15);
+    color: #7fb800;
+    border: 1px solid rgba(127, 184, 0, 0.3);
+}
+
+.ai-badge.uncertain {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.ai-badge.missing {
+    background: rgba(255, 82, 82, 0.15);
+    color: #ff5252;
+    border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+@keyframes badgeScaleIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Typing cursor */
+.demo-cursor {
+    color: #C9A961;
+    animation: cursorBlink 0.6s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Dropdown flash */
+.animated-input.typing {
+    animation: dropdownFlash 0.15s ease;
+}
+
+@keyframes dropdownFlash {
+    0% { background: rgba(201, 169, 97, 0.15); }
+    100% { background: rgba(201, 169, 97, 0.05); }
+}
+
+/* Completion message */
+.demo-complete-message {
+    text-align: center;
+    margin-top: 50px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.6s ease;
+    pointer-events: none;
+}
+
+.demo-complete-message.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.demo-complete-message p {
+    font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+    font-size: 22px;
+    color: #C9A961;
+    margin-bottom: 24px;
+}
+
+.demo-replay-btn {
+    background: linear-gradient(135deg, #C9A961 0%, #8B7355 100%);
+    color: #000;
+    border: none;
+    padding: 14px 40px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-outfit), sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.demo-replay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.3);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .demo-title {
+        font-size: 28px;
+    }
+
+    .demo-subtitle {
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .demo-form-section .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .demo-complete-message p {
+        font-size: 18px;
+    }
+}
