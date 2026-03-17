@@ -8,43 +8,37 @@ interface FieldDef {
   type: 'text' | 'dropdown';
   section: 'details' | 'items';
   confidence: 'high' | 'uncertain' | 'missing';
+  width?: 'full' | 'half';
 }
 
 const FIELDS: FieldDef[] = [
-  { label: 'Vendor', value: 'Green Health LLC', type: 'text', section: 'details', confidence: 'high' },
-  { label: 'Room', value: 'Vault', type: 'dropdown', section: 'details', confidence: 'high' },
-  { label: 'Inventory Status', value: 'Ready', type: 'dropdown', section: 'details', confidence: 'high' },
-  { label: 'Product Name', value: 'Jeeter | Gelato | Hybrid | Pre-roll 1g 5pk', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Batch / Lot ID', value: 'LOT-GEL-0126-A', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Package ID (METRC)', value: '1A4060300002F04000027491', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Quantity', value: '24', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Expiration Date', value: '09/2027', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'THC%', value: '22.4%', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'CBD%', value: '0.08%', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Cost per unit', value: '$8.50', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Price per unit', value: '$17.00', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Total package cost', value: '$204.00', type: 'text', section: 'items', confidence: 'high' },
-  { label: 'Ingredients', value: '', type: 'text', section: 'items', confidence: 'uncertain' },
-  { label: 'Allergens', value: '', type: 'text', section: 'items', confidence: 'missing' },
+  // Details section
+  { label: 'Vendor / Supplier', value: 'Green Health LLC', type: 'text', section: 'details', confidence: 'high', width: 'half' },
+  { label: 'Receiving Room', value: 'Vault', type: 'dropdown', section: 'details', confidence: 'high', width: 'half' },
+  { label: 'Inventory Status', value: 'Ready for Sale', type: 'dropdown', section: 'details', confidence: 'high', width: 'full' },
+  // Items section
+  { label: 'Product Name', value: 'Jeeter | Gelato | Hybrid | Pre-roll 1g 5pk', type: 'text', section: 'items', confidence: 'high', width: 'full' },
+  { label: 'Batch / Lot ID', value: 'LOT-GEL-0126-A', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Package ID (METRC)', value: '1A4060300002F04000027491', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Quantity Received', value: '24', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Expiration Date', value: '09/2027', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'THC %', value: '22.4%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'CBD %', value: '0.08%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Cost per Unit', value: '$8.50', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Retail Price per Unit', value: '$17.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Total Package Cost', value: '$204.00', type: 'text', section: 'items', confidence: 'high', width: 'full' },
+  { label: 'Ingredients', value: '', type: 'text', section: 'items', confidence: 'uncertain', width: 'half' },
+  { label: 'Allergens', value: '', type: 'text', section: 'items', confidence: 'missing', width: 'half' },
 ];
 
 type FieldState = 'idle' | 'typing' | 'complete';
-
-function ConfidenceBadge({ confidence }: { confidence: 'high' | 'uncertain' | 'missing' }) {
-  if (confidence === 'high') {
-    return <span className="ai-badge high">&#10003;</span>;
-  }
-  if (confidence === 'uncertain') {
-    return <span className="ai-badge uncertain">?</span>;
-  }
-  return <span className="ai-badge missing">!</span>;
-}
 
 export default function DemoAutofillSection() {
   const [fieldStates, setFieldStates] = useState<FieldState[]>(() => FIELDS.map(() => 'idle'));
   const [displayTexts, setDisplayTexts] = useState<string[]>(() => FIELDS.map(() => ''));
   const [showComplete, setShowComplete] = useState(false);
   const [animationDone, setAnimationDone] = useState(false);
+  const [submitReady, setSubmitReady] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const intervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
 
@@ -61,34 +55,28 @@ export default function DemoAutofillSection() {
     setDisplayTexts(FIELDS.map(() => ''));
     setShowComplete(false);
     setAnimationDone(false);
+    setSubmitReady(false);
 
-    let delay = 500;
-    const CHAR_INTERVAL = 30;
-    const FIELD_GAP = 400;
+    let delay = 600;
+    const CHAR_INTERVAL = 28;
+    const FIELD_GAP = 380;
 
     FIELDS.forEach((field, idx) => {
       const startDelay = delay;
 
       if (field.type === 'dropdown' || field.value === '') {
-        // Instant snap for dropdowns and empty fields
-        const t = setTimeout(() => {
+        timersRef.current.push(setTimeout(() => {
           setFieldStates(prev => { const n = [...prev]; n[idx] = 'typing'; return n; });
           setDisplayTexts(prev => { const n = [...prev]; n[idx] = field.value; return n; });
-
-          const t2 = setTimeout(() => {
+          timersRef.current.push(setTimeout(() => {
             setFieldStates(prev => { const n = [...prev]; n[idx] = 'complete'; return n; });
-          }, 150);
-          timersRef.current.push(t2);
-        }, startDelay);
-        timersRef.current.push(t);
+          }, 180));
+        }, startDelay));
         delay += FIELD_GAP;
       } else {
-        // Typewriter for text fields
         const typingDuration = field.value.length * CHAR_INTERVAL;
-
-        const t = setTimeout(() => {
+        timersRef.current.push(setTimeout(() => {
           setFieldStates(prev => { const n = [...prev]; n[idx] = 'typing'; return n; });
-
           let charIdx = 0;
           const interval = setInterval(() => {
             charIdx++;
@@ -99,26 +87,24 @@ export default function DemoAutofillSection() {
             });
             if (charIdx >= field.value.length) {
               clearInterval(interval);
-              const t3 = setTimeout(() => {
+              timersRef.current.push(setTimeout(() => {
                 setFieldStates(prev => { const n = [...prev]; n[idx] = 'complete'; return n; });
-              }, 100);
-              timersRef.current.push(t3);
+              }, 100));
             }
           }, CHAR_INTERVAL);
           intervalsRef.current.push(interval);
-        }, startDelay);
-        timersRef.current.push(t);
+        }, startDelay));
         delay += Math.max(typingDuration, FIELD_GAP);
       }
     });
 
-    // Completion message
-    const completeTimer = setTimeout(() => {
-      setShowComplete(true);
-      const doneTimer = setTimeout(() => setAnimationDone(true), 500);
-      timersRef.current.push(doneTimer);
-    }, delay + 1500);
-    timersRef.current.push(completeTimer);
+    timersRef.current.push(setTimeout(() => {
+      setSubmitReady(true);
+      timersRef.current.push(setTimeout(() => {
+        setShowComplete(true);
+        timersRef.current.push(setTimeout(() => setAnimationDone(true), 500));
+      }, 800));
+    }, delay + 600));
   }, [cleanup]);
 
   useEffect(() => {
@@ -126,28 +112,40 @@ export default function DemoAutofillSection() {
     return cleanup;
   }, [runAnimation, cleanup]);
 
-  const handleReplay = () => {
-    runAnimation();
-  };
-
   const detailFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'details');
   const itemFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'items');
 
   const renderField = (field: FieldDef & { idx: number }) => {
     const state = fieldStates[field.idx];
     const text = displayTexts[field.idx];
-    const confidenceClass = state === 'complete' ? `confidence-${field.confidence}` : '';
-    const stateClass = state === 'typing' ? 'typing' : state === 'complete' ? 'complete' : '';
+    const isTyping = state === 'typing';
+    const isDone = state === 'complete';
+
+    const inputClass = [
+      'dform-input',
+      isTyping ? 'typing' : '',
+      isDone ? 'done' : '',
+      isDone ? `conf-${field.confidence}` : '',
+    ].filter(Boolean).join(' ');
 
     return (
-      <div className="form-field" key={field.idx}>
-        <label>{field.label}{field.type === 'dropdown' && ' \u25BE'}</label>
-        <div className={`animated-input ${stateClass} ${confidenceClass}`}>
-          <span className="typing-text">
-            {text}
-            {state === 'typing' && <span className="demo-cursor">|</span>}
+      <div key={field.idx} className={`dform-field${field.width === 'full' ? ' full' : ''}`}>
+        <label className="dform-label">
+          {field.label}
+          {field.type === 'dropdown' && <span className="dform-dropdown-icon">▾</span>}
+        </label>
+        <div className={inputClass}>
+          <span className="dform-value">
+            {text || (isDone && field.value === '' ? <span className="dform-empty">Not detected</span> : null)}
+            {isTyping && <span className="dform-cursor">|</span>}
           </span>
-          {state === 'complete' && <ConfidenceBadge confidence={field.confidence} />}
+          {isDone && (
+            <span className={`dform-badge conf-${field.confidence}`}>
+              {field.confidence === 'high' && '✓'}
+              {field.confidence === 'uncertain' && '?'}
+              {field.confidence === 'missing' && '!'}
+            </span>
+          )}
         </div>
       </div>
     );
@@ -156,60 +154,108 @@ export default function DemoAutofillSection() {
   return (
     <div className="demo-page">
       <div className="demo-container">
+        {/* Page heading — stays dark-themed above the window */}
         <h1 className="demo-title">Watch Trakie AI in Action</h1>
-        <p className="demo-subtitle">See how Trakie automatically fills your Dutchie receiving forms</p>
+        <p className="demo-subtitle">Dutchie receiving form — filled automatically in real time</p>
 
-        <div className="demo-form">
-          <div className="demo-form-section">
-            <h3>Receiving Details</h3>
-            <div className="form-row">
-              {renderField(detailFields[0])}
-              {renderField(detailFields[1])}
+        {/* Browser window */}
+        <div className="dlive-window" style={{ marginBottom: 0 }}>
+
+          {/* macOS chrome */}
+          <div className="dlive-chrome">
+            <div className="dlive-dots">
+              <span className="dlive-dot" style={{ background: '#ff5f57' }} />
+              <span className="dlive-dot" style={{ background: '#ffbd2e' }} />
+              <span className="dlive-dot" style={{ background: '#28ca41' }} />
             </div>
-            <div className="form-row demo-full-width">
-              {renderField(detailFields[2])}
+            <div className="dlive-url-bar">
+              <span className="dlive-url-lock">🔒</span>
+              pos.dutchie.com / inventory / receive-transfer
             </div>
           </div>
 
-          <div className="demo-form-section">
-            <h3>Items Received</h3>
-            <div className="form-row demo-full-width">
-              {renderField(itemFields[0])}
+          {/* Dutchie app */}
+          <div className="dlive-app">
+
+            {/* Nav */}
+            <div className="dlive-nav">
+              <div className="dlive-nav-logo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" fill="#2d9d78" />
+                  <path d="M8 12.5l2.5 2.5L16 9" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span>Dutchie POS</span>
+              </div>
+              <span className="dlive-nav-sep">›</span>
+              <span className="dlive-nav-crumb">Inventory</span>
+              <span className="dlive-nav-sep">›</span>
+              <span className="dlive-nav-crumb active">Receive Transfer</span>
+              <div className="dlive-nav-live">
+                <span className="dlive-live-dot" />
+                TRAKIE AI AUTOFILLING
+              </div>
             </div>
-            <div className="form-row">
-              {renderField(itemFields[1])}
-              {renderField(itemFields[2])}
+
+            {/* Page header */}
+            <div className="dlive-page-header">
+              <div>
+                <h2 className="dlive-page-title">Receive Inbound Transfer</h2>
+                <p className="dlive-page-sub">Trakie AI is reading your invoice and labels</p>
+              </div>
+              <span className="dlive-processing-badge">
+                <span className="dlive-badge-dot" />
+                {submitReady ? 'Complete' : 'Processing'}
+              </span>
             </div>
-            <div className="form-row">
-              {renderField(itemFields[3])}
-              {renderField(itemFields[4])}
+
+            {/* Form body */}
+            <div className="dform-body">
+
+              <div className="dform-section">
+                <div className="dform-section-title">Receiving Details</div>
+                <div className="dform-grid">
+                  {detailFields.map(f => renderField(f))}
+                </div>
+              </div>
+
+              <div className="dform-section">
+                <div className="dform-section-title">Item Details</div>
+                <div className="dform-grid">
+                  {itemFields.map(f => renderField(f))}
+                </div>
+              </div>
+
             </div>
-            <div className="form-row">
-              {renderField(itemFields[5])}
-              {renderField(itemFields[6])}
+
+            {/* Footer / submit */}
+            <div className="dform-footer">
+              <span className="dform-footer-note">
+                {animationDone
+                  ? '13 of 15 fields filled · 2 require manual review'
+                  : 'Autofilling fields…'}
+              </span>
+              <button
+                className={`dlive-confirm-btn${submitReady ? ' ready' : ''}`}
+                disabled={!submitReady}
+                onClick={runAnimation}
+              >
+                {submitReady ? '✓  Submit Receiving' : 'Autofilling…'}
+              </button>
             </div>
-            <div className="form-row">
-              {renderField(itemFields[7])}
-              {renderField(itemFields[8])}
-            </div>
-            <div className="form-row demo-full-width">
-              {renderField(itemFields[9])}
-            </div>
-            <div className="form-row">
-              {renderField(itemFields[10])}
-              {renderField(itemFields[11])}
-            </div>
+
           </div>
         </div>
 
+        {/* Completion message */}
         <div className={`demo-complete-message${showComplete ? ' visible' : ''}`}>
-          <p>Demo complete &mdash; Trakie fills your forms in under 60 seconds</p>
+          <p>Complete — Trakie fills your forms in under 60 seconds</p>
           {animationDone && (
-            <button className="demo-replay-btn" onClick={handleReplay}>
+            <button className="demo-replay-btn" onClick={runAnimation}>
               Replay
             </button>
           )}
         </div>
+
       </div>
     </div>
   );

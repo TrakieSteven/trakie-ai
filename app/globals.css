@@ -3957,3 +3957,578 @@ body::before {
         font-size: 18px;
     }
 }
+
+/* ============================================================
+   DFORM — Dutchie-style form fields (used in /demo autofill)
+   ============================================================ */
+
+.dform-body {
+    padding: 0 20px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: #fff;
+}
+
+.dform-section {
+    padding: 16px 0 12px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.dform-section:last-child {
+    border-bottom: none;
+}
+
+.dform-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dform-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+}
+
+.dform-field {
+    width: calc(50% - 8px);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dform-field.full {
+    width: 100%;
+}
+
+.dform-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    font-family: var(--font-outfit), sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dform-dropdown-icon {
+    font-size: 9px;
+    color: #d1d5db;
+}
+
+.dform-input {
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 8px 10px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: #6b7280;
+    font-family: var(--font-outfit), sans-serif;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+}
+
+.dform-input.typing {
+    border-color: #2d9d78;
+    background: #f0fdf8;
+    color: #111827;
+}
+
+.dform-input.done {
+    background: #fff;
+    color: #111827;
+}
+
+.dform-input.done.conf-high {
+    border-color: #bbf7d0;
+}
+
+.dform-input.done.conf-uncertain {
+    border-color: #fde68a;
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.dform-input.done.conf-missing {
+    border-color: #fecaca;
+    background: #fff5f5;
+    color: #991b1b;
+}
+
+.dform-value {
+    flex: 1;
+    min-height: 18px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dform-empty {
+    color: #d1d5db;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.dform-cursor {
+    display: inline-block;
+    margin-left: 1px;
+    animation: dlive-blink 0.55s step-end infinite;
+    color: #2d9d78;
+    font-weight: 300;
+}
+
+.dform-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 800;
+    flex-shrink: 0;
+    animation: badgeScaleIn 0.25s ease forwards;
+}
+
+.dform-badge.conf-high {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.dform-badge.conf-uncertain {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.dform-badge.conf-missing {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.dform-footer {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid #e5e7eb;
+    background: #f9fafb;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dform-footer-note {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+@media (max-width: 600px) {
+    .dform-field {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+   DUTCHIE LIVE AUTOFILL SCREEN
+   ============================================================ */
+
+.dlive-screen {
+    display: none;
+    min-height: 100vh;
+    padding: 130px 30px 60px;
+    background: #0A0A0A;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.dlive-screen.active {
+    display: flex;
+}
+
+/* Browser window */
+.dlive-window {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 40px 80px rgba(0,0,0,0.7);
+}
+
+.dlive-chrome {
+    background: #2c2c2e;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.dlive-dots {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.dlive-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dlive-url-bar {
+    flex: 1;
+    background: #3a3a3c;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11.5px;
+    font-family: ui-monospace, 'SF Mono', monospace;
+    color: #aeaeb2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dlive-url-lock {
+    font-size: 10px;
+}
+
+/* Dutchie app shell */
+.dlive-app {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top nav */
+.dlive-nav {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dlive-nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #111827;
+}
+
+.dlive-nav-sep {
+    color: #d1d5db;
+    font-size: 14px;
+}
+
+.dlive-nav-crumb {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.dlive-nav-crumb.active {
+    color: #111827;
+    font-weight: 600;
+}
+
+.dlive-nav-live {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #2d9d78;
+    background: #d1fae5;
+    padding: 4px 11px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.dlive-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2d9d78;
+    animation: dlive-pulse-dot 1.2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes dlive-pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Page header */
+.dlive-page-header {
+    padding: 14px 20px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafafa;
+}
+
+.dlive-page-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    font-family: var(--font-outfit), sans-serif;
+    margin: 0 0 2px;
+}
+
+.dlive-page-sub {
+    font-size: 12px;
+    color: #9ca3af;
+    font-family: var(--font-outfit), sans-serif;
+    margin: 0;
+}
+
+.dlive-processing-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #d97706;
+    background: #fef3c7;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dlive-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d97706;
+    animation: dlive-pulse-dot 1s ease-in-out infinite;
+}
+
+/* Transfer info strip */
+.dlive-info-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dlive-info-card {
+    padding: 10px 14px;
+    border-right: 1px solid #f3f4f6;
+}
+
+.dlive-info-card:last-child {
+    border-right: none;
+}
+
+.dlive-info-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dlive-info-value {
+    font-size: 11.5px;
+    color: #6b7280;
+    font-weight: 500;
+    min-height: 18px;
+    font-family: ui-monospace, 'SF Mono', monospace;
+    transition: color 0.3s;
+}
+
+.dlive-info-value.done {
+    color: #111827;
+}
+
+.dlive-empty-dash {
+    color: #d1d5db;
+}
+
+.dlive-cursor {
+    display: inline-block;
+    margin-left: 1px;
+    animation: dlive-blink 0.55s step-end infinite;
+    color: #2d9d78;
+    font-weight: 300;
+}
+
+@keyframes dlive-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Table */
+.dlive-table-wrap {
+    padding: 0 0 4px;
+    overflow-x: auto;
+}
+
+.dlive-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 12px;
+}
+
+.dlive-table thead tr {
+    background: #f9fafb;
+}
+
+.dlive-table th {
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.dlive-table td {
+    padding: 9px 14px;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    white-space: nowrap;
+    min-width: 90px;
+    transition: background 0.2s;
+}
+
+.dlive-table td:first-child {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 10px;
+    color: #6b7280;
+    min-width: 170px;
+}
+
+.dlive-row {
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dlive-row.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.dlive-cell.filling {
+    background: #fef9c3;
+}
+
+.dlive-cell.done {
+    background: transparent;
+    color: #111827;
+}
+
+/* Footer */
+.dlive-footer {
+    padding: 13px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid #e5e7eb;
+    background: #f9fafb;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.dlive-total {
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.dlive-total.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dlive-total-label {
+    font-size: 10px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+}
+
+.dlive-total-amount {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px;
+}
+
+.dlive-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dlive-items-count {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.dlive-confirm-btn {
+    padding: 10px 24px;
+    background: #e5e7eb;
+    color: #9ca3af;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: not-allowed;
+    transition: all 0.4s ease;
+    font-family: var(--font-outfit), sans-serif;
+    letter-spacing: 0.2px;
+}
+
+.dlive-confirm-btn.ready {
+    background: #2d9d78;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 0 0 rgba(45,157,120,0.5);
+    animation: dlive-btn-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes dlive-btn-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(45,157,120,0.5); }
+    60% { box-shadow: 0 0 0 10px rgba(45,157,120,0); }
+    100% { box-shadow: 0 0 0 0 rgba(45,157,120,0); }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .dlive-info-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dlive-table td:first-child {
+        min-width: 120px;
+        font-size: 9px;
+    }
+
+    .dlive-total-amount {
+        font-size: 18px;
+    }
+}

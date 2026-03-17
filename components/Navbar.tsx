@@ -57,7 +57,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             <a onClick={() => navigate('home')}>Home</a>
             <a onClick={() => navigate('receive')}>Receive Demo</a>
             <a onClick={() => navigate('demo')}>Demo</a>
-            <a onClick={() => navigate('bubbles')}>Intelligent Inventory</a>
             <a onClick={() => navigate('pricing')}>Pricing</a>
             <a onClick={() => navigate('contact')}>Contact</a>
           </div>
@@ -100,7 +99,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           <a onClick={() => navigate('home')}>Home</a>
           <a onClick={() => navigate('receive')}>Receive Demo</a>
           <a onClick={() => navigate('demo')}>Demo</a>
-          <a onClick={() => navigate('bubbles')}>Intelligent Inventory</a>
           <a onClick={() => navigate('pricing')}>Pricing</a>
           <a onClick={() => navigate('contact')}>Contact</a>
         </div>
