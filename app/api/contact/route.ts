@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { name, email, dispensary, message } = await request.json();
+    const { name, email, phone, bestTime, dispensary, deliveries, message } = await request.json();
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -22,7 +22,10 @@ export async function POST(request: Request) {
       text: [
         `Name: ${name}`,
         `Email: ${email}`,
+        phone ? `Phone: ${phone}` : null,
+        bestTime ? `Best Time to Call: ${bestTime}` : null,
         dispensary ? `Dispensary: ${dispensary}` : null,
+        deliveries ? `Deliveries per Week: ${deliveries}` : null,
         `\nMessage:\n${message}`,
       ]
         .filter(Boolean)
