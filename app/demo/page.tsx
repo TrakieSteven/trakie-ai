@@ -8,7 +8,7 @@ import Watermark from '@/components/Watermark';
 export default function DemoPage() {
   const handleNavigate = (section: string) => {
     if (section === 'demo') return;
-    window.location.href = `/?section=${section}`;
+    window.location.href = section === 'home' ? '/' : `/${section}`;
   };
 
   return (
