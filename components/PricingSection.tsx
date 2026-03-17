@@ -11,19 +11,14 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
     <section className="pricing">
       <div className="pricing-header">
         <h2 className="pricing-title">Foundation Pricing</h2>
-        <p className="pricing-subtitle">First 21 customers lock in $369/month forever</p>
-        <p className="pricing-note">After 21 spots filled → Price increases to $499/month</p>
       </div>
 
       <div className="pricing-card">
         <div className="popular-badge">
           <ZapIcon size={16} color="#000" /> FOUNDATION RATE
         </div>
-        <h3 className="plan-name">First 21 Customers Only</h3>
-
         <div className="price-comparison">
-          <div className="plan-price">$369</div>
-          <div className="original-price">Regular price: $499/month</div>
+          <div className="plan-price">$1000</div>
           <p className="plan-period">per month, per location</p>
         </div>
 
