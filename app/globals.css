@@ -244,9 +244,17 @@ body::before {
 .nav-logo {
     display: flex;
     align-items: center;
+    gap: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     min-width: 180px;
+}
+
+.nav-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .nav-logo-text {
