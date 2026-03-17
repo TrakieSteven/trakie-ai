@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
+import AuthModal from './AuthModal';
 
 interface NavbarProps {
   onNavigate: (section: string) => void;
@@ -11,6 +12,7 @@ interface NavbarProps {
 export default function Navbar({ onNavigate }: NavbarProps) {
   const [user, setUser] = useState<User | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authModal, setAuthModal] = useState<'login' | 'signup' | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -66,20 +68,16 @@ export default function Navbar({ onNavigate }: NavbarProps) {
                 Logout
               </button>
             ) : (
-              <a href="/login" className="nav-auth-btn">
+              <button onClick={() => setAuthModal('login')} className="nav-auth-btn">
                 Login
-              </a>
+              </button>
             )}
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('pricing');
-              }}
+            <button
+              onClick={() => setAuthModal('signup')}
               className="nav-cta"
             >
               Get Started
-            </a>
+            </button>
             <button
               className={`nav-hamburger${menuOpen ? ' open' : ''}`}
               onClick={() => setMenuOpen(!menuOpen)}
@@ -92,6 +90,10 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           </div>
         </div>
       </nav>
+
+      {authModal && (
+        <AuthModal initialView={authModal} onClose={() => setAuthModal(null)} />
+      )}
 
       {/* Mobile full-screen menu */}
       <div className={`nav-mobile-menu${menuOpen ? ' open' : ''}`}>
@@ -108,17 +110,16 @@ export default function Navbar({ onNavigate }: NavbarProps) {
               Logout
             </button>
           ) : (
-            <a href="/login" className="nav-mobile-auth-btn">
+            <button onClick={() => { setAuthModal('login'); setMenuOpen(false); }} className="nav-mobile-auth-btn">
               Login
-            </a>
+            </button>
           )}
-          <a
-            href="#"
-            onClick={(e) => { e.preventDefault(); navigate('pricing'); }}
+          <button
+            onClick={() => { setAuthModal('signup'); setMenuOpen(false); }}
             className="nav-mobile-cta-btn"
           >
             Get Started
-          </a>
+          </button>
         </div>
       </div>
     </>
