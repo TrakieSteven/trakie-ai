@@ -13,7 +13,7 @@ interface FieldDef {
 
 const FIELDS: FieldDef[] = [
   // Details section
-  { label: 'Vendor / Supplier', value: 'Green Health LLC', type: 'text', section: 'details', confidence: 'high', width: 'half' },
+  { label: 'Vendor / Supplier', value: 'Green Leaf Farms LLC', type: 'text', section: 'details', confidence: 'high', width: 'half' },
   { label: 'Receiving Room', value: 'Vault', type: 'dropdown', section: 'details', confidence: 'high', width: 'half' },
   { label: 'Inventory Status', value: 'Ready for Sale', type: 'dropdown', section: 'details', confidence: 'high', width: 'full' },
   // Items section

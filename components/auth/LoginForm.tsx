@@ -32,7 +32,7 @@ export default function LoginForm() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1 className="auth-title">TRAKIE.AI</h1>
+        <h1 className="auth-title">trakie</h1>
         <p className="auth-subtitle">Sign in to your account</p>
 
         {error && <div className="form-error">{error}</div>}

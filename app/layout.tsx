@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Outfit, Bodoni_Moda } from 'next/font/google';
+import { Outfit, Bodoni_Moda, DM_Sans } from 'next/font/google';
 import './globals.css';
 
 const outfit = Outfit({
@@ -14,6 +14,13 @@ const bodoniModa = Bodoni_Moda({
   weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
   variable: '--font-bodoni',
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-dm-sans',
   display: 'swap',
 });
 
@@ -35,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${bodoniModa.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${bodoniModa.variable} ${dmSans.variable}`}>
       <head>
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-Frame-Options" content="DENY" />

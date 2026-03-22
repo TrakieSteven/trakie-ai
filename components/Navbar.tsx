@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
-import Image from 'next/image';
 import AuthModal from './AuthModal';
 
 interface NavbarProps {
@@ -54,8 +53,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <nav className="nav">
         <div className="nav-content">
           <div className="nav-logo" onClick={() => navigate('home')}>
-            <Image src="/logo.png" alt="Trakie.ai" width={36} height={36} className="nav-logo-img" />
-            <div className="nav-logo-text">TRAKIE.AI</div>
+            <div className="nav-logo-text">trakie</div>
           </div>
           <div className="nav-links">
             <a onClick={() => navigate('home')}>Home</a>

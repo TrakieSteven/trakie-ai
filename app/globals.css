@@ -244,10 +244,9 @@ body::before {
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 180px;
+    min-width: 100px;
 }
 
 .nav-logo-img {
@@ -258,21 +257,16 @@ body::before {
 }
 
 .nav-logo-text {
-    font-family: var(--font-bodoni), serif;
-    font-size: 42px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, #C9A961 0%, #8B7355 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    filter: drop-shadow(0 2px 8px rgba(201, 169, 97, 0.15));
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    transition: opacity 0.2s ease;
 }
 
 .nav-logo:hover .nav-logo-text {
-    transform: scale(1.03);
-    filter: drop-shadow(0 4px 12px rgba(201, 169, 97, 0.3));
+    opacity: 0.75;
 }
 
 .nav-links {
@@ -3201,7 +3195,7 @@ body::before {
         padding: 16px 20px;
     }
     .nav-logo-text {
-        font-size: 30px;
+        font-size: 20px;
         min-width: 0;
     }
     .nav-logo {
@@ -3643,12 +3637,13 @@ body::before {
 }
 
 .auth-title {
-    font-family: var(--font-bodoni), serif;
-    font-size: 36px;
-    color: #C9A961;
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 8px;
-    letter-spacing: 3px;
+    letter-spacing: -0.5px;
 }
 
 .auth-subtitle {
@@ -4746,4 +4741,355 @@ body::before {
 
 .dlive-window {
     animation: sectionFadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PRICING V2 — SAVINGS-LED REDESIGN
+═══════════════════════════════════════════════════════ */
+
+.pv2 {
+    padding: 140px 40px 120px;
+    background: linear-gradient(180deg, #070E07 0%, #0D1F0D 45%, #070E07 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.pv2::before {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle, rgba(74, 222, 128, 0.04) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+.pv2-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── HERO — savings number ── */
+
+.pv2-hero {
+    text-align: center;
+    margin-bottom: 44px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.pv2-hero--visible {
+    opacity: 1;
+    transform: none;
+}
+
+.pv2-label {
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: rgba(74, 222, 128, 0.6);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+}
+
+.pv2-number {
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: clamp(54px, 9.5vw, 108px);
+    font-weight: 700;
+    color: #4ADE80;
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 14px;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 100px rgba(74, 222, 128, 0.25);
+}
+
+.pv2-currency {
+    font-size: 0.52em;
+    vertical-align: super;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+.pv2-sep {
+    color: rgba(74, 222, 128, 0.35);
+    letter-spacing: -1px;
+}
+
+.pv2-unit {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ── CONTEXT ── */
+
+.pv2-context {
+    text-align: center;
+    margin-bottom: 72px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+
+.pv2-context--visible {
+    opacity: 1;
+    transform: none;
+}
+
+.pv2-context-primary {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.pv2-context-secondary {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.25);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ── LABOR TABLE ── */
+
+.pv2-table-wrap {
+    margin-bottom: 72px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+}
+
+.pv2-table-wrap--visible {
+    opacity: 1;
+    transform: none;
+}
+
+.pv2-table-heading {
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.pv2-table-scroll {
+    overflow-x: auto;
+}
+
+.pv2-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.pv2-th {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pv2-th--num {
+    text-align: right;
+}
+
+.pv2-tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.15s ease;
+}
+
+.pv2-tr:hover {
+    background: rgba(74, 222, 128, 0.03);
+}
+
+.pv2-td {
+    padding: 15px 16px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    vertical-align: top;
+    line-height: 1.4;
+}
+
+.pv2-td--role {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 500;
+    width: 36%;
+}
+
+.pv2-td--detail {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.pv2-td--num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+}
+
+.pv2-tr-total {
+    border-top: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.pv2-td-total-label {
+    padding: 18px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.pv2-td-total-num {
+    padding: 18px 16px;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: right;
+    color: #4ADE80;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* ── PRICE BLOCK — de-emphasized ── */
+
+.pv2-price-block {
+    text-align: center;
+    margin-bottom: 88px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+}
+
+.pv2-price-block--visible {
+    opacity: 1;
+    transform: none;
+}
+
+.pv2-price-rule {
+    width: 36px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 auto 36px;
+}
+
+.pv2-price-main {
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+}
+
+.pv2-price-sub {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.28);
+    margin-bottom: 22px;
+}
+
+.pv2-price-lock {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 12px;
+    color: rgba(201, 169, 97, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    line-height: 1.5;
+}
+
+/* ── LAUNCH + CTA ── */
+
+.pv2-launch {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.65s, transform 0.7s ease 0.65s;
+}
+
+.pv2-launch--visible {
+    opacity: 1;
+    transform: none;
+}
+
+.pv2-launch-badge {
+    display: inline-block;
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #C9A961;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+}
+
+.pv2-launch-tagline {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 36px;
+}
+
+.pv2-cta {
+    display: inline-block;
+    font-family: var(--font-dm-sans), sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    background: #4ADE80;
+    border: none;
+    padding: 17px 46px;
+    cursor: pointer;
+    letter-spacing: -0.2px;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+}
+
+.pv2-cta:hover {
+    background: #6EE79A;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(74, 222, 128, 0.3);
+}
+
+/* ── RESPONSIVE ── */
+
+@media (max-width: 768px) {
+    .pv2 {
+        padding: 100px 24px 80px;
+    }
+    .pv2-number {
+        letter-spacing: -2px;
+    }
+    .pv2-th--detail,
+    .pv2-td--detail {
+        display: none;
+    }
+    .pv2-cta {
+        width: 100%;
+        padding: 18px 24px;
+    }
 }

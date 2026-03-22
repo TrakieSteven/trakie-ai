@@ -97,7 +97,7 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
 
         <button className="auth-modal-close" onClick={onClose} aria-label="Close">✕</button>
 
-        <h1 className="auth-title">TRAKIE.AI</h1>
+        <h1 className="auth-title">trakie</h1>
         <p className="auth-subtitle">
           {view === 'login' && 'Sign in to your account'}
           {view === 'signup' && 'Create your account'}

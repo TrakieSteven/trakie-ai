@@ -72,7 +72,7 @@ export default function SignupForm() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1 className="auth-title">TRAKIE.AI</h1>
+        <h1 className="auth-title">trakie</h1>
         <p className="auth-subtitle">
           {step === 'form' ? 'Create your account' : 'Check your email'}
         </p>
