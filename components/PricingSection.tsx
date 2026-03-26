@@ -6,18 +6,26 @@ interface PricingSectionProps {
   onNavigate: (section: string) => void;
 }
 
-function useCountUp(target: number, duration: number, active: boolean) {
+function useAnimatedValue(target: number, duration: number, active: boolean) {
   const [value, setValue] = useState(0);
+  const prevTarget = useRef(target);
+  const hasRun = useRef(false);
+
   useEffect(() => {
     if (!active) return;
+    const from = hasRun.current ? prevTarget.current : 0;
+    prevTarget.current = target;
+    hasRun.current = true;
     const start = performance.now();
+    let raf: number;
     const animate = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(target * eased));
-      if (progress < 1) requestAnimationFrame(animate);
+      setValue(Math.round(from + (target - from) * eased));
+      if (progress < 1) raf = requestAnimationFrame(animate);
     };
-    requestAnimationFrame(animate);
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
   }, [target, duration, active]);
   return value;
 }
@@ -41,6 +49,7 @@ function LockIcon() {
 
 export default function PricingSection({ onNavigate }: PricingSectionProps) {
   const [active, setActive] = useState(false);
+  const [deliveries, setDeliveries] = useState(3);
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -54,8 +63,17 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
     return () => observer.disconnect();
   }, []);
 
-  const low = useCountUp(5100, 1600, active);
-  const high = useCountUp(7800, 2000, active);
+  const scale = deliveries / 3;
+  const scaledRows = laborRows.map(row => ({
+    ...row,
+    low: Math.round(row.low * scale),
+    high: Math.round(row.high * scale),
+  }));
+  const totalLow = scaledRows.reduce((sum, r) => sum + r.low, 0);
+  const totalHigh = scaledRows.reduce((sum, r) => sum + r.high, 0);
+
+  const low = useAnimatedValue(totalLow, 600, active);
+  const high = useAnimatedValue(totalHigh, 600, active);
 
   return (
     <section className="pv2" ref={ref}>
@@ -64,6 +82,24 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
         {/* ── SAVINGS HERO ── */}
         <div className={`pv2-hero${active ? ' pv2-hero--visible' : ''}`}>
           <div className="pv2-label">Monthly Savings Estimate</div>
+          <div className="pv2-slider-wrap">
+            <label className="pv2-slider-label">
+              <span className="pv2-slider-value">{deliveries}</span> deliveries per week
+            </label>
+            <input
+              type="range"
+              className="pv2-slider"
+              min={1}
+              max={10}
+              step={1}
+              value={deliveries}
+              onChange={(e) => setDeliveries(Number(e.target.value))}
+            />
+            <div className="pv2-slider-range">
+              <span>1</span>
+              <span>10</span>
+            </div>
+          </div>
           <div className="pv2-number">
             <span className="pv2-currency">$</span>{low.toLocaleString()}
             <span className="pv2-sep"> – </span>
@@ -96,7 +132,7 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
                 </tr>
               </thead>
               <tbody>
-                {laborRows.map((row, i) => (
+                {scaledRows.map((row, i) => (
                   <tr key={i} className="pv2-tr">
                     <td className="pv2-td pv2-td--role">{row.role}</td>
                     <td className="pv2-td pv2-td--detail">{row.detail}</td>
@@ -106,8 +142,8 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
                 ))}
                 <tr className="pv2-tr-total">
                   <td className="pv2-td-total-label" colSpan={2}>Monthly Total</td>
-                  <td className="pv2-td-total-num">$5,100</td>
-                  <td className="pv2-td-total-num">$7,800</td>
+                  <td className="pv2-td-total-num">${totalLow.toLocaleString()}</td>
+                  <td className="pv2-td-total-num">${totalHigh.toLocaleString()}</td>
                 </tr>
               </tbody>
             </table>
