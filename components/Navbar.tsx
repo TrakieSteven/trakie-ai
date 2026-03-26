@@ -53,7 +53,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <nav className="nav">
         <div className="nav-content">
           <div className="nav-logo" onClick={() => navigate('home')}>
-            <div className="nav-logo-text">trakie</div>
+            <div className="nav-logo-text">trakie.ai</div>
           </div>
           <div className="nav-links">
             <a onClick={() => navigate('home')}>Home</a>
