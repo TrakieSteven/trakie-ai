@@ -11,7 +11,7 @@ import ContactSection from '@/components/ContactSection';
 import DutchieFormScreen from '@/components/DutchieFormScreen';
 import ProductModal from '@/components/ProductModal';
 import SecurityLayer from '@/components/SecurityLayer';
-import Watermark from '@/components/Watermark';
+
 import { products } from '@/data/products';
 
 interface Props {
@@ -74,7 +74,6 @@ export default function MainPage({ initialSection }: Props) {
       </div>
 
       <SecurityLayer />
-      <Watermark />
     </>
   );
 }

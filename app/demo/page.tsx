@@ -3,7 +3,7 @@
 import Navbar from '@/components/Navbar';
 import DemoAutofillSection from '@/components/DemoAutofillSection';
 import SecurityLayer from '@/components/SecurityLayer';
-import Watermark from '@/components/Watermark';
+
 
 export default function DemoPage() {
   const handleNavigate = (section: string) => {
@@ -20,7 +20,6 @@ export default function DemoPage() {
         </div>
       </div>
       <SecurityLayer />
-      <Watermark />
     </>
   );
 }

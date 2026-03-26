@@ -127,7 +127,7 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
 
         {/* ── LAUNCH + CTA ── */}
         <div className={`pv2-launch${active ? ' pv2-launch--visible' : ''}`}>
-          <div className="pv2-launch-badge">Launching August 2026</div>
+          <div className="pv2-launch-badge">Now Accepting Founding Customers</div>
           <p className="pv2-launch-tagline">Reserve your founding customer spot now</p>
           <button className="pv2-cta" onClick={() => onNavigate('contact')}>
             Reserve Your Spot — Free 30-Day Trial
