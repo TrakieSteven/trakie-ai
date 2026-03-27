@@ -123,7 +123,7 @@ export default function ProductReadingPhase() {
           }}>
             <span style={{
               width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
-              background: done ? '#4ade80' : '#C9A961',
+              background: done ? '#4ade80' : '#C9A55A',
               animation: done ? 'none' : 'scanPulse 1s ease infinite',
               display: 'inline-block',
             }} />

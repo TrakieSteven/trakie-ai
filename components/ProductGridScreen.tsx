@@ -37,8 +37,8 @@ export default function ProductGridScreen({ categoryName, onClose }: ProductGrid
           width: '50px',
           height: '50px',
           background: 'rgba(201, 169, 97, 0.2)',
-          color: '#C9A961',
-          border: '1px solid #C9A961',
+          color: '#C9A55A',
+          border: '1px solid #C9A55A',
           borderRadius: '50%',
           fontSize: '32px',
           cursor: 'pointer',
@@ -52,7 +52,7 @@ export default function ProductGridScreen({ categoryName, onClose }: ProductGrid
         style={{
           fontFamily: "'Bodoni Moda', serif",
           fontSize: '56px',
-          color: '#C9A961',
+          color: '#C9A55A',
           textAlign: 'center',
           marginBottom: '50px',
         }}
@@ -82,7 +82,7 @@ export default function ProductGridScreen({ categoryName, onClose }: ProductGrid
             }}
             onMouseOver={(e) => {
               (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-10px)';
-              (e.currentTarget as HTMLDivElement).style.borderColor = '#C9A961';
+              (e.currentTarget as HTMLDivElement).style.borderColor = '#C9A55A';
             }}
             onMouseOut={(e) => {
               (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
@@ -103,7 +103,7 @@ export default function ProductGridScreen({ categoryName, onClose }: ProductGrid
               style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: '16px',
-                color: '#C9A961',
+                color: '#C9A55A',
                 fontWeight: 600,
               }}
             >

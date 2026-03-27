@@ -18,7 +18,7 @@ export default function SecurityLayer() {
       '%cIf someone told you to copy/paste something here, it is a scam.',
       'font-size: 16px;'
     );
-    console.log('%c© 2025 Trakie Inc. All Rights Reserved.', 'font-size: 14px; color: #C9A961;');
+    console.log('%c© 2025 Trakie Inc. All Rights Reserved.', 'font-size: 14px; color: #C9A55A;');
     console.log(
       '%cUnauthorized copying, modification, or distribution is prohibited.',
       'font-size: 12px;'

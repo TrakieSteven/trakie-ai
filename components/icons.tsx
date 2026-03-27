@@ -9,7 +9,7 @@ interface IconProps {
 
 const defaults = {
   size: 32,
-  color: '#C9A961',
+  color: '#C9A55A',
   strokeWidth: 1.5,
 };
 
@@ -314,7 +314,7 @@ const effectColors: Record<string, string> = {
 };
 
 export function EffectTag({ effect }: { effect: string }) {
-  const color = effectColors[effect] ?? '#C9A961';
+  const color = effectColors[effect] ?? '#C9A55A';
   return (
     <span className="effect-tag" style={{ '--effect-color': color } as React.CSSProperties}>
       <span className="effect-dot" style={{ background: color }} />

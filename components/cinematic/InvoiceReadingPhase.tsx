@@ -50,7 +50,7 @@ export default function InvoiceReadingPhase() {
         <div style={{ flex: '0 0 46%', background: '#F5F2EA', borderRadius: 10, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.55)' }}>
           {/* header bar */}
           <div style={{ background: '#1C1C1C', padding: '11px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#C9A961', textTransform: 'uppercase' }}>Invoice</span>
+            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#C9A55A', textTransform: 'uppercase' }}>Invoice</span>
             <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>#INV-0326-847</span>
           </div>
           {/* sub-header */}
@@ -107,7 +107,7 @@ export default function InvoiceReadingPhase() {
           }}>
             <span style={{
               width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
-              background: done ? '#4ade80' : '#C9A961',
+              background: done ? '#4ade80' : '#C9A55A',
               animation: done ? 'none' : 'scanPulse 1s ease infinite',
               display: 'inline-block',
             }} />

@@ -123,7 +123,7 @@ export default function SignupForm() {
         ) : (
           <form onSubmit={handleVerifyOtp}>
             <p style={{ color: '#aaa', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
-              We sent an 8-digit verification code to <strong style={{ color: '#C9A961' }}>{email}</strong>.
+              We sent an 8-digit verification code to <strong style={{ color: '#C9A55A' }}>{email}</strong>.
               Enter it below to confirm your account.
             </p>
             <div className="form-group">
@@ -145,7 +145,7 @@ export default function SignupForm() {
             <button
               type="button"
               onClick={() => { setStep('form'); setOtp(''); setError(''); }}
-              style={{ background: 'none', border: 'none', color: '#C9A961', cursor: 'pointer', width: '100%', marginTop: '0.75rem', fontSize: '0.85rem' }}
+              style={{ background: 'none', border: 'none', color: '#C9A55A', cursor: 'pointer', width: '100%', marginTop: '0.75rem', fontSize: '0.85rem' }}
             >
               ← Back
             </button>
