@@ -11,8 +11,8 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
   return (
     <>
       <section className="vogue-hero">
-        <h1 className="vogue-hero-title">CANNABIS RETAIL</h1>
-        <h2 className="vogue-hero-subtitle">INTELLIGENCE</h2>
+        <h1 className="vogue-hero-title">Receive inventory</h1>
+        <h2 className="vogue-hero-subtitle">in 60 seconds.</h2>
         <p className="vogue-hero-tagline">
           <span>INSTANT INVENTORY RECOGNITION</span> &bull;{' '}
           <span>PREDICTIVE RESTOCKING</span> &bull;{' '}
