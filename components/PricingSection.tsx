@@ -156,11 +156,11 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
         {/* ── PRICE — DE-EMPHASIZED ── */}
         <div className={`pv2-price-block${active ? ' pv2-price-block--visible' : ''}`}>
           <div className="pv2-price-rule" />
-          <p className="pv2-price-main">trakie costs $1,000/month</p>
+          <p className="pv2-price-main">Early Bird: $499/month</p>
           <p className="pv2-price-sub">Most dispensaries recover the full cost in week one.</p>
           <p className="pv2-price-lock">
             <LockIcon />
-            Lifetime price lock — you&apos;ll never pay more, even as we raise prices
+            Locked for 3 years — regular price $799/month after founding period
           </p>
         </div>
 
