@@ -49,7 +49,7 @@ function LockIcon() {
 
 export default function PricingSection({ onNavigate }: PricingSectionProps) {
   const [active, setActive] = useState(false);
-  const [deliveries, setDeliveries] = useState(3);
+  const [deliveries, setDeliveries] = useState(5);
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -82,6 +82,9 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
         {/* ── SAVINGS HERO ── */}
         <div className={`pv2-hero${active ? ' pv2-hero--visible' : ''}`}>
           <div className="pv2-label">Monthly Savings Estimate</div>
+          <p className="pv2-context-secondary" style={{ textAlign: 'center', marginBottom: 20, marginTop: 4 }}>
+            Based on 30–45 min average manual receiving time per delivery, per month
+          </p>
           <div className="pv2-slider-wrap">
             <label className="pv2-slider-label">
               <span className="pv2-slider-value">{deliveries}</span> deliveries per week
