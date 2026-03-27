@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 
 const stats = [
   { number: '7x', label: 'Faster Than Manual' },
@@ -11,77 +11,70 @@ const stats = [
   { number: '45s', label: 'Average Receive' },
 ];
 
+const SPEED = 0.8; // px per frame at 60fps ≈ 48px/s
+
 export default function StatsCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const loopCountRef = useRef(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const pausedRef = useRef(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartOffset = useRef(0);
 
-  const pages = Math.ceil(stats.length / 3);
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-  const updateTransform = useCallback((index: number) => {
-    if (!trackRef.current || !trackRef.current.children[0]) return;
-    const cardWidth = (trackRef.current.children[0] as HTMLElement).offsetWidth;
-    const gap = 30;
-    trackRef.current.style.transform = `translateX(-${index * (cardWidth + gap) * 3}px)`;
+    const tick = () => {
+      if (!pausedRef.current) {
+        offsetRef.current += SPEED;
+        const half = track.scrollWidth / 2;
+        if (offsetRef.current >= half) offsetRef.current -= half;
+        track.style.transform = `translateX(${-offsetRef.current}px)`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, []);
 
-  const nextStat = useCallback(() => {
-    setCurrentIndex((prev) => {
-      let next = prev + 1;
-      if (next >= pages) {
-        next = 0;
-        loopCountRef.current++;
-        if (loopCountRef.current >= 8) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-          return prev;
-        }
-      }
-      return next;
-    });
-  }, [pages]);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartOffset.current = offsetRef.current;
+    pausedRef.current = true;
+  };
 
-  useEffect(() => {
-    updateTransform(currentIndex);
-  }, [currentIndex, updateTransform]);
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || !trackRef.current) return;
+    const delta = touchStartX.current - e.touches[0].clientX;
+    const half = trackRef.current.scrollWidth / 2;
+    let next = touchStartOffset.current + delta;
+    next = ((next % half) + half) % half;
+    offsetRef.current = next;
+    trackRef.current.style.transform = `translateX(${-next}px)`;
+  };
 
-  useEffect(() => {
-    intervalRef.current = setInterval(nextStat, 4000);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [nextStat]);
-
-  const goToStat = (index: number) => {
-    setCurrentIndex(index);
+  const onTouchEnd = () => {
+    pausedRef.current = false;
+    touchStartX.current = null;
   };
 
   return (
     <section className="vogue-stats">
-      <div className="vogue-stats-container">
-        <div className="vogue-stats-carousel">
-          <div className="vogue-stats-track" id="statsTrack" ref={trackRef}>
-            {stats.map((stat, i) => (
-              <div className="vogue-stat-box" key={i}>
-                <div className="vogue-stat-number">{stat.number}</div>
-                <div className="vogue-stat-label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="carousel-controls">
-          <div className="carousel-dots" id="carouselDots">
-            {Array.from({ length: pages }, (_, i) => (
-              <div
-                key={i}
-                className={`carousel-dot${i === currentIndex ? ' active' : ''}`}
-                onClick={() => goToStat(i)}
-              />
-            ))}
-          </div>
-          <button className="carousel-arrow" onClick={nextStat}>
-            ›
-          </button>
+      <div
+        className="vogue-stats-carousel"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <div className="vogue-stats-track" ref={trackRef}>
+          {[...stats, ...stats].map((stat, i) => (
+            <div className="vogue-stat-box" key={i}>
+              <div className="vogue-stat-number">{stat.number}</div>
+              <div className="vogue-stat-label">{stat.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
