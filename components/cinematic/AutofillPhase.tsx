@@ -12,35 +12,37 @@ interface FieldDef {
 }
 
 const FIELDS: FieldDef[] = [
-  // Details section
-  { label: 'Vendor / Supplier', value: 'Green Leaf Farms LLC', type: 'text', section: 'details', confidence: 'high', width: 'half' },
+  { label: 'Vendor / Supplier', value: 'Mary Jane Farms LLC', type: 'text', section: 'details', confidence: 'high', width: 'half' },
   { label: 'Receiving Room', value: 'Vault', type: 'dropdown', section: 'details', confidence: 'high', width: 'half' },
   { label: 'Inventory Status', value: 'Ready for Sale', type: 'dropdown', section: 'details', confidence: 'high', width: 'full' },
-  // Items section
-  { label: 'Product Name', value: 'Jeeter | Gelato | Hybrid | Pre-roll 1g 5pk', type: 'text', section: 'items', confidence: 'high', width: 'full' },
-  { label: 'Batch / Lot ID', value: 'LOT-GEL-0126-A', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Package ID (METRC)', value: '1A4060300002F04000027491', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Quantity Received', value: '24', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Expiration Date', value: '09/2027', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'THC %', value: '22.4%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'CBD %', value: '0.08%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Cost per Unit', value: '$8.50', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Retail Price per Unit', value: '$17.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Total Package Cost', value: '$204.00', type: 'text', section: 'items', confidence: 'high', width: 'full' },
-  { label: 'Ingredients', value: '', type: 'text', section: 'items', confidence: 'uncertain', width: 'half' },
-  { label: 'Allergens', value: '', type: 'text', section: 'items', confidence: 'missing', width: 'half' },
+  { label: 'Product Name', value: 'Sour Diesel | Hybrid | Flower | 3.5g', type: 'text', section: 'items', confidence: 'high', width: 'full' },
+  { label: 'Batch / Lot ID', value: 'LOT-SD-0326-B', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Package ID (METRC)', value: '1A4060300002F04000031847', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Quantity Received', value: '48', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Expiration Date', value: '12/2026', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'THC %', value: '24.5%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'CBD %', value: '0.12%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Cost per Unit', value: '$12.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Retail Price per Unit', value: '$25.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Total Package Cost', value: '$576.00', type: 'text', section: 'items', confidence: 'high', width: 'full' },
+  { label: 'Net Weight', value: '3.5g', type: 'text', section: 'items', confidence: 'high', width: 'half' },
+  { label: 'Strain Type', value: '', type: 'text', section: 'items', confidence: 'uncertain', width: 'half' },
 ];
 
 type FieldState = 'idle' | 'typing' | 'complete';
 
-export default function DemoAutofillSection() {
+interface AutofillPhaseProps {
+  onComplete: () => void;
+}
+
+export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
   const [fieldStates, setFieldStates] = useState<FieldState[]>(() => FIELDS.map(() => 'idle'));
   const [displayTexts, setDisplayTexts] = useState<string[]>(() => FIELDS.map(() => ''));
-  const [showComplete, setShowComplete] = useState(false);
-  const [animationDone, setAnimationDone] = useState(false);
-  const [submitReady, setSubmitReady] = useState(false);
+  const [allDone, setAllDone] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const intervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   const cleanup = useCallback(() => {
     timersRef.current.forEach(clearTimeout);
@@ -49,17 +51,15 @@ export default function DemoAutofillSection() {
     intervalsRef.current = [];
   }, []);
 
-  const runAnimation = useCallback(() => {
+  useEffect(() => {
     cleanup();
     setFieldStates(FIELDS.map(() => 'idle'));
     setDisplayTexts(FIELDS.map(() => ''));
-    setShowComplete(false);
-    setAnimationDone(false);
-    setSubmitReady(false);
+    setAllDone(false);
 
     let delay = 600;
-    const CHAR_INTERVAL = 28;
-    const FIELD_GAP = 380;
+    const CHAR_INTERVAL = 65;
+    const FIELD_GAP = 500;
 
     FIELDS.forEach((field, idx) => {
       const startDelay = delay;
@@ -98,19 +98,16 @@ export default function DemoAutofillSection() {
       }
     });
 
+    // Fire onComplete 1.5s after last field finishes
     timersRef.current.push(setTimeout(() => {
-      setSubmitReady(true);
+      setAllDone(true);
       timersRef.current.push(setTimeout(() => {
-        setShowComplete(true);
-        timersRef.current.push(setTimeout(() => setAnimationDone(true), 500));
-      }, 800));
-    }, delay + 600));
-  }, [cleanup]);
+        onCompleteRef.current();
+      }, 1500));
+    }, delay + 400));
 
-  useEffect(() => {
-    runAnimation();
     return cleanup;
-  }, [runAnimation, cleanup]);
+  }, [cleanup]);
 
   const detailFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'details');
   const itemFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'items');
@@ -132,7 +129,7 @@ export default function DemoAutofillSection() {
       <div key={field.idx} className={`dform-field${field.width === 'full' ? ' full' : ''}`}>
         <label className="dform-label">
           {field.label}
-          {field.type === 'dropdown' && <span className="dform-dropdown-icon">▾</span>}
+          {field.type === 'dropdown' && <span className="dform-dropdown-icon">&#9662;</span>}
         </label>
         <div className={inputClass}>
           <span className="dform-value">
@@ -141,7 +138,7 @@ export default function DemoAutofillSection() {
           </span>
           {isDone && (
             <span className={`dform-badge conf-${field.confidence}`}>
-              {field.confidence === 'high' && '✓'}
+              {field.confidence === 'high' && '\u2713'}
               {field.confidence === 'uncertain' && '?'}
               {field.confidence === 'missing' && '!'}
             </span>
@@ -152,15 +149,9 @@ export default function DemoAutofillSection() {
   };
 
   return (
-    <div className="demo-page">
+    <div className="cinematic-phase cinematic-autofill">
       <div className="demo-container">
-        {/* Page heading — stays dark-themed above the window */}
-        <h1 className="demo-title">Watch Trakie AI in Action</h1>
-        <p className="demo-subtitle">Dutchie receiving form — filled automatically in real time</p>
-
-        {/* Browser window */}
         <div className="dlive-window" style={{ marginBottom: 0 }}>
-
           {/* macOS chrome */}
           <div className="dlive-chrome">
             <div className="dlive-dots">
@@ -169,26 +160,26 @@ export default function DemoAutofillSection() {
               <span className="dlive-dot" style={{ background: '#28ca41' }} />
             </div>
             <div className="dlive-url-bar">
-              <span className="dlive-url-lock">🔒</span>
+              <span className="dlive-url-lock">&#128274;</span>
               pos.dutchie.com / inventory / receive-transfer
             </div>
           </div>
 
           {/* Dutchie app */}
           <div className="dlive-app">
-
-            {/* Nav */}
             <div className="dlive-nav">
               <div className="dlive-nav-logo">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" fill="#2d9d78" />
-                  <path d="M8 12.5l2.5 2.5L16 9" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <img
+                  src="/dutchie-logo.jpeg"
+                  alt="Dutchie"
+                  style={{ height: 20, marginRight: 6 }}
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
                 <span>Dutchie POS</span>
               </div>
-              <span className="dlive-nav-sep">›</span>
+              <span className="dlive-nav-sep">&rsaquo;</span>
               <span className="dlive-nav-crumb">Inventory</span>
-              <span className="dlive-nav-sep">›</span>
+              <span className="dlive-nav-sep">&rsaquo;</span>
               <span className="dlive-nav-crumb active">Receive Transfer</span>
               <div className="dlive-nav-live">
                 <span className="dlive-live-dot" />
@@ -196,66 +187,41 @@ export default function DemoAutofillSection() {
               </div>
             </div>
 
-            {/* Page header */}
             <div className="dlive-page-header">
               <div>
                 <h2 className="dlive-page-title">Receive Inbound Transfer</h2>
-                <p className="dlive-page-sub">Trakie AI is reading your invoice and labels</p>
+                <p className="dlive-page-sub">trakie.ai is reading your invoice and labels</p>
               </div>
               <span className="dlive-processing-badge">
                 <span className="dlive-badge-dot" />
-                {submitReady ? 'Complete' : 'Processing'}
+                {allDone ? 'Complete' : 'Processing'}
               </span>
             </div>
 
-            {/* Form body */}
             <div className="dform-body">
-
               <div className="dform-section">
                 <div className="dform-section-title">Receiving Details</div>
                 <div className="dform-grid">
                   {detailFields.map(f => renderField(f))}
                 </div>
               </div>
-
               <div className="dform-section">
                 <div className="dform-section-title">Item Details</div>
                 <div className="dform-grid">
                   {itemFields.map(f => renderField(f))}
                 </div>
               </div>
-
             </div>
 
-            {/* Footer / submit */}
             <div className="dform-footer">
               <span className="dform-footer-note">
-                {animationDone
-                  ? '13 of 15 fields filled · 2 require manual review'
-                  : 'Autofilling fields…'}
+                {allDone
+                  ? '14 fields filled \u00b7 1 requires manual review'
+                  : 'Autofilling fields\u2026'}
               </span>
-              <button
-                className={`dlive-confirm-btn${submitReady ? ' ready' : ''}`}
-                disabled={!submitReady}
-                onClick={runAnimation}
-              >
-                {submitReady ? '✓  Submit Receiving' : 'Autofilling…'}
-              </button>
             </div>
-
           </div>
         </div>
-
-        {/* Completion message */}
-        <div className={`demo-complete-message${showComplete ? ' visible' : ''}`}>
-          <p>Complete — Trakie fills your forms in under 60 seconds</p>
-          {animationDone && (
-            <button className="demo-replay-btn" onClick={runAnimation}>
-              Replay
-            </button>
-          )}
-        </div>
-
       </div>
     </div>
   );

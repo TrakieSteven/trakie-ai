@@ -68,7 +68,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
       <StatsCarousel />
 
       <section className="vogue-demo-section">
-        <h2 className="vogue-demo-title">Experience Trakie</h2>
+        <h2 className="vogue-demo-title">Experience trakie.ai</h2>
         <p className="vogue-demo-subtitle">Join NYC&apos;s most sophisticated dispensaries</p>
         <button className="vogue-demo-button" onClick={() => onNavigate('receive')}>
           View Live Demo

@@ -1,25 +1,5 @@
-'use client';
-
-import Navbar from '@/components/Navbar';
-import DemoAutofillSection from '@/components/DemoAutofillSection';
-import SecurityLayer from '@/components/SecurityLayer';
-
+import MainPage from '@/components/MainPage';
 
 export default function DemoPage() {
-  const handleNavigate = (section: string) => {
-    if (section === 'demo') return;
-    window.location.href = section === 'home' ? '/' : `/${section}`;
-  };
-
-  return (
-    <>
-      <div className="main-site show">
-        <Navbar onNavigate={handleNavigate} />
-        <div className="page-section active">
-          <DemoAutofillSection />
-        </div>
-      </div>
-      <SecurityLayer />
-    </>
-  );
+  return <MainPage initialSection="demo" />;
 }

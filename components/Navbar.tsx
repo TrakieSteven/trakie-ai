@@ -57,7 +57,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           </div>
           <div className="nav-links">
             <a onClick={() => navigate('home')}>Home</a>
-            <a onClick={() => navigate('receive')}>Receive Demo</a>
             <a onClick={() => navigate('demo')}>Demo</a>
             <a onClick={() => navigate('pricing')}>Pricing</a>
             <a onClick={() => navigate('contact')}>Contact</a>
@@ -99,7 +98,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <div className={`nav-mobile-menu${menuOpen ? ' open' : ''}`}>
         <div className="nav-mobile-links">
           <a onClick={() => navigate('home')}>Home</a>
-          <a onClick={() => navigate('receive')}>Receive Demo</a>
           <a onClick={() => navigate('demo')}>Demo</a>
           <a onClick={() => navigate('pricing')}>Pricing</a>
           <a onClick={() => navigate('contact')}>Contact</a>

@@ -1,5 +1,5 @@
-import MainPage from '@/components/MainPage';
+import { redirect } from 'next/navigation';
 
 export default function ReceivePage() {
-  return <MainPage initialSection="receive" />;
+  redirect('/demo');
 }

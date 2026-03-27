@@ -5,10 +5,9 @@ import { useRouter } from 'next/navigation';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import Navbar from '@/components/Navbar';
 import HomeSection from '@/components/HomeSection';
-import ReceiveSection from '@/components/ReceiveSection';
+import CinematicDemo from '@/components/CinematicDemo';
 import PricingSection from '@/components/PricingSection';
 import ContactSection from '@/components/ContactSection';
-import DutchieFormScreen from '@/components/DutchieFormScreen';
 import ProductModal from '@/components/ProductModal';
 import SecurityLayer from '@/components/SecurityLayer';
 
@@ -21,8 +20,6 @@ interface Props {
 export default function MainPage({ initialSection }: Props) {
   const router = useRouter();
   const [productModalIndex, setProductModalIndex] = useState<number | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dutchieFormVisible] = useState(false);
 
   const showSection = useCallback((sectionName: string) => {
     const path = sectionName === 'home' ? '/' : `/${sectionName}`;
@@ -37,6 +34,8 @@ export default function MainPage({ initialSection }: Props) {
     setProductModalIndex(null);
   }, []);
 
+  void openProductModal;
+
   const s = initialSection;
 
   return (
@@ -50,14 +49,9 @@ export default function MainPage({ initialSection }: Props) {
           <HomeSection onNavigate={showSection} />
         </div>
 
-        <div className={`page-section${s === 'receive' ? ' active' : ''}`} id="receiveSection">
-          <ReceiveSection
-            onNavigate={showSection}
-            onOpenProductModal={openProductModal}
-          />
+        <div className={`page-section${s === 'demo' ? ' active' : ''}`}>
+          <CinematicDemo />
         </div>
-
-        <DutchieFormScreen isActive={dutchieFormVisible} />
 
         <ProductModal
           product={productModalIndex !== null ? products[productModalIndex] : null}
