@@ -4797,6 +4797,7 @@ body::before {
 
 /* Fade-in animation wrapper */
 .cinematic-phase-in {
+    width: 100%;
     animation: phaseIn 0.8s ease both;
 }
 
