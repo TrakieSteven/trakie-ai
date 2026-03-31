@@ -36,7 +36,7 @@ export default function ScanPhase() {
 
         .inv-label {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 13px;
+          font-size: 16px;
           font-weight: 600;
           letter-spacing: 2.5px;
           text-transform: uppercase;
@@ -139,7 +139,7 @@ export default function ScanPhase() {
         }
         .inv-doc-title {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 13px;
+          font-size: 16px;
           font-weight: 700;
           letter-spacing: 2.5px;
           text-transform: uppercase;
@@ -147,18 +147,18 @@ export default function ScanPhase() {
         }
         .inv-doc-id {
           font-family: monospace;
-          font-size: 11px;
+          font-size: 13px;
           color: rgba(255, 255, 255, 0.2);
         }
 
         .inv-doc-vendor {
-          padding: 12px 24px 10px;
+          padding: 14px 28px 12px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.05);
           flex-shrink: 0;
         }
         .inv-doc-vendor-label {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 10px;
+          font-size: 12px;
           color: rgba(255, 255, 255, 0.25);
           text-transform: uppercase;
           letter-spacing: 1px;
@@ -166,13 +166,13 @@ export default function ScanPhase() {
         }
         .inv-doc-vendor-name {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 14px;
+          font-size: 17px;
           font-weight: 600;
           color: rgba(255, 255, 255, 0.7);
         }
         .inv-doc-vendor-date {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 10px;
+          font-size: 12px;
           color: rgba(255, 255, 255, 0.2);
           margin-top: 3px;
         }
@@ -189,8 +189,8 @@ export default function ScanPhase() {
         .inv-row {
           display: flex;
           align-items: center;
-          padding: 9px 24px;
-          gap: 12px;
+          padding: 12px 28px;
+          gap: 14px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.03);
           opacity: 0;
           transform: translateY(6px);
@@ -221,12 +221,12 @@ export default function ScanPhase() {
 
         .inv-row-label {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 11px;
+          font-size: 13px;
           color: rgba(255, 255, 255, 0.3);
           text-transform: uppercase;
           letter-spacing: 0.8px;
           flex-shrink: 0;
-          min-width: 105px;
+          min-width: 120px;
         }
         .inv-row.revealed .inv-row-label {
           color: rgba(255, 255, 255, 0.45);
@@ -234,7 +234,7 @@ export default function ScanPhase() {
 
         .inv-row-value {
           font-family: 'SF Mono', 'Fira Code', monospace;
-          font-size: 12px;
+          font-size: 14px;
           color: rgba(255, 255, 255, 0.12);
           text-align: right;
           flex: 1;
@@ -265,9 +265,9 @@ export default function ScanPhase() {
           .inv-bracket.tr, .inv-bracket.br { right: 14px; }
           .inv-doc-header { padding: 12px 16px 10px; }
           .inv-doc-vendor { padding: 10px 16px 8px; }
-          .inv-row { padding: 7px 16px; }
-          .inv-row-label { min-width: 70px; font-size: 10px; }
-          .inv-row-value { font-size: 10px; }
+          .inv-row { padding: 9px 18px; }
+          .inv-row-label { min-width: 80px; font-size: 11px; }
+          .inv-row-value { font-size: 11px; }
         }
       `}</style>
 

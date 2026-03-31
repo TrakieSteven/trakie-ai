@@ -44,20 +44,20 @@ export default function InvoiceReadingPhase() {
         }
       `}</style>
 
-      <div style={{ display: 'flex', gap: 20, maxWidth: 860, width: '100%', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: 24, maxWidth: 960, width: '100%', alignItems: 'flex-start' }}>
 
         {/* ── Left: Invoice Document ── */}
         <div style={{ flex: '0 0 46%', background: '#F5F2EA', borderRadius: 10, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.55)' }}>
           {/* header bar */}
-          <div style={{ background: '#1C1C1C', padding: '11px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#C9A85C', textTransform: 'uppercase' }}>Invoice</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>#INV-0326-847</span>
+          <div style={{ background: '#1C1C1C', padding: '13px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 14, fontWeight: 700, letterSpacing: 2, color: '#C9A85C', textTransform: 'uppercase' as const }}>Invoice</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>#INV-0326-847</span>
           </div>
           {/* sub-header */}
-          <div style={{ padding: '10px 16px 8px', borderBottom: '1px solid #DDD9CE' }}>
-            <div style={{ fontFamily: 'sans-serif', fontSize: 10, color: '#999', marginBottom: 1 }}>From</div>
-            <div style={{ fontFamily: 'sans-serif', fontSize: 13, fontWeight: 700, color: '#222' }}>Mary Jane Farms LLC</div>
-            <div style={{ fontFamily: 'sans-serif', fontSize: 10, color: '#AAA', marginTop: 3 }}>Date: 03 / 26 / 2026</div>
+          <div style={{ padding: '12px 20px 10px', borderBottom: '1px solid #DDD9CE' }}>
+            <div style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#999', marginBottom: 1 }}>From</div>
+            <div style={{ fontFamily: 'sans-serif', fontSize: 16, fontWeight: 700, color: '#222' }}>Mary Jane Farms LLC</div>
+            <div style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#AAA', marginTop: 3 }}>Date: 03 / 26 / 2026</div>
           </div>
           {/* rows */}
           {ROWS.map((row, i) => (
@@ -67,8 +67,8 @@ export default function InvoiceReadingPhase() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: '9px 16px',
-                gap: 10,
+                padding: '11px 20px',
+                gap: 12,
                 borderLeft: `3px solid ${active === i ? 'rgba(74,222,128,0.9)' : filled.has(i) ? 'rgba(74,222,128,0.3)' : 'transparent'}`,
                 background: active === i
                   ? 'rgba(74,222,128,0.15)'
@@ -79,10 +79,10 @@ export default function InvoiceReadingPhase() {
                 borderBottom: '1px solid rgba(0,0,0,0.06)',
               }}
             >
-              <span style={{ fontFamily: 'sans-serif', fontSize: 11, color: '#777', flexShrink: 0, minWidth: 90 }}>{row.label}</span>
+              <span style={{ fontFamily: 'sans-serif', fontSize: 13, color: '#777', flexShrink: 0, minWidth: 100 }}>{row.label}</span>
               <span style={{
                 fontFamily: 'monospace',
-                fontSize: 10,
+                fontSize: 12,
                 color: filled.has(i) ? '#2a2a2a' : '#C8C4BA',
                 textAlign: 'right',
                 wordBreak: 'break-all',
@@ -99,30 +99,30 @@ export default function InvoiceReadingPhase() {
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            padding: '9px 13px',
-            marginBottom: 12,
+            padding: '11px 16px',
+            marginBottom: 14,
             background: 'rgba(255,255,255,0.04)',
             border: '1px solid rgba(255,255,255,0.09)',
             borderRadius: 8,
           }}>
             <span style={{
-              width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
+              width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
               background: done ? '#4ade80' : '#C9A85C',
               animation: done ? 'none' : 'scanPulse 1s ease infinite',
               display: 'inline-block',
             }} />
-            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.55)', letterSpacing: 0.5 }}>
+            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.55)', letterSpacing: 0.5 }}>
               {done ? 'Invoice read — 6 fields extracted' : 'trakie.ai reading invoice…'}
             </span>
           </div>
 
           {/* extracted fields */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {ROWS.map((row, i) => (
               <div
                 key={i}
                 style={{
-                  padding: '9px 13px',
+                  padding: '11px 16px',
                   borderRadius: 8,
                   border: `1px solid ${filled.has(i) ? 'rgba(74,222,128,0.4)' : 'rgba(255,255,255,0.07)'}`,
                   background: filled.has(i) ? 'rgba(74,222,128,0.07)' : 'rgba(255,255,255,0.025)',
@@ -131,12 +131,12 @@ export default function InvoiceReadingPhase() {
                   opacity: filled.has(i) ? 1 : 0.35,
                 }}
               >
-                <div style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 9, color: 'rgba(255,255,255,0.35)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 3 }}>{row.field}</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  {filled.has(i) && <span style={{ color: '#4ade80', fontSize: 10, flexShrink: 0 }}>✓</span>}
+                <div style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: 1, textTransform: 'uppercase' as const, marginBottom: 4 }}>{row.field}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                  {filled.has(i) && <span style={{ color: '#4ade80', fontSize: 12, flexShrink: 0 }}>✓</span>}
                   <span style={{
                     fontFamily: 'var(--font-outfit),sans-serif',
-                    fontSize: 11,
+                    fontSize: 14,
                     color: filled.has(i) ? 'rgba(255,255,255,0.88)' : 'rgba(255,255,255,0.2)',
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',

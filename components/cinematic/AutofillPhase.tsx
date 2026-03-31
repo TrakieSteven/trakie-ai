@@ -41,6 +41,7 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
   const [allDone, setAllDone] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const intervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
+  const appRef = useRef<HTMLDivElement>(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
@@ -109,6 +110,27 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
     return cleanup;
   }, [cleanup]);
 
+  // Auto-scroll to the field currently being typed
+  useEffect(() => {
+    const typingIdx = fieldStates.findIndex(s => s === 'typing');
+    if (typingIdx < 0 || !appRef.current) return;
+
+    const fieldEl = appRef.current.querySelector(`[data-field-idx="${typingIdx}"]`);
+    if (!fieldEl) return;
+
+    const container = appRef.current;
+    const fieldRect = fieldEl.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    // If the field is below the visible area, scroll down to reveal it
+    if (fieldRect.bottom > containerRect.bottom - 20) {
+      container.scrollTo({
+        top: container.scrollTop + (fieldRect.bottom - containerRect.bottom) + 60,
+        behavior: 'smooth',
+      });
+    }
+  }, [fieldStates]);
+
   const detailFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'details');
   const itemFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'items');
 
@@ -126,7 +148,7 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
     ].filter(Boolean).join(' ');
 
     return (
-      <div key={field.idx} className={`dform-field${field.width === 'full' ? ' full' : ''}`}>
+      <div key={field.idx} data-field-idx={field.idx} className={`dform-field${field.width === 'full' ? ' full' : ''}`}>
         <label className="dform-label">
           {field.label}
           {field.type === 'dropdown' && <span className="dform-dropdown-icon">&#9662;</span>}
@@ -166,13 +188,13 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
           </div>
 
           {/* Dutchie app */}
-          <div className="dlive-app">
+          <div className="dlive-app" ref={appRef}>
             <div className="dlive-nav">
               <div className="dlive-nav-logo">
                 <img
                   src="/dutchie-logo.jpeg"
                   alt="Dutchie"
-                  style={{ height: 20, marginRight: 6 }}
+                  style={{ height: 24, marginRight: 7 }}
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 />
                 <span>Dutchie POS</span>
