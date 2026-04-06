@@ -2,6 +2,7 @@
 
 import StatsCarousel from './StatsCarousel';
 import HeroDemo from './HeroDemo';
+import HowItWorks from './HowItWorks';
 
 interface HomeSectionProps {
   onNavigate: (section: string) => void;
@@ -23,6 +24,8 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
       </section>
 
       <StatsCarousel />
+
+      <HowItWorks />
 
       <section className="vogue-demo-section">
         <h2 className="vogue-demo-title">Experience trakie.ai</h2>
