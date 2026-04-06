@@ -367,7 +367,8 @@ body::before {
     justify-content: center;
     align-items: center;
     background: linear-gradient(180deg, #070709 0%, #0F0F13 50%, #070709 100%);
-    padding-top: 130px;
+    padding-top: 100px;
+    padding-bottom: 40px;
     position: relative;
     overflow: hidden;
 }
@@ -393,7 +394,7 @@ body::before {
 
 .vogue-hero-title {
     font-family: var(--font-bodoni), serif;
-    font-size: clamp(80px, 12vw, 160px);
+    font-size: clamp(56px, 8vw, 110px);
     font-weight: 500;
     letter-spacing: -2px;
     line-height: 0.95;
@@ -412,7 +413,7 @@ body::before {
 
 .vogue-hero-subtitle {
     font-family: var(--font-bodoni), serif;
-    font-size: clamp(90px, 11.5vw, 170px);
+    font-size: clamp(60px, 8.5vw, 120px);
     font-weight: 700;
     letter-spacing: -3px;
     line-height: 0.95;
@@ -424,7 +425,7 @@ body::before {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-top: -15px;
+    margin-top: -10px;
 }
 
 @keyframes secondaryHeroEnter {
@@ -440,7 +441,7 @@ body::before {
     letter-spacing: 2.5px;
     text-transform: uppercase;
     color: #C9A85C;
-    margin-top: 50px;
+    margin-top: 30px;
     opacity: 0;
     transform: translateY(20px);
     animation: tertiaryHeroEnter 1.2s ease 0.6s forwards;
@@ -3239,24 +3240,24 @@ body::before {
     .vogue-hero {
         min-height: auto;
         justify-content: flex-start;
-        padding-top: 250px;
-        padding-bottom: 200px;
+        padding-top: 140px;
+        padding-bottom: 30px;
         padding-left: 24px;
         padding-right: 24px;
     }
     .vogue-hero-title {
-        font-size: clamp(44px, 13vw, 64px);
+        font-size: clamp(38px, 11vw, 56px);
         letter-spacing: -1px;
     }
     .vogue-hero-subtitle {
-        font-size: clamp(48px, 15vw, 72px);
+        font-size: clamp(42px, 12vw, 62px);
         letter-spacing: -2px;
-        margin-top: 20px;
+        margin-top: -5px;
     }
     .vogue-hero-tagline {
         font-size: 10px;
         letter-spacing: 1.5px;
-        margin-top: 32px;
+        margin-top: 20px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -3513,10 +3514,10 @@ body::before {
     }
 
     .vogue-hero-title {
-        font-size: clamp(32px, 10vw, 48px);
+        font-size: clamp(28px, 9vw, 40px);
     }
     .vogue-hero-subtitle {
-        font-size: clamp(36px, 12vw, 54px);
+        font-size: clamp(32px, 10vw, 44px);
     }
     .vogue-hero-tagline {
         font-size: 9px;

@@ -1,0 +1,36 @@
+ Here's a clean breakdown of what Steven wants, organized by placement on the page:                                                                       
+                                                                                                                                                           
+  Mobile Layout (Single Scroll, Top to Bottom)                                                                                                             
+                                                                                                                                                           
+  1. Hero with Product Video (Priority 1) — Looping silent video in the hero showing: invoice scan → AI reads it → Dutchie auto-fills. ~10 second loop,    
+  autoplay, muted.                                                                                                                                         
+  2. Stats Strip (Priority 3) — Between hero and How It Works. Dark bg, champagne/gold numbers: 60 sec / 45 min saved / 100% Dutchie-native
+  3. Manifesto Line (Priority 4) — Below hero or stats strip. The "Humans weren't built for data entry..." quote.                                          
+  4. How It Works — 3 Steps (Priority 2) — Numbered steps with one screenshot each:                                                                        
+    - Scan vendor invoice with phone                                                                                                                       
+    - AI reads & maps every line item
+    - Dutchie form fills automatically                                                                                                                     
+  5. Manual vs Trakie Comparison (Priority 6) — Bottom of How It Works section. Side-by-side:                                                              
+    - ❌ Manual: clipboard + spreadsheet + 45 min + errors
+    - ✅ Trakie: phone scan + 60 sec + zero typos
+  6. Founder Line (Priority 7) — Near bottom. "Built by a former dispensary inventory lead who processed shipments 7x faster than his team."
+  7. Contact Form — Simplified: just email field + submit + "We'll be in touch" confirmation animation.
+  8. Scroll Animations (Priority 5) — Framer Motion fade-up on each section.
+
+  Desktop
+
+  Keep the current tab system but incorporate the same new content within those tabs.
+
+  Design References
+
+  - cluely.com — Hero video, competitor comparison block energy, single-scroll mobile
+  - linear.app — Dark clean aesthetic, smooth scroll animations
+
+  Key Changes to Current Site
+
+  - HomeSection: Gets completely reworked (hero video, stats strip, manifesto, how it works, comparison, founder line)
+  - ContactSection: Stripped down to just email + submit
+  - StatsCarousel: Replaced with a simpler static stats strip
+  - Features pyramid: Replaced by the How It Works steps
+  - framer-motion: Needs to be installed (not currently in the project)
+  - New hero video: You'll need a ~10s screen recording of the invoice scan → AI → Dutchie flow
