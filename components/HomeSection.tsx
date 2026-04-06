@@ -1,6 +1,6 @@
 'use client';
 
-import StatsCarousel from './StatsCarousel';
+import StatsStrip from './StatsStrip';
 import HeroDemo from './HeroDemo';
 import HowItWorks from './HowItWorks';
 
@@ -23,7 +23,13 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
         <HeroDemo />
       </section>
 
-      <StatsCarousel />
+      <StatsStrip />
+
+      <div className="manifesto">
+        <p className="manifesto-text">
+          Humans weren&apos;t built for repetitive data entry. We were built to innovate, connect, and grow. Trakie handles the clipboard so you can get back to the floor.
+        </p>
+      </div>
 
       <HowItWorks />
 
@@ -34,6 +40,29 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
           View Live Demo
         </button>
       </section>
+
+      <style>{`
+        .manifesto {
+          padding: 56px 24px;
+          text-align: center;
+        }
+        .manifesto-text {
+          font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+          font-size: clamp(20px, 4vw, 32px);
+          font-weight: 400;
+          font-style: italic;
+          color: rgba(255, 255, 255, 0.55);
+          line-height: 1.5;
+          max-width: 600px;
+          margin: 0 auto;
+          letter-spacing: 0.2px;
+        }
+        @media (max-width: 480px) {
+          .manifesto {
+            padding: 40px 20px;
+          }
+        }
+      `}</style>
     </>
   );
 }
