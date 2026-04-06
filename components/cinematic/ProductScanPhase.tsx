@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import ProductLabel from '../ProductLabel';
 
 const FIELDS = [
   { label: 'SOUR DIESEL', type: 'title' },
@@ -8,11 +9,6 @@ const FIELDS = [
   { label: '3.5g',        type: 'text' },
   { label: 'THC 24.5%',   type: 'text' },
   { label: 'CBD 0.12%',   type: 'text' },
-];
-
-/* Barcode bar widths — alternating dark/light strips */
-const BARCODE_BARS = [
-  2,1,1,3,1,2,1,1,3,1,1,2,1,3,1,1,2,1,1,1,3,1,2,1,1,3,1,2,1,1,1,2,3,1,1,2,1,1,3,1,2,1,1,2,1,3,1,1,2,1,
 ];
 
 export default function ProductScanPhase() {
@@ -165,41 +161,32 @@ export default function ProductScanPhase() {
         .pscan-inner-bracket.bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
         .pscan-inner-bracket.br { bottom: 6px; right: 6px; transform: scale(-1); }
 
-        /* ── product label card ── */
-        .pscan-card {
+        /* ── product label inside phone ── */
+        .pscan-label-wrap {
           position: absolute;
-          inset: 18px 14px;
-          border-radius: 8px;
-          background: rgba(255, 255, 255, 0.97);
+          inset: 8px 6px;
+          z-index: 1;
           display: flex;
-          flex-direction: column;
-          overflow: hidden;
+          align-items: center;
+          justify-content: center;
         }
 
-        .pscan-card-header {
-          padding: 12px 16px;
-          background: linear-gradient(135deg, #C9A961 0%, #8B7355 100%);
-          flex-shrink: 0;
-        }
-        .pscan-card-brand {
-          font-family: var(--font-outfit), sans-serif;
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.95);
-        }
-
-        .pscan-card-body {
-          flex: 1;
+        /* ── scan overlay fields ── */
+        .pscan-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
           display: flex;
           flex-direction: column;
-          padding: 0;
+          justify-content: center;
+          pointer-events: none;
+          padding: 0 6px;
         }
 
         .pscan-field {
-          padding: 10px 16px;
-          border-bottom: 1px solid #EAEAEA;
+          padding: 6px 10px;
+          margin: 2px 0;
+          border-radius: 4px;
           border-left: 3px solid transparent;
           display: flex;
           align-items: center;
@@ -207,71 +194,48 @@ export default function ProductScanPhase() {
           opacity: 0;
           transform: translateY(4px);
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          background: transparent;
         }
         .pscan-field.revealed {
           opacity: 1;
           transform: translateY(0);
+          background: rgba(0, 0, 0, 0.55);
+          backdrop-filter: blur(4px);
         }
         .pscan-field.active {
-          background: rgba(74, 222, 128, 0.08);
-          border-left-color: rgba(74, 222, 128, 0.7);
+          background: rgba(74, 222, 128, 0.15);
+          border-left-color: rgba(74, 222, 128, 0.8);
+          backdrop-filter: blur(6px);
         }
 
         .pscan-field-title {
-          font-family: sans-serif;
-          font-size: 18px;
-          font-weight: 900;
-          color: #111;
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 15px;
+          font-weight: 800;
+          color: #fff;
           letter-spacing: 1px;
-          text-align: center;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
 
         .pscan-field-badge {
           display: inline-block;
-          border: 2px solid #BBB;
+          border: 1.5px solid rgba(74, 222, 128, 0.6);
           border-radius: 3px;
-          padding: 2px 16px;
-          font-family: sans-serif;
-          font-size: 13px;
+          padding: 1px 12px;
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 11px;
           font-weight: 700;
-          color: #222;
+          color: rgba(74, 222, 128, 0.9);
           letter-spacing: 2px;
-        }
-        .pscan-field.revealed .pscan-field-badge {
-          border-color: rgba(74, 222, 128, 0.7);
         }
 
         .pscan-field-text {
-          font-family: sans-serif;
-          font-size: 15px;
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 13px;
           font-weight: 600;
-          color: #222;
+          color: rgba(255, 255, 255, 0.9);
           letter-spacing: 0.5px;
-        }
-
-        /* ── barcode ── */
-        .pscan-barcode {
-          padding: 8px 14px 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0;
-          opacity: 0;
-          transform: translateY(4px);
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .pscan-barcode.revealed {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .pscan-bar {
-          height: 28px;
-          background: #111;
-        }
-        .pscan-bar-space {
-          height: 28px;
-          background: transparent;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.4);
         }
 
         .pscan-noise {
@@ -293,15 +257,11 @@ export default function ProductScanPhase() {
           .pscan-bracket.tr, .pscan-bracket.br { right: 14px; }
           .pscan-phone { width: 200px; height: 370px; border-radius: 22px; }
           .pscan-inner-bracket svg { width: 18px; height: 18px; }
-          .pscan-card { inset: 14px 10px; }
-          .pscan-card-header { padding: 8px 10px; }
-          .pscan-card-brand { font-size: 9px; }
-          .pscan-field { padding: 6px 10px; }
-          .pscan-field-title { font-size: 15px; }
-          .pscan-field-badge { font-size: 11px; padding: 1px 12px; }
-          .pscan-field-text { font-size: 13px; }
-          .pscan-barcode { padding: 6px 10px 8px; }
-          .pscan-bar, .pscan-bar-space { height: 22px; }
+          .pscan-label-wrap { inset: 6px 4px; }
+          .pscan-field { padding: 4px 8px; }
+          .pscan-field-title { font-size: 13px; }
+          .pscan-field-badge { font-size: 9px; padding: 1px 8px; }
+          .pscan-field-text { font-size: 11px; }
         }
       `}</style>
 
@@ -344,43 +304,33 @@ export default function ProductScanPhase() {
                 </div>
               ))}
 
-              <div className="pscan-card">
-                <div className="pscan-card-header">
-                  <div className="pscan-card-brand">Mary Jane Farms</div>
-                </div>
+              {/* Realistic product label */}
+              <div className="pscan-label-wrap">
+                <ProductLabel size="sm" />
+              </div>
 
-                <div className="pscan-card-body">
-                  {FIELDS.map((field, i) => {
-                    const isRevealed = revealedFields >= i + 1;
-                    const isActive = revealedFields === i + 1;
-                    return (
-                      <div
-                        key={i}
-                        className={`pscan-field${isRevealed ? ' revealed' : ''}${isActive ? ' active' : ''}`}
-                      >
-                        {field.type === 'title' && (
-                          <span className="pscan-field-title">{field.label}</span>
-                        )}
-                        {field.type === 'badge' && (
-                          <span className="pscan-field-badge">{field.label}</span>
-                        )}
-                        {field.type === 'text' && (
-                          <span className="pscan-field-text">{field.label}</span>
-                        )}
-                      </div>
-                    );
-                  })}
-
-                  <div className={`pscan-barcode${revealedFields >= 6 ? ' revealed' : ''}`}>
-                    {BARCODE_BARS.map((w, i) =>
-                      i % 2 === 0 ? (
-                        <div key={i} className="pscan-bar" style={{ width: w }} />
-                      ) : (
-                        <div key={i} className="pscan-bar-space" style={{ width: w }} />
-                      )
-                    )}
-                  </div>
-                </div>
+              {/* Scan reveal overlay */}
+              <div className="pscan-overlay">
+                {FIELDS.map((field, i) => {
+                  const isRevealed = revealedFields >= i + 1;
+                  const isActive = revealedFields === i + 1;
+                  return (
+                    <div
+                      key={i}
+                      className={`pscan-field${isRevealed ? ' revealed' : ''}${isActive ? ' active' : ''}`}
+                    >
+                      {field.type === 'title' && (
+                        <span className="pscan-field-title">{field.label}</span>
+                      )}
+                      {field.type === 'badge' && (
+                        <span className="pscan-field-badge">{field.label}</span>
+                      )}
+                      {field.type === 'text' && (
+                        <span className="pscan-field-text">{field.label}</span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

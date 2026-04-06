@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import ProductLabel from '../ProductLabel';
 
 const ROWS = [
-  { labelText: 'SOUR DIESEL',  field: 'Product Name',  extracted: 'Sour Diesel' },
-  { labelText: 'HYBRID',       field: 'Strain Type',   extracted: 'Hybrid' },
-  { labelText: '3.5 G',        field: 'Net Weight',    extracted: '3.5g' },
-  { labelText: 'THC 24.5%',    field: 'THC %',         extracted: '24.5%' },
-  { labelText: 'CBD 0.12%',    field: 'CBD %',         extracted: '0.12%' },
+  { field: 'Product Name',  extracted: 'Sour Diesel' },
+  { field: 'Strain Type',   extracted: 'Hybrid' },
+  { field: 'Net Weight',    extracted: '3.5g' },
+  { field: 'THC %',         extracted: '24.5%' },
+  { field: 'CBD %',         extracted: '0.12%' },
 ];
 
 const STEP_MS = 540;
@@ -30,6 +31,20 @@ export default function ProductReadingPhase() {
     return () => timers.forEach(clearTimeout);
   }, []);
 
+  /* Map row index to which part of the label is being scanned */
+  const highlightArea = (i: number): string => {
+    switch (i) {
+      case 0: return 'strain';      // Product Name → strain
+      case 1: return 'strainType';   // Strain Type → type badge
+      case 2: return 'weight';       // Net Weight → weight
+      case 3: return 'thcPct';       // THC % → THC potency
+      case 4: return 'cbdPct';       // CBD % → CBD potency
+      default: return '';
+    }
+  };
+
+  const activeHighlight = active >= 0 ? highlightArea(active) : '';
+
   return (
     <div className="cinematic-phase">
       <style>{`
@@ -41,75 +56,72 @@ export default function ProductReadingPhase() {
           0%,100% { opacity: 0.7; }
           50%      { opacity: 1;   }
         }
+        @keyframes labelHighlight {
+          0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+          50%     { box-shadow: 0 0 12px 2px rgba(74,222,128,0.25); }
+        }
+
+        /* Highlight overlay on label — active scan indicator */
+        .pread-label-wrap {
+          position: relative;
+          width: 100%;
+          max-width: 280px;
+        }
+        .pread-label-wrap .plabel-bag {
+          transition: box-shadow 0.3s ease;
+        }
+        .pread-label-wrap.scanning .plabel-bag {
+          animation: labelHighlight 1.2s ease infinite;
+        }
+
+        /* Scan line on the label */
+        .pread-scan-line {
+          position: absolute;
+          left: 4px;
+          right: 4px;
+          height: 2px;
+          z-index: 10;
+          pointer-events: none;
+          background: linear-gradient(90deg, transparent 0%, rgba(74,222,128,0.6) 30%, rgba(74,222,128,0.9) 50%, rgba(74,222,128,0.6) 70%, transparent 100%);
+          box-shadow: 0 0 10px 2px rgba(74,222,128,0.2);
+          transition: top 0.4s ease, opacity 0.3s ease;
+          border-radius: 1px;
+        }
+
+        @media (max-width: 700px) {
+          .pread-layout { flex-direction: column !important; }
+          .pread-label-col { flex: none !important; width: 100% !important; }
+          .pread-label-wrap { max-width: 220px !important; margin: 0 auto; }
+          .pread-fields-col { flex: none !important; width: 100% !important; }
+        }
       `}</style>
 
-      <div style={{ display: 'flex', gap: 24, maxWidth: 860, width: '100%', alignItems: 'center' }}>
+      <div className="pread-layout" style={{ display: 'flex', gap: 24, maxWidth: 860, width: '100%', alignItems: 'center' }}>
 
         {/* ── Left: Product Label ── */}
-        <div style={{ flex: '0 0 42%', display: 'flex', justifyContent: 'center' }}>
-          {/* outer "jar" label look */}
-          <div style={{
-            background: '#fff',
-            borderRadius: 10,
-            width: '100%',
-            maxWidth: 280,
-            boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
-            overflow: 'hidden',
-            border: '1.5px solid rgba(255,255,255,0.15)',
-          }}>
-            {/* top band */}
-            <div style={{ background: '#111', height: 10 }} />
-
-            {/* label rows */}
-            {ROWS.map((row, i) => (
+        <div className="pread-label-col" style={{ flex: '0 0 42%', display: 'flex', justifyContent: 'center' }}>
+          <div className={`pread-label-wrap${!done ? ' scanning' : ''}`}>
+            {/* Scan line */}
+            {!done && (
               <div
-                key={i}
+                className="pread-scan-line"
                 style={{
-                  padding: i === 0 ? '18px 22px 14px' : '12px 22px',
-                  textAlign: 'center',
-                  borderLeft: `4px solid ${active === i ? 'rgba(74,222,128,0.9)' : filled.has(i) ? 'rgba(74,222,128,0.35)' : 'transparent'}`,
-                  background: active === i
-                    ? 'rgba(74,222,128,0.12)'
-                    : filled.has(i)
-                    ? 'rgba(74,222,128,0.04)'
-                    : 'transparent',
-                  borderBottom: i < ROWS.length - 1 ? '1px solid #EAEAEA' : 'none',
-                  transition: 'background 0.25s ease, border-color 0.25s ease',
+                  top: active < 0 ? '10%'
+                     : active === 0 ? '30%'
+                     : active === 1 ? '42%'
+                     : active === 2 ? '50%'
+                     : active === 3 ? '58%'
+                     : '66%',
+                  opacity: active < 0 ? 0.4 : 1,
                 }}
-              >
-                {i === 1 ? (
-                  /* HYBRID gets a bordered box like the real label */
-                  <span style={{
-                    display: 'inline-block',
-                    border: `2px solid ${filled.has(i) ? 'rgba(74,222,128,0.7)' : '#BBB'}`,
-                    borderRadius: 3,
-                    padding: '3px 20px',
-                    fontFamily: 'sans-serif',
-                    fontSize: 15,
-                    fontWeight: 700,
-                    color: '#222',
-                    letterSpacing: 2,
-                    transition: 'border-color 0.3s ease',
-                  }}>HYBRID</span>
-                ) : (
-                  <span style={{
-                    fontFamily: 'sans-serif',
-                    fontSize: i === 0 ? 26 : 16,
-                    fontWeight: i === 0 ? 900 : 600,
-                    color: '#111',
-                    letterSpacing: i === 0 ? 1 : 0.5,
-                  }}>{row.labelText}</span>
-                )}
-              </div>
-            ))}
-
-            {/* bottom band */}
-            <div style={{ background: '#111', height: 10 }} />
+              />
+            )}
+            <ProductLabel size="md" />
           </div>
         </div>
 
         {/* ── Right: Dutchie fields ── */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="pread-fields-col" style={{ flex: 1, minWidth: 0 }}>
           {/* status badge */}
           <div style={{
             display: 'flex',

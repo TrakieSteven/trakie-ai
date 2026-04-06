@@ -237,6 +237,7 @@ function HeroAutofillMini({ onComplete }: { onComplete: () => void }) {
       {/* Dutchie app area */}
       <div className="hero-af-app">
         <div className="hero-af-nav">
+          <img src="/dutchie-logo.jpeg" alt="Dutchie" className="hero-af-nav-logo" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
           <span className="hero-af-nav-brand">Dutchie POS</span>
           <span className="hero-af-nav-sep">&rsaquo;</span>
           <span className="hero-af-nav-crumb">Receive Transfer</span>
@@ -556,15 +557,17 @@ export default function HeroDemo() {
           bottom: 32px;
           z-index: 2;
           border-radius: 10px;
-          background: rgba(245,242,234,0.04);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: #F5F2EA;
+          border: 1px solid rgba(0,0,0,0.08);
           display: flex;
           flex-direction: column;
           overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .hero-scan-doc-header {
           padding: 12px 18px 10px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #1C1C1C;
+          border-bottom: 1px solid rgba(0,0,0,0.1);
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -576,12 +579,12 @@ export default function HeroDemo() {
           font-weight: 700;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: rgba(201,168,92,0.85);
+          color: #C9A85C;
         }
         .hero-scan-doc-id {
           font-family: monospace;
           font-size: 11px;
-          color: rgba(255,255,255,0.2);
+          color: rgba(255,255,255,0.4);
         }
 
         .hero-scan-rows {
@@ -596,26 +599,26 @@ export default function HeroDemo() {
           align-items: center;
           padding: 10px 18px;
           gap: 10px;
-          border-bottom: 1px solid rgba(255,255,255,0.03);
+          border-bottom: 1px solid rgba(0,0,0,0.06);
           opacity: 0;
           transform: translateY(6px);
           transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
-          border-left: 2px solid transparent;
+          border-left: 3px solid transparent;
         }
         .hero-scan-row.revealed {
           opacity: 1;
           transform: translateY(0);
         }
         .hero-scan-row.active {
-          background: rgba(74,222,128,0.06);
-          border-left-color: rgba(74,222,128,0.6);
+          background: rgba(74,222,128,0.12);
+          border-left-color: rgba(74,222,128,0.8);
         }
         .hero-scan-row-dot {
           width: 5px;
           height: 5px;
           border-radius: 50%;
           flex-shrink: 0;
-          background: rgba(255,255,255,0.06);
+          background: #ccc;
           transition: all 0.3s ease;
         }
         .hero-scan-row.revealed .hero-scan-row-dot {
@@ -625,25 +628,25 @@ export default function HeroDemo() {
         .hero-scan-row-label {
           font-family: var(--font-outfit), sans-serif;
           font-size: 11px;
-          color: rgba(255,255,255,0.3);
+          color: #888;
           text-transform: uppercase;
           letter-spacing: 0.8px;
           flex-shrink: 0;
           min-width: 100px;
         }
         .hero-scan-row.revealed .hero-scan-row-label {
-          color: rgba(255,255,255,0.45);
+          color: #666;
         }
         .hero-scan-row-value {
           font-family: 'SF Mono', 'Fira Code', monospace;
           font-size: 12px;
-          color: rgba(255,255,255,0.1);
+          color: #ccc;
           text-align: right;
           flex: 1;
           transition: color 0.3s ease;
         }
         .hero-scan-row.revealed .hero-scan-row-value {
-          color: rgba(255,255,255,0.85);
+          color: #1a1a1a;
         }
 
         /* ═══════════════════════════════════════════════════════
@@ -717,13 +720,14 @@ export default function HeroDemo() {
         .hero-read-inv-value {
           font-family: monospace;
           font-size: 10px;
-          color: #C8C4BA;
+          color: #999;
           text-align: right;
           word-break: break-all;
           transition: color 0.3s ease;
         }
         .hero-read-inv-row.filled .hero-read-inv-value {
-          color: #2a2a2a;
+          color: #1a1a1a;
+          font-weight: 600;
         }
 
         /* Right fields */
@@ -873,6 +877,12 @@ export default function HeroDemo() {
           background: rgba(255,255,255,0.03);
           border-bottom: 1px solid rgba(255,255,255,0.05);
           flex-shrink: 0;
+        }
+        .hero-af-nav-logo {
+          height: 18px;
+          width: auto;
+          border-radius: 3px;
+          object-fit: contain;
         }
         .hero-af-nav-brand {
           font-family: var(--font-outfit), sans-serif;
