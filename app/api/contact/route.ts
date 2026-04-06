@@ -5,11 +5,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { name, email, phone, bestTime, dispensary, deliveries, message } = await request.json();
+    const { email } = await request.json();
 
-    if (!name || !email || !message) {
+    if (!email) {
       return NextResponse.json(
-        { error: 'Name, email, and message are required.' },
+        { error: 'Email is required.' },
         { status: 400 }
       );
     }
@@ -18,18 +18,8 @@ export async function POST(request: Request) {
       from: 'Trakie.ai Contact <contact@trakie.ai>',
       to: 'stevenfounder@trakie.ai',
       replyTo: email,
-      subject: `New Contact Form: ${name}${dispensary ? ` — ${dispensary}` : ''}`,
-      text: [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        phone ? `Phone: ${phone}` : null,
-        bestTime ? `Best Time to Call: ${bestTime}` : null,
-        dispensary ? `Dispensary: ${dispensary}` : null,
-        deliveries ? `Deliveries per Week: ${deliveries}` : null,
-        `\nMessage:\n${message}`,
-      ]
-        .filter(Boolean)
-        .join('\n'),
+      subject: `New Lead: ${email}`,
+      text: `New contact form submission:\n\nEmail: ${email}`,
     });
 
     return NextResponse.json({ success: true });
