@@ -246,27 +246,40 @@ body::before {
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 100px;
+    min-width: 60px;
+}
+
+.nav-logo-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
 }
 
 .nav-logo-img {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
     flex-shrink: 0;
+    filter: drop-shadow(0 0 6px rgba(201, 169, 97, 0.3));
+    transition: filter 0.3s ease;
+}
+
+.nav-logo:hover .nav-logo-img {
+    filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.5));
 }
 
 .nav-logo-text {
-    font-family: var(--font-dm-sans), sans-serif;
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: -0.5px;
-    color: #FAFAF8;
+    font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #C9A961;
     transition: opacity 0.2s ease;
 }
 
 .nav-logo:hover .nav-logo-text {
-    opacity: 0.75;
+    opacity: 0.8;
 }
 
 .nav-links {
@@ -3219,8 +3232,12 @@ body::before {
         padding: 16px 20px;
     }
     .nav-logo-text {
-        font-size: 20px;
+        font-size: 12px;
         min-width: 0;
+    }
+    .nav-logo-img {
+        width: 24px;
+        height: 24px;
     }
     .nav-logo {
         min-width: 0;
@@ -3510,7 +3527,11 @@ body::before {
         padding: 14px 16px;
     }
     .nav-logo-text {
-        font-size: 26px;
+        font-size: 11px;
+    }
+    .nav-logo-img {
+        width: 22px;
+        height: 22px;
     }
 
     .vogue-hero-title {
