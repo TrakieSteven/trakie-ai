@@ -59,11 +59,11 @@ export default function WelcomeScreen() {
 
       <div className="gradient-accent"></div>
 
-      <h1 className="title">Automate Receiving. Predict Demand. Accelerate Sales.</h1>
+      <h1 className="title">Save time. Save money. Trakie does the rest.</h1>
 
       <p className="welcome-subtitle">
         The future of cannabis retail operations.<br />
-        Purpose-built for dispensaries at scale.
+        Purpose-built for dispensaries.
       </p>
 
       <div className="login-box">

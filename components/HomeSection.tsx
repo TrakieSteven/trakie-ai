@@ -3,6 +3,7 @@
 import StatsStrip from './StatsStrip';
 import HeroDemo from './HeroDemo';
 import HowItWorks from './HowItWorks';
+import MenuScore from './MenuScore';
 import FadeUp from './FadeUp';
 
 interface HomeSectionProps {
@@ -16,9 +17,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
         <h1 className="vogue-hero-title">Receive inventory</h1>
         <h2 className="vogue-hero-subtitle">in 60 seconds.</h2>
         <p className="vogue-hero-tagline">
-          <span>INSTANT INVENTORY RECOGNITION</span> &bull;{' '}
-          <span>PREDICTIVE RESTOCKING</span> &bull;{' '}
-          <span>AUTOMATED COMPLIANCE</span>
+          The fastest way to receive inventory on Dutchie.
         </p>
 
         <HeroDemo />
@@ -38,6 +37,10 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
 
       <FadeUp>
         <HowItWorks />
+      </FadeUp>
+
+      <FadeUp>
+        <MenuScore />
       </FadeUp>
 
       <FadeUp>
