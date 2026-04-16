@@ -30,7 +30,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
       <FadeUp>
         <div className="manifesto">
           <p className="manifesto-text">
-            Humans weren&apos;t built for repetitive data entry. We were built to innovate, connect, and grow. Trakie handles the clipboard so you can get back to the floor.
+            Humans weren&apos;t built for repetitive data entry. We were built to innovate, connect, and grow. Trakie handles the data entry so you can get back to the floor.
           </p>
         </div>
       </FadeUp>

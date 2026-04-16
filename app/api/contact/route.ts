@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { name, dispensary, email } = await request.json();
 
     if (!email) {
       return NextResponse.json(
@@ -18,8 +18,8 @@ export async function POST(request: Request) {
       from: 'Trakie.ai Contact <contact@trakie.ai>',
       to: 'stevenfounder@trakie.ai',
       replyTo: email,
-      subject: `New Lead: ${email}`,
-      text: `New contact form submission:\n\nEmail: ${email}`,
+      subject: `New Lead: ${name || email}${dispensary ? ` — ${dispensary}` : ''}`,
+      text: `New contact form submission:\n\nName: ${name || '—'}\nDispensary: ${dispensary || '—'}\nEmail: ${email}`,
     });
 
     return NextResponse.json({ success: true });

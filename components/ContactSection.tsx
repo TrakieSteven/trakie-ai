@@ -3,6 +3,8 @@
 import { FormEvent, useState } from 'react';
 
 export default function ContactSection() {
+  const [name, setName] = useState('');
+  const [dispensary, setDispensary] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -16,7 +18,7 @@ export default function ContactSection() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ name, dispensary, email }),
       });
 
       if (!res.ok) {
@@ -25,6 +27,8 @@ export default function ContactSection() {
       }
 
       setStatus('success');
+      setName('');
+      setDispensary('');
       setEmail('');
     } catch (err) {
       setStatus('error');
@@ -52,8 +56,24 @@ export default function ContactSection() {
 
           <form className="contact-form-minimal" onSubmit={handleSubmit}>
             <input
+              type="text"
+              className="contact-input"
+              required
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              className="contact-input"
+              required
+              placeholder="Dispensary name"
+              value={dispensary}
+              onChange={(e) => setDispensary(e.target.value)}
+            />
+            <input
               type="email"
-              className="contact-email-input"
+              className="contact-input"
               required
               placeholder="your@email.com"
               value={email}
@@ -94,13 +114,15 @@ export default function ContactSection() {
 
         .contact-form-minimal {
           display: flex;
-          gap: 10px;
-          max-width: 440px;
+          flex-direction: column;
+          gap: 12px;
+          max-width: 400px;
+          width: 100%;
           margin: 0 auto;
           padding: 0 24px;
         }
-        .contact-email-input {
-          flex: 1;
+        .contact-input {
+          width: 100%;
           padding: 14px 18px;
           border-radius: 8px;
           border: 1px solid rgba(255,255,255,0.1);
@@ -111,10 +133,10 @@ export default function ContactSection() {
           outline: none;
           transition: border-color 0.2s ease;
         }
-        .contact-email-input::placeholder {
+        .contact-input::placeholder {
           color: rgba(255,255,255,0.25);
         }
-        .contact-email-input:focus {
+        .contact-input:focus {
           border-color: rgba(201,169,97,0.4);
         }
         .contact-submit {
@@ -172,7 +194,6 @@ export default function ContactSection() {
 
         @media (max-width: 480px) {
           .contact-form-minimal {
-            flex-direction: column;
             padding: 0 16px;
           }
           .contact-submit {
