@@ -139,7 +139,7 @@ export default function ProductReadingPhase() {
               animation: done ? 'none' : 'scanPulse 1s ease infinite',
               display: 'inline-block',
             }} />
-            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.55)', letterSpacing: 0.5 }}>
+            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.82)', letterSpacing: 0.5 }}>
               {done ? 'Label read — 5 fields extracted' : 'trakie.ai reading product label…'}
             </span>
           </div>
@@ -159,7 +159,7 @@ export default function ProductReadingPhase() {
                   opacity: filled.has(i) ? 1 : 0.35,
                 }}
               >
-                <div style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: 1, textTransform: 'uppercase' as const, marginBottom: 4 }}>{row.field}</div>
+                <div style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.7)', letterSpacing: 1, textTransform: 'uppercase' as const, marginBottom: 4 }}>{row.field}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                   {filled.has(i) && <span style={{ color: '#4ade80', fontSize: 12, flexShrink: 0 }}>✓</span>}
                   <span style={{

@@ -122,7 +122,7 @@ export default function SignupForm() {
           </form>
         ) : (
           <form onSubmit={handleVerifyOtp}>
-            <p style={{ color: '#aaa', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+            <p style={{ color: '#D4D4D4', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
               We sent an 8-digit verification code to <strong style={{ color: '#C9A85C' }}>{email}</strong>.
               Enter it below to confirm your account.
             </p>

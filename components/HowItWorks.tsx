@@ -280,7 +280,7 @@ export default function HowItWorks() {
           font-family: var(--font-bodoni), 'Bodoni Moda', serif;
           font-size: 13px;
           letter-spacing: 2px;
-          color: rgba(201,169,97,0.5);
+          color: #C9A961;
           display: block;
           margin-bottom: 8px;
         }
@@ -296,7 +296,7 @@ export default function HowItWorks() {
           font-family: var(--font-outfit), sans-serif;
           font-size: 14px;
           line-height: 1.6;
-          color: rgba(255,255,255,0.45);
+          color: rgba(255,255,255,0.82);
         }
 
         /* Connector arrows between steps */

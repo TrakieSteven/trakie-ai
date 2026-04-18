@@ -55,10 +55,10 @@ export default function StatsStrip() {
         .stats-strip-label {
           font-family: var(--font-outfit), sans-serif;
           font-size: 11px;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.35);
+          color: rgba(255, 255, 255, 0.78);
         }
 
         @media (max-width: 600px) {

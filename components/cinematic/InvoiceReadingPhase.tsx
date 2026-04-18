@@ -51,13 +51,13 @@ export default function InvoiceReadingPhase() {
           {/* header bar */}
           <div style={{ background: '#1C1C1C', padding: '13px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 14, fontWeight: 700, letterSpacing: 2, color: '#C9A85C', textTransform: 'uppercase' as const }}>Invoice</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>#INV-0326-847</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>#INV-0326-847</span>
           </div>
           {/* sub-header */}
           <div style={{ padding: '12px 20px 10px', borderBottom: '1px solid #DDD9CE' }}>
-            <div style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#999', marginBottom: 1 }}>From</div>
+            <div style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#555', marginBottom: 1 }}>From</div>
             <div style={{ fontFamily: 'sans-serif', fontSize: 16, fontWeight: 700, color: '#222' }}>Mary Jane Farms LLC</div>
-            <div style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#AAA', marginTop: 3 }}>Date: 03 / 26 / 2026</div>
+            <div style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#666', marginTop: 3 }}>Date: 03 / 26 / 2026</div>
           </div>
           {/* rows */}
           {ROWS.map((row, i) => (
@@ -111,7 +111,7 @@ export default function InvoiceReadingPhase() {
               animation: done ? 'none' : 'scanPulse 1s ease infinite',
               display: 'inline-block',
             }} />
-            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.55)', letterSpacing: 0.5 }}>
+            <span style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.82)', letterSpacing: 0.5 }}>
               {done ? 'Invoice read — 6 fields extracted' : 'trakie.ai reading invoice…'}
             </span>
           </div>
@@ -131,7 +131,7 @@ export default function InvoiceReadingPhase() {
                   opacity: filled.has(i) ? 1 : 0.35,
                 }}
               >
-                <div style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: 1, textTransform: 'uppercase' as const, marginBottom: 4 }}>{row.field}</div>
+                <div style={{ fontFamily: 'var(--font-outfit),sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.7)', letterSpacing: 1, textTransform: 'uppercase' as const, marginBottom: 4 }}>{row.field}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                   {filled.has(i) && <span style={{ color: '#4ade80', fontSize: 12, flexShrink: 0 }}>✓</span>}
                   <span style={{

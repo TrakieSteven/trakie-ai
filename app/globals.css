@@ -103,7 +103,7 @@ body::before {
 
 .welcome-subtitle {
     font-size: 18px;
-    color: #ccc;
+    color: #E8E8E8;
     margin-bottom: 10px;
     font-weight: 400;
     opacity: 0;
@@ -289,7 +289,7 @@ body::before {
 }
 
 .nav-links a {
-    color: #A8A093;
+    color: #E8E8E8;
     text-decoration: none;
     font-weight: 500;
     font-size: 16px;
@@ -970,7 +970,7 @@ body::before {
 .start-receiving-subtitle {
     font-family: var(--font-outfit), sans-serif;
     font-size: 22px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 80px;
     line-height: 1.8;
     font-weight: 400;
@@ -1236,7 +1236,7 @@ body::before {
 .processing-confidence {
     font-family: var(--font-outfit), sans-serif;
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 60px;
 }
 
@@ -1248,7 +1248,7 @@ body::before {
 .click-to-continue {
     font-family: var(--font-outfit), sans-serif;
     font-size: 16px;
-    color: rgba(201, 168, 92, 0.6);
+    color: rgba(201, 168, 92, 0.9);
     text-transform: uppercase;
     letter-spacing: 2px;
     animation: blink 1.5s ease-in-out infinite;
@@ -1296,7 +1296,7 @@ body::before {
 .metrc-vault-subtitle {
     font-family: var(--font-outfit), sans-serif;
     font-size: 20px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 60px;
 }
 
@@ -1344,7 +1344,7 @@ body::before {
 .metrc-status {
     font-family: var(--font-outfit), sans-serif;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.8);
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -1433,7 +1433,7 @@ body::before {
 .dutchie-sync-subtitle {
     font-family: var(--font-outfit), sans-serif;
     font-size: 20px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 60px;
 }
 
@@ -1588,7 +1588,7 @@ body::before {
 
 .dutchie-field label {
     font-size: 13px;
-    color: #999;
+    color: #C0C0C0;
     font-weight: 500;
 }
 
@@ -1655,7 +1655,7 @@ body::before {
 
 .dutchie-product-details {
     font-size: 13px;
-    color: #999;
+    color: #C0C0C0;
 }
 
 .dutchie-product-qty {
@@ -1750,7 +1750,7 @@ body::before {
 
 .grid-product-details {
     font-size: 15px;
-    color: #999;
+    color: #C0C0C0;
 }
 
 /* PRODUCT MODAL - BLACK THEME WITH EFFECTS */
@@ -1786,7 +1786,7 @@ body::before {
 
 .form-screen-subtitle {
     font-size: 16px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-align: center;
     margin-bottom: 50px;
     text-transform: uppercase;
@@ -1813,7 +1813,7 @@ body::before {
 
 .form-field label {
     font-size: 11px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -1873,7 +1873,7 @@ body::before {
 
 .processing-header {
     font-size: 11px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -1949,7 +1949,7 @@ body::before {
 
 .summary-item span {
     font-size: 11px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -2096,7 +2096,7 @@ body::before {
 .modal-product-name {
     font-family: var(--font-outfit), sans-serif;
     font-size: 28px;
-    color: #A8A093;
+    color: #E8E8E8;
     margin-bottom: 35px;
     font-weight: 500;
 }
@@ -2124,7 +2124,7 @@ body::before {
 .modal-cannabinoid-label {
     font-family: var(--font-outfit), sans-serif;
     font-size: 13px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-transform: uppercase;
     margin-bottom: 10px;
     font-weight: 700;
@@ -2153,7 +2153,7 @@ body::before {
     font-family: var(--font-outfit), sans-serif;
     font-size: 18px;
     line-height: 1.8;
-    color: #A8A093;
+    color: #E8E8E8;
     margin-bottom: 30px;
     font-weight: 400;
 }
@@ -2161,7 +2161,7 @@ body::before {
 .modal-powered-by {
     font-family: var(--font-outfit), sans-serif;
     font-size: 14px;
-    color: #666;
+    color: #A8A8A8;
     text-align: center;
     padding: 15px;
     background: rgba(255, 255, 255, 0.02);
@@ -2187,7 +2187,7 @@ body::before {
 .modal-price-label {
     font-family: var(--font-outfit), sans-serif;
     font-size: 12px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-transform: uppercase;
     margin-bottom: 10px;
     font-weight: 700;
@@ -2304,7 +2304,7 @@ body::before {
 
 .timer-label {
     font-size: 16px;
-    color: #888;
+    color: #B0B0B0;
     font-weight: 600;
     letter-spacing: 2px;
 }
@@ -2352,7 +2352,7 @@ body::before {
     font-family: var(--font-outfit), sans-serif;
     font-size: 13px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -2393,7 +2393,7 @@ body::before {
 .compliance-footer {
     font-family: var(--font-outfit), sans-serif;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.78);
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid rgba(201, 168, 92, 0.2);
@@ -2795,14 +2795,14 @@ body::before {
 
 .original-price {
     font-size: 32px;
-    color: #888;
+    color: #B0B0B0;
     text-decoration: line-through;
     margin-bottom: 20px;
 }
 
 .plan-period {
     font-family: var(--font-outfit), sans-serif;
-    color: #aaa;
+    color: #D4D4D4;
     margin-bottom: 25px;
     font-size: 20px;
     font-weight: 500;
@@ -2911,7 +2911,7 @@ body::before {
 .contact-subtitle {
     font-family: var(--font-outfit), sans-serif;
     font-size: 20px;
-    color: rgba(201, 168, 92, 0.6);
+    color: #C9A85C;
     font-weight: 400;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -3697,7 +3697,7 @@ body::before {
 
 .auth-subtitle {
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.78);
     text-align: center;
     margin-bottom: 35px;
 }
@@ -3706,7 +3706,7 @@ body::before {
     text-align: center;
     margin-top: 25px;
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.78);
 }
 
 .auth-link {
@@ -3750,7 +3750,7 @@ body::before {
     right: 18px;
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.65);
     font-size: 18px;
     cursor: pointer;
     line-height: 1;
@@ -3764,7 +3764,7 @@ body::before {
 
 .auth-otp-hint {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.82);
     margin-bottom: 24px;
     line-height: 1.6;
 }
@@ -3980,7 +3980,7 @@ body::before {
 
 .demo-subtitle {
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 16px;
     margin-bottom: 50px;
 }
@@ -3993,7 +3993,7 @@ body::before {
 
 .demo-form-section h3 {
     font-size: 11px;
-    color: #B8923E;
+    color: #D4AF6A;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -4852,7 +4852,7 @@ body::before {
 .cinematic-subtitle {
     font-family: var(--font-outfit), sans-serif;
     font-size: 20px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.78);
     font-weight: 300;
     animation: fadeUp 0.9s ease 0.25s both;
 }
@@ -4881,7 +4881,7 @@ body::before {
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(74, 222, 128, 0.7);
+    color: rgba(74, 222, 128, 0.95);
     margin-bottom: 20px;
 }
 
@@ -5021,7 +5021,7 @@ body::before {
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.72);
 }
 
 .completion-stat-value {
@@ -5043,14 +5043,14 @@ body::before {
 .completion-vs {
     font-family: var(--font-outfit), sans-serif;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.55);
     font-weight: 300;
 }
 
 .completion-summary {
     font-family: var(--font-outfit), sans-serif;
     font-size: 19px;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.78);
     font-weight: 300;
     animation: fadeUp 0.8s ease 0.4s both;
 }
@@ -5127,7 +5127,7 @@ body::before {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 3px;
-    color: rgba(74, 222, 128, 0.6);
+    color: rgba(74, 222, 128, 0.95);
     margin-bottom: 22px;
     text-transform: uppercase;
 }
@@ -5159,7 +5159,7 @@ body::before {
 .pv2-unit {
     font-family: var(--font-outfit), sans-serif;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
     letter-spacing: 2px;
     text-transform: uppercase;
 }
@@ -5175,7 +5175,7 @@ body::before {
     display: block;
     font-family: var(--font-outfit), sans-serif;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.78);
     text-align: center;
     margin-bottom: 14px;
 }
@@ -5235,7 +5235,7 @@ body::before {
     justify-content: space-between;
     font-family: var(--font-outfit), sans-serif;
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.5);
     margin-top: 6px;
 }
 
@@ -5263,7 +5263,7 @@ body::before {
 .pv2-context-primary {
     font-family: var(--font-outfit), sans-serif;
     font-size: 17px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 10px;
     font-weight: 400;
 }
@@ -5271,7 +5271,7 @@ body::before {
 .pv2-context-secondary {
     font-family: var(--font-outfit), sans-serif;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.65);
     max-width: 520px;
     margin: 0 auto;
     line-height: 1.7;
@@ -5296,7 +5296,7 @@ body::before {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 2.5px;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
     margin-bottom: 14px;
 }
@@ -5316,7 +5316,7 @@ body::before {
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.65);
     padding: 11px 16px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -5338,27 +5338,27 @@ body::before {
 .pv2-td {
     padding: 15px 16px;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.88);
     vertical-align: top;
     line-height: 1.4;
 }
 
 .pv2-td--role {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.98);
     font-weight: 500;
     width: 36%;
 }
 
 .pv2-td--detail {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.68);
 }
 
 .pv2-td--num {
     text-align: right;
     font-variant-numeric: tabular-nums;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.85);
     white-space: nowrap;
 }
 
@@ -5370,7 +5370,7 @@ body::before {
     padding: 18px 16px;
     font-size: 11px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.75);
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
@@ -5411,7 +5411,7 @@ body::before {
     font-family: var(--font-dm-sans), sans-serif;
     font-size: 26px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 10px;
     letter-spacing: -0.3px;
 }
@@ -5419,14 +5419,14 @@ body::before {
 .pv2-price-sub {
     font-family: var(--font-outfit), sans-serif;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.68);
     margin-bottom: 22px;
 }
 
 .pv2-price-lock {
     font-family: var(--font-outfit), sans-serif;
     font-size: 12px;
-    color: rgba(201, 168, 92, 0.55);
+    color: #C9A85C;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5465,7 +5465,7 @@ body::before {
 .pv2-launch-tagline {
     font-family: var(--font-outfit), sans-serif;
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 36px;
 }
 

@@ -102,7 +102,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
           font-size: clamp(20px, 4vw, 32px);
           font-weight: 400;
           font-style: italic;
-          color: rgba(255, 255, 255, 0.55);
+          color: #C9A961;
           line-height: 1.5;
           max-width: 600px;
           margin: 0 auto;
