@@ -107,7 +107,7 @@ export default function ContactSection() {
           font-size: clamp(32px, 5vw, 48px);
         }
         .contact-subtitle {
-          font-size: 15px;
+          font-size: 18px;
           text-transform: none;
           letter-spacing: 0.3px;
         }
@@ -115,38 +115,38 @@ export default function ContactSection() {
         .contact-form-minimal {
           display: flex;
           flex-direction: column;
-          gap: 12px;
-          max-width: 400px;
+          gap: 14px;
+          max-width: 460px;
           width: 100%;
           margin: 0 auto;
           padding: 0 24px;
         }
         .contact-input {
           width: 100%;
-          padding: 14px 18px;
+          padding: 18px 22px;
           border-radius: 8px;
           border: 1px solid rgba(255,255,255,0.1);
           background: rgba(255,255,255,0.04);
           color: #FAFAF8;
           font-family: var(--font-outfit), sans-serif;
-          font-size: 14px;
+          font-size: 18px;
           outline: none;
           transition: border-color 0.2s ease;
         }
         .contact-input::placeholder {
-          color: rgba(255,255,255,0.25);
+          color: rgba(255,255,255,0.45);
         }
         .contact-input:focus {
           border-color: rgba(201,169,97,0.4);
         }
         .contact-submit {
-          padding: 14px 28px;
+          padding: 18px 28px;
           border-radius: 8px;
           border: 1px solid rgba(201,169,97,0.3);
           background: rgba(201,169,97,0.1);
           color: #C9A961;
           font-family: var(--font-outfit), sans-serif;
-          font-size: 14px;
+          font-size: 18px;
           font-weight: 600;
           letter-spacing: 0.5px;
           cursor: pointer;
@@ -184,8 +184,8 @@ export default function ContactSection() {
         }
         .contact-success-text {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 16px;
-          color: rgba(255,255,255,0.6);
+          font-size: 18px;
+          color: rgba(255,255,255,0.82);
         }
         @keyframes contactFadeIn {
           from { opacity: 0; transform: translateY(8px); }

@@ -1,7 +1,7 @@
 'use client';
 
 /* ═══════════════════════════════════════════════════════
-   MENU SCORE — "Your menu score. Finally maintained."
+   MENU SCORE — "Your menu score. Locked in."
    Placed after How It Works section
 ═══════════════════════════════════════════════════════ */
 
@@ -10,13 +10,10 @@ export default function MenuScore() {
     <section className="menu-score">
       <div className="menu-score-inner">
         <span className="menu-score-eyebrow">Menu Quality</span>
-        <h2 className="menu-score-title">Your menu score. Finally maintained.</h2>
+        <h2 className="menu-score-title">Your menu score. Locked in.</h2>
         <div className="menu-score-rule" />
 
         <div className="menu-score-body">
-          <p>
-            You have hundreds of products. Descriptions, ingredients, allergens — nobody owns it so nobody fills it in. Mistakes pile up. Your Dutchie menu score suffers silently.
-          </p>
           <p>
             Trakie&apos;s AI generates accurate product descriptions, ingredients, and allergens automatically during receiving. Every product enters your system complete, correct, and menu-ready.
           </p>
@@ -76,10 +73,12 @@ export default function MenuScore() {
         }
         .menu-score-body p {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 16px;
-          line-height: 1.7;
-          color: rgba(255, 255, 255, 0.55);
-          text-align: left;
+          font-size: 20px;
+          line-height: 1.65;
+          color: rgba(255, 255, 255, 0.85);
+          text-align: center;
+          max-width: 620px;
+          margin: 0 auto;
         }
         .menu-score-highlight {
           margin-top: 48px;
@@ -126,7 +125,7 @@ export default function MenuScore() {
             padding: 72px 20px 56px;
           }
           .menu-score-body p {
-            font-size: 15px;
+            font-size: 17px;
           }
           .menu-score-highlight {
             padding: 24px 20px;

@@ -54,11 +54,11 @@ export default function StatsStrip() {
         }
         .stats-strip-label {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.78);
+          color: rgba(255, 255, 255, 0.82);
         }
 
         @media (max-width: 600px) {
@@ -69,7 +69,7 @@ export default function StatsStrip() {
             gap: 24px;
           }
           .stats-strip-label {
-            font-size: 9px;
+            font-size: 11px;
             letter-spacing: 1px;
           }
         }

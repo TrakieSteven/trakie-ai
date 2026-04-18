@@ -14,6 +14,7 @@ html {
 
 body {
     font-family: var(--font-outfit), -apple-system, system-ui, sans-serif;
+    font-size: 17px;
     background: linear-gradient(180deg, #070709 0%, #0F0F13 50%, #070709 100%);
     background-attachment: fixed;
     color: #FAFAF8;
@@ -236,9 +237,10 @@ body::before {
 .nav-content {
     max-width: 1600px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    gap: 24px;
 }
 
 .nav-logo {
@@ -246,19 +248,19 @@ body::before {
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 60px;
+    justify-self: start;
 }
 
 .nav-logo-stack {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
 }
 
 .nav-logo-img {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     flex-shrink: 0;
     filter: drop-shadow(0 0 6px rgba(201, 169, 97, 0.3));
@@ -271,10 +273,11 @@ body::before {
 
 .nav-logo-text {
     font-family: var(--font-bodoni), 'Bodoni Moda', serif;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 2px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
     color: #C9A961;
+    line-height: 1;
     transition: opacity 0.2s ease;
 }
 
@@ -286,13 +289,15 @@ body::before {
     display: flex;
     gap: 40px;
     align-items: center;
+    justify-self: center;
+    justify-content: center;
 }
 
 .nav-links a {
     color: #E8E8E8;
     text-decoration: none;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 17px;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     position: relative;
@@ -319,12 +324,12 @@ body::before {
 }
 
 .nav-cta {
-    padding: 12px 32px;
+    padding: 13px 32px;
     background: linear-gradient(135deg, #C9A85C 0%, #B8923E 100%);
     color: #000;
     text-decoration: none;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
     letter-spacing: 1px;
     transition: all 0.3s ease;
     border: none;
@@ -450,7 +455,7 @@ body::before {
 
 .vogue-hero-tagline {
     font-family: var(--font-outfit), sans-serif;
-    font-size: clamp(12px, 1.4vw, 20px);
+    font-size: clamp(14px, 1.5vw, 22px);
     letter-spacing: 2.5px;
     text-transform: uppercase;
     color: #C9A85C;
@@ -571,8 +576,8 @@ body::before {
 
 .vogue-feature-description {
     font-family: var(--font-outfit), sans-serif;
-    font-size: 20px;
-    line-height: 1.7;
+    font-size: 22px;
+    line-height: 1.65;
     color: #E8E8E8;
     letter-spacing: 0.2px;
     font-weight: 500;
@@ -733,8 +738,8 @@ body::before {
     color: #C9A85C;
     border: 1px solid rgba(201, 168, 92, 0.4);
     box-shadow: 0 8px 32px rgba(201, 168, 92, 0.1), 0 0 0 0 rgba(201, 168, 92, 0.4);
-    padding: 25px 60px;
-    font-size: 16px;
+    padding: 26px 60px;
+    font-size: 18px;
     letter-spacing: 3px;
     text-transform: uppercase;
     cursor: pointer;
@@ -2966,7 +2971,7 @@ body::before {
 
 .form-label {
     display: block;
-    font-size: 16px;
+    font-size: 17px;
     color: #C9A85C;
     margin-bottom: 8px;
     font-weight: 600;
@@ -2975,11 +2980,11 @@ body::before {
 
 .form-input, .form-textarea {
     width: 100%;
-    padding: 16px 20px;
+    padding: 18px 22px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(201, 168, 92, 0.3);
     color: #FAFAF8;
-    font-size: 18px;
+    font-size: 19px;
     font-family: var(--font-outfit), sans-serif;
     transition: all 0.3s ease;
 }
@@ -3147,12 +3152,12 @@ body::before {
     display: block;
     width: 100%;
     text-align: center;
-    padding: 12px 30px;
+    padding: 14px 30px;
     background: transparent;
     color: #C9A85C;
     border: 1px solid rgba(201, 168, 92, 0.4);
     font-family: var(--font-outfit), sans-serif;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -3170,11 +3175,11 @@ body::before {
     display: block;
     width: 100%;
     text-align: center;
-    padding: 14px 30px;
+    padding: 16px 30px;
     background: linear-gradient(135deg, #C9A85C 0%, #B8923E 100%);
     color: #000;
     font-family: var(--font-outfit), sans-serif;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -3229,18 +3234,22 @@ body::before {
 @media (max-width: 768px) {
     /* ── Navbar ── */
     .nav {
-        padding: 16px 20px;
+        padding: 14px 20px;
+    }
+    .nav-content {
+        grid-template-columns: 1fr auto;
+        gap: 16px;
+    }
+    .nav-logo-stack {
+        gap: 3px;
     }
     .nav-logo-text {
-        font-size: 12px;
-        min-width: 0;
+        font-size: 13px;
+        letter-spacing: 1.2px;
     }
     .nav-logo-img {
-        width: 24px;
-        height: 24px;
-    }
-    .nav-logo {
-        min-width: 0;
+        width: 26px;
+        height: 26px;
     }
     .nav-links {
         display: none;
@@ -3524,10 +3533,11 @@ body::before {
 
 @media (max-width: 480px) {
     .nav {
-        padding: 14px 16px;
+        padding: 12px 16px;
     }
     .nav-logo-text {
-        font-size: 11px;
+        font-size: 12px;
+        letter-spacing: 1px;
     }
     .nav-logo-img {
         width: 22px;
@@ -3643,14 +3653,15 @@ body::before {
     display: flex;
     align-items: center;
     gap: 15px;
+    justify-self: end;
 }
 
 .nav-auth-btn {
-    padding: 8px 20px;
+    padding: 9px 20px;
     background: transparent;
     color: #C9A85C;
     border: 1px solid rgba(201, 168, 92, 0.4);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     font-family: var(--font-outfit), sans-serif;
     letter-spacing: 0.5px;
@@ -3760,6 +3771,19 @@ body::before {
 
 .auth-modal-close:hover {
     color: #C9A85C;
+}
+
+.auth-modal-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.auth-modal-logo img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.35));
 }
 
 .auth-otp-hint {
@@ -5174,8 +5198,8 @@ body::before {
 .pv2-slider-label {
     display: block;
     font-family: var(--font-outfit), sans-serif;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.78);
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.85);
     text-align: center;
     margin-bottom: 14px;
 }
@@ -5262,16 +5286,16 @@ body::before {
 
 .pv2-context-primary {
     font-family: var(--font-outfit), sans-serif;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 0.85);
+    font-size: 19px;
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 10px;
     font-weight: 400;
 }
 
 .pv2-context-secondary {
     font-family: var(--font-outfit), sans-serif;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.65);
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.72);
     max-width: 520px;
     margin: 0 auto;
     line-height: 1.7;
@@ -5293,7 +5317,7 @@ body::before {
 
 .pv2-table-heading {
     font-family: var(--font-dm-sans), sans-serif;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 2.5px;
     color: rgba(255, 255, 255, 0.6);
@@ -5312,12 +5336,12 @@ body::before {
 }
 
 .pv2-th {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.65);
-    padding: 11px 16px;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 14px 16px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
@@ -5336,11 +5360,11 @@ body::before {
 }
 
 .pv2-td {
-    padding: 15px 16px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.88);
+    padding: 18px 16px;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.9);
     vertical-align: top;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 .pv2-td--role {
@@ -5350,15 +5374,16 @@ body::before {
 }
 
 .pv2-td--detail {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.68);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.72);
 }
 
 .pv2-td--num {
     text-align: right;
     font-variant-numeric: tabular-nums;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.85);
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.9);
     white-space: nowrap;
 }
 
@@ -5367,17 +5392,17 @@ body::before {
 }
 
 .pv2-td-total-label {
-    padding: 18px 16px;
-    font-size: 11px;
+    padding: 20px 16px;
+    font-size: 13px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.82);
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
 
 .pv2-td-total-num {
-    padding: 18px 16px;
-    font-size: 17px;
+    padding: 20px 16px;
+    font-size: 20px;
     font-weight: 700;
     text-align: right;
     color: #4ADE80;

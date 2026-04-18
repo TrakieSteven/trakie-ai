@@ -3,6 +3,7 @@
 import StatsStrip from './StatsStrip';
 import HeroDemo from './HeroDemo';
 import HowItWorks from './HowItWorks';
+import OnlineListing from './OnlineListing';
 import MenuScore from './MenuScore';
 import FadeUp from './FadeUp';
 
@@ -30,7 +31,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
       <FadeUp>
         <div className="manifesto">
           <p className="manifesto-text">
-            Humans weren&apos;t built for repetitive data entry. We were built to innovate, connect, and grow. Trakie handles the data entry so you can get back to the floor.
+            Built for innovation, not data entry. Trakie handles the paperwork so you can get back to the floor.
           </p>
         </div>
       </FadeUp>
@@ -40,7 +41,22 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
       </FadeUp>
 
       <FadeUp>
+        <OnlineListing />
+      </FadeUp>
+
+      <FadeUp>
         <MenuScore />
+      </FadeUp>
+
+      <FadeUp>
+        <section className="control">
+          <span className="control-eyebrow">You Stay In Control</span>
+          <h2 className="control-title">The human has final say.</h2>
+          <div className="control-rule" />
+          <p className="control-body">
+            Trakie handles the data entry. You review every field, confirm every match, and approve before anything saves to Dutchie. Compliance stays where it belongs — with you.
+          </p>
+        </section>
       </FadeUp>
 
       <FadeUp>
@@ -52,7 +68,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
                 <span className="compare-card-label">Manual</span>
               </div>
               <ul className="compare-list">
-                <li>Clipboard &amp; spreadsheet</li>
+                <li>Line-by-line data entry</li>
                 <li>45 minutes per shipment</li>
                 <li>Typos &amp; miskeys</li>
                 <li>METRC copy-paste errors</li>
@@ -77,7 +93,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
       <FadeUp>
         <div className="founder">
           <p className="founder-text">
-            Built by a former dispensary inventory lead who processed shipments 7x faster than his team.
+            Built by a former dispensary inventory lead — 7× faster than his team.
           </p>
         </div>
       </FadeUp>
@@ -111,6 +127,54 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
         @media (max-width: 480px) {
           .manifesto {
             padding: 40px 20px;
+          }
+        }
+
+        /* ── Control / Trust ── */
+        .control {
+          padding: 100px 24px 80px;
+          max-width: 700px;
+          margin: 0 auto;
+          text-align: center;
+        }
+        .control-eyebrow {
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #C9A961;
+          display: block;
+          margin-bottom: 16px;
+        }
+        .control-title {
+          font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+          font-size: clamp(30px, 5.5vw, 48px);
+          font-weight: 400;
+          color: #FAFAF8;
+          letter-spacing: -0.5px;
+          line-height: 1.2;
+        }
+        .control-rule {
+          width: 48px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #C9A961, transparent);
+          margin: 24px auto 36px;
+        }
+        .control-body {
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 20px;
+          line-height: 1.65;
+          color: rgba(255, 255, 255, 0.85);
+          max-width: 620px;
+          margin: 0 auto;
+        }
+        @media (max-width: 480px) {
+          .control {
+            padding: 72px 20px 56px;
+          }
+          .control-body {
+            font-size: 17px;
           }
         }
 
@@ -169,7 +233,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
         }
         .compare-card-label {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 16px;
+          font-size: 20px;
           font-weight: 600;
           color: #FAFAF8;
           letter-spacing: -0.2px;
@@ -178,15 +242,15 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 14px;
         }
         .compare-list li {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 14px;
-          color: rgba(255,255,255,0.45);
-          padding-left: 16px;
+          font-size: 17px;
+          color: rgba(255,255,255,0.85);
+          padding-left: 18px;
           position: relative;
-          line-height: 1.4;
+          line-height: 1.5;
         }
         .compare-list li::before {
           content: '';
@@ -222,10 +286,10 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
         }
         .founder-text {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 14px;
+          font-size: 17px;
           font-weight: 400;
-          color: rgba(255,255,255,0.3);
-          max-width: 520px;
+          color: rgba(255,255,255,0.72);
+          max-width: 560px;
           margin: 0 auto;
           line-height: 1.6;
           letter-spacing: 0.2px;
@@ -235,7 +299,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
             padding: 36px 20px 44px;
           }
           .founder-text {
-            font-size: 13px;
+            font-size: 15px;
           }
         }
       `}</style>

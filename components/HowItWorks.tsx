@@ -9,17 +9,17 @@ const STEPS = [
   {
     number: '01',
     title: 'Scan the invoice',
-    description: 'Point your phone at any vendor invoice. Trakie captures every line item instantly.',
+    description: 'Point your phone. Trakie captures every line item instantly.',
   },
   {
     number: '02',
     title: 'AI reads every field',
-    description: 'Our model extracts vendor, product, METRC tags, quantities, and pricing — no templates needed.',
+    description: 'Vendor, product, METRC tags, quantities, pricing — extracted without templates.',
   },
   {
     number: '03',
-    title: 'Dutchie fills itself',
-    description: 'Fields populate in real-time. Review, confirm, done. What took 45 minutes now takes 60 seconds.',
+    title: 'You review. You approve.',
+    description: 'Fields populate live — nothing saves without your confirmation. 45 minutes becomes 60 seconds.',
   },
 ];
 
@@ -218,7 +218,7 @@ export default function HowItWorks() {
         }
         .hiw-eyebrow {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
           letter-spacing: 3px;
           text-transform: uppercase;
@@ -228,7 +228,7 @@ export default function HowItWorks() {
         }
         .hiw-title {
           font-family: var(--font-bodoni), 'Bodoni Moda', serif;
-          font-size: clamp(28px, 5vw, 44px);
+          font-size: clamp(32px, 5.5vw, 52px);
           font-weight: 400;
           color: #FAFAF8;
           letter-spacing: -0.5px;
@@ -278,25 +278,25 @@ export default function HowItWorks() {
         }
         .hiw-step-number {
           font-family: var(--font-bodoni), 'Bodoni Moda', serif;
-          font-size: 13px;
+          font-size: 15px;
           letter-spacing: 2px;
           color: #C9A961;
           display: block;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
         .hiw-step-title {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 600;
           color: #FAFAF8;
           letter-spacing: -0.3px;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
         .hiw-step-desc {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 14px;
+          font-size: 17px;
           line-height: 1.6;
-          color: rgba(255,255,255,0.82);
+          color: rgba(255,255,255,0.85);
         }
 
         /* Connector arrows between steps */
@@ -796,10 +796,10 @@ export default function HowItWorks() {
             max-width: 320px;
           }
           .hiw-step-title {
-            font-size: 18px;
+            font-size: 20px;
           }
           .hiw-step-desc {
-            font-size: 13px;
+            font-size: 15px;
           }
           .hiw-phone {
             width: 120px;
