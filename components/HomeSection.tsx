@@ -15,10 +15,19 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
   return (
     <>
       <section className="vogue-hero">
+        <div className="hero-ext-badge">
+          <svg className="hero-ext-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3a9 9 0 019 9h-9V3z" fill="#C9A85C" opacity="0.85"/>
+            <path d="M3 12a9 9 0 019-9v9H3z" fill="#C9A85C" opacity="0.55"/>
+            <path d="M12 21a9 9 0 01-9-9h9v9z" fill="#C9A85C" opacity="0.35"/>
+            <circle cx="12" cy="12" r="3" fill="#0D1F0D" stroke="#C9A85C" strokeWidth="1.2"/>
+          </svg>
+          <span>Chrome Extension · Runs Inside Dutchie</span>
+        </div>
         <h1 className="vogue-hero-title">Receive inventory</h1>
         <h2 className="vogue-hero-subtitle">in 60 seconds.</h2>
         <p className="vogue-hero-tagline">
-          The fastest way to receive inventory on Dutchie.
+          A Chrome extension that lives inside Dutchie.
         </p>
 
         <HeroDemo />
@@ -102,13 +111,119 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
         <section className="vogue-demo-section">
           <h2 className="vogue-demo-title">Experience trakie.ai</h2>
           <p className="vogue-demo-subtitle">Join NYC&apos;s most sophisticated dispensaries</p>
-          <button className="vogue-demo-button" onClick={() => onNavigate('receive')}>
-            View Live Demo
-          </button>
+          <div className="vogue-demo-cta-row">
+            <button className="vogue-demo-button" onClick={() => onNavigate('demo')}>
+              View Live Demo
+            </button>
+            <button
+              type="button"
+              className="vogue-demo-button vogue-demo-button-secondary"
+              onClick={() => onNavigate('contact')}
+              title="Chrome Web Store listing coming soon — join the waitlist"
+              aria-label="Add to Chrome — coming soon, join the waitlist"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="vogue-chrome-icon">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+                <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M12 8.8h8.5M12 8.8L7.8 16M12 8.8L15 14.2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+              </svg>
+              Add to Chrome — Coming Soon
+            </button>
+          </div>
+          <p className="vogue-demo-helper">Chrome Web Store listing coming soon. Join the waitlist and we&apos;ll notify you.</p>
         </section>
       </FadeUp>
 
       <style>{`
+        .vogue-demo-cta-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          justify-content: center;
+          align-items: center;
+        }
+        .vogue-demo-button-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: transparent;
+          border: 1px solid rgba(201, 168, 92, 0.35);
+          box-shadow: none;
+          animation: none;
+          padding: 22px 36px;
+          font-size: 15px;
+          letter-spacing: 2px;
+        }
+        .vogue-demo-button-secondary:hover {
+          background: rgba(201, 168, 92, 0.12);
+          color: #E0C27A;
+          transform: none;
+          box-shadow: none;
+          border-color: rgba(201, 168, 92, 0.6);
+        }
+        .vogue-chrome-icon {
+          width: 18px;
+          height: 18px;
+          flex-shrink: 0;
+        }
+        .vogue-demo-helper {
+          margin-top: 18px;
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.55);
+          letter-spacing: 0.3px;
+        }
+        @media (max-width: 600px) {
+          .vogue-demo-cta-row {
+            flex-direction: column;
+            gap: 12px;
+          }
+          .vogue-demo-button-secondary {
+            font-size: 13px;
+            padding: 18px 28px;
+          }
+        }
+
+        .hero-ext-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 16px;
+          margin-bottom: 24px;
+          background: rgba(201, 168, 92, 0.08);
+          border: 1px solid rgba(201, 168, 92, 0.35);
+          border-radius: 999px;
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #C9A85C;
+          opacity: 0;
+          transform: translateY(-10px);
+          animation: heroExtBadgeEnter 1s ease 0.15s forwards;
+        }
+        .hero-ext-badge-icon {
+          width: 16px;
+          height: 16px;
+          flex-shrink: 0;
+        }
+        @keyframes heroExtBadgeEnter {
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 480px) {
+          .hero-ext-badge {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            padding: 6px 12px;
+            margin-bottom: 18px;
+          }
+          .hero-ext-badge-icon {
+            width: 13px;
+            height: 13px;
+          }
+        }
+
         .manifesto {
           padding: 56px 24px;
           text-align: center;

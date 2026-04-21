@@ -75,10 +75,19 @@ export default function Navbar({ onNavigate }: NavbarProps) {
               </button>
             )}
             <button
-              onClick={() => setAuthModal('signup')}
-              className="nav-cta"
+              type="button"
+              onClick={() => navigate('contact')}
+              className="nav-cta nav-cta-disabled"
+              title="Chrome Web Store listing coming soon — join the waitlist"
+              aria-label="Add to Chrome — coming soon, join the waitlist"
             >
-              Get Started
+              <svg className="nav-cta-chrome" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+                <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M12 8.8h8.5M12 8.8L7.8 16M12 8.8L15 14.2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+              </svg>
+              Add to Chrome
+              <span className="nav-cta-soon">Soon</span>
             </button>
             <button
               className={`nav-hamburger${menuOpen ? ' open' : ''}`}
@@ -116,10 +125,17 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             </button>
           )}
           <button
-            onClick={() => { setAuthModal('signup'); setMenuOpen(false); }}
-            className="nav-mobile-cta-btn"
+            type="button"
+            onClick={() => navigate('contact')}
+            className="nav-mobile-cta-btn nav-cta-disabled"
+            aria-label="Add to Chrome — coming soon, join the waitlist"
           >
-            Get Started
+            <svg className="nav-cta-chrome" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+              <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M12 8.8h8.5M12 8.8L7.8 16M12 8.8L15 14.2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+            </svg>
+            Add to Chrome — Coming Soon
           </button>
         </div>
       </div>
