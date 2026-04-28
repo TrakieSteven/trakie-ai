@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSubscription } from '@/lib/hooks/useSubscription';
+import AuthModal from './AuthModal';
 
 interface PricingSectionProps {
   onNavigate: (section: string) => void;
@@ -48,8 +51,12 @@ function LockIcon() {
 }
 
 export default function PricingSection({ onNavigate }: PricingSectionProps) {
+  const router = useRouter();
+  const { user, isActive: hasActiveSub, loading: subLoading } = useSubscription();
   const [active, setActive] = useState(false);
   const [deliveries, setDeliveries] = useState(5);
+  const [authModal, setAuthModal] = useState<'login' | 'signup' | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -74,6 +81,39 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
 
   const low = useAnimatedValue(totalLow, 600, active);
   const high = useAnimatedValue(totalHigh, 600, active);
+
+  async function startCheckout() {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch('/api/stripe/checkout', { method: 'POST' });
+      const data = await res.json();
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        setCheckoutLoading(false);
+      }
+    } catch {
+      setCheckoutLoading(false);
+    }
+  }
+
+  function handleCta() {
+    if (!user) {
+      setAuthModal('signup');
+      return;
+    }
+    if (hasActiveSub) {
+      router.push('/account/subscription');
+      return;
+    }
+    startCheckout();
+  }
+
+  let ctaLabel: string;
+  if (subLoading) ctaLabel = 'Loading…';
+  else if (!user) ctaLabel = 'Reserve Your Spot — Free 30-Day Trial';
+  else if (hasActiveSub) ctaLabel = 'Manage Subscription';
+  else ctaLabel = checkoutLoading ? 'Opening checkout…' : 'Start Free 30-Day Trial';
 
   return (
     <section className="pv2" ref={ref}>
@@ -168,12 +208,20 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
         <div className={`pv2-launch${active ? ' pv2-launch--visible' : ''}`}>
           <div className="pv2-launch-badge">Now Accepting Founding Customers</div>
           <p className="pv2-launch-tagline">Reserve your founding customer spot now</p>
-          <button className="pv2-cta" onClick={() => onNavigate('contact')}>
-            Reserve Your Spot — Free 30-Day Trial
+          <button
+            className="pv2-cta"
+            onClick={handleCta}
+            disabled={subLoading || checkoutLoading}
+          >
+            {ctaLabel}
           </button>
         </div>
 
       </div>
+
+      {authModal && (
+        <AuthModal initialView={authModal} onClose={() => setAuthModal(null)} />
+      )}
     </section>
   );
 }

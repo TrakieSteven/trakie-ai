@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 import AuthModal from './AuthModal';
@@ -10,9 +11,12 @@ interface NavbarProps {
 }
 
 export default function Navbar({ onNavigate }: NavbarProps) {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModal, setAuthModal] = useState<'login' | 'signup' | null>(null);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -36,10 +40,30 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
+  // Close profile dropdown on outside click / Escape
+  useEffect(() => {
+    if (!profileOpen) return;
+    function onDown(e: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setProfileOpen(false);
+    }
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [profileOpen]);
+
   async function handleLogout() {
     const supabase = createClient();
     await supabase.auth.signOut();
     setUser(null);
+    setProfileOpen(false);
     window.location.href = '/';
   }
 
@@ -48,14 +72,24 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     setMenuOpen(false);
   };
 
+  const initial = (user?.email?.[0] ?? '?').toUpperCase();
+
+  function goManageSubscription() {
+    setProfileOpen(false);
+    setMenuOpen(false);
+    router.push('/account/subscription');
+  }
+
   return (
     <>
       <nav className="nav">
         <div className="nav-content">
-          <div className="nav-logo" onClick={() => navigate('home')}>
-            <div className="nav-logo-stack">
-              <img src="/logo.png" alt="Trakie" className="nav-logo-img" />
-              <div className="nav-logo-text">trakie.ai</div>
+          <div className="nav-left">
+            <div className="nav-logo" onClick={() => navigate('home')}>
+              <div className="nav-logo-stack">
+                <img src="/logo.png" alt="Trakie" className="nav-logo-img" />
+                <div className="nav-logo-text">trakie.ai</div>
+              </div>
             </div>
           </div>
           <div className="nav-links">
@@ -65,15 +99,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             <a onClick={() => navigate('contact')}>Contact</a>
           </div>
           <div className="nav-right">
-            {user ? (
-              <button onClick={handleLogout} className="nav-auth-btn">
-                Logout
-              </button>
-            ) : (
-              <button onClick={() => setAuthModal('login')} className="nav-auth-btn">
-                Login
-              </button>
-            )}
             <button
               type="button"
               onClick={() => navigate('contact')}
@@ -89,6 +114,36 @@ export default function Navbar({ onNavigate }: NavbarProps) {
               Add to Chrome
               <span className="nav-cta-soon">Soon</span>
             </button>
+            {user ? (
+              <div
+                ref={profileRef}
+                className="nav-profile"
+                onMouseEnter={() => setProfileOpen(true)}
+                onMouseLeave={() => setProfileOpen(false)}
+              >
+                <button
+                  type="button"
+                  className="nav-profile-avatar"
+                  aria-label="Open profile menu"
+                  aria-expanded={profileOpen}
+                  onClick={() => setProfileOpen(o => !o)}
+                >
+                  {initial}
+                </button>
+                <div className={`nav-profile-menu${profileOpen ? ' open' : ''}`} role="menu">
+                  <button type="button" className="nav-profile-menu-item" role="menuitem" onClick={goManageSubscription}>
+                    Manage Subscription
+                  </button>
+                  <button type="button" className="nav-profile-menu-item" role="menuitem" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button onClick={() => setAuthModal('login')} className="nav-auth-btn">
+                Login
+              </button>
+            )}
             <button
               className={`nav-hamburger${menuOpen ? ' open' : ''}`}
               onClick={() => setMenuOpen(!menuOpen)}
@@ -116,9 +171,14 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         </div>
         <div className="nav-mobile-actions">
           {user ? (
-            <button onClick={handleLogout} className="nav-mobile-auth-btn">
-              Logout
-            </button>
+            <>
+              <button onClick={goManageSubscription} className="nav-mobile-auth-btn">
+                Manage Subscription
+              </button>
+              <button onClick={handleLogout} className="nav-mobile-auth-btn">
+                Logout
+              </button>
+            </>
           ) : (
             <button onClick={() => { setAuthModal('login'); setMenuOpen(false); }} className="nav-mobile-auth-btn">
               Login
