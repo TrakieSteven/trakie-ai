@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe/server';
 import { createServiceClient } from '@/lib/supabase/admin';
+import { sendEmail } from '@/lib/emails/send';
+import { trialStartedEmail, subscriptionCancelledEmail } from '@/lib/emails/templates';
 
 export const runtime = 'nodejs';
 
@@ -42,6 +44,27 @@ async function upsertFromSubscription(sub: Stripe.Subscription) {
   );
 }
 
+async function customerEmail(customer: string | Stripe.Customer | Stripe.DeletedCustomer): Promise<string | null> {
+  const stripe = getStripe();
+  const id = typeof customer === 'string' ? customer : customer.id;
+  try {
+    const c = await stripe.customers.retrieve(id);
+    if (c.deleted) return null;
+    return c.email ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function safeSend(to: string | null, content: { subject: string; html: string }) {
+  if (!to) return;
+  try {
+    await sendEmail({ to, ...content });
+  } catch (err) {
+    console.error('[stripe/webhook] email send failed', err);
+  }
+}
+
 export async function POST(request: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret) {
@@ -73,14 +96,37 @@ export async function POST(request: Request) {
           const subId = typeof session.subscription === 'string' ? session.subscription : session.subscription.id;
           const sub = await stripe.subscriptions.retrieve(subId);
           await upsertFromSubscription(sub);
+          const to = session.customer_details?.email ?? (await customerEmail(sub.customer));
+          await safeSend(to, trialStartedEmail({ trialEnd: tsToIso(sub.trial_end) }));
         }
         break;
       }
-      case 'customer.subscription.created':
-      case 'customer.subscription.updated':
+      case 'customer.subscription.created': {
+        const sub = event.data.object as Stripe.Subscription;
+        await upsertFromSubscription(sub);
+        break;
+      }
+      case 'customer.subscription.updated': {
+        const sub = event.data.object as Stripe.Subscription;
+        const previous = (event.data as { previous_attributes?: Partial<Stripe.Subscription> }).previous_attributes;
+        await upsertFromSubscription(sub);
+        const wasCancelled = previous?.cancel_at_period_end === false && sub.cancel_at_period_end === true;
+        if (wasCancelled) {
+          const item = sub.items.data[0];
+          const accessUntil = tsToIso(item?.current_period_end ?? null);
+          const to = await customerEmail(sub.customer);
+          await safeSend(to, subscriptionCancelledEmail({ accessUntil }));
+        }
+        break;
+      }
       case 'customer.subscription.deleted': {
         const sub = event.data.object as Stripe.Subscription;
         await upsertFromSubscription(sub);
+        const item = sub.items.data[0];
+        const periodEnd = tsToIso(item?.current_period_end ?? null);
+        const accessUntil = periodEnd && new Date(periodEnd).getTime() > Date.now() ? periodEnd : null;
+        const to = await customerEmail(sub.customer);
+        await safeSend(to, subscriptionCancelledEmail({ accessUntil }));
         break;
       }
       default:

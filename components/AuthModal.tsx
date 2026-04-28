@@ -163,8 +163,8 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
             </p>
             <div className="form-group">
               <label className="form-label">Verification Code</label>
-              <input type="text" className="form-input" required maxLength={8}
-                placeholder="00000000" value={otp}
+              <input type="text" className="form-input" required maxLength={6}
+                placeholder="000000" value={otp}
                 onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
                 style={{ letterSpacing: '0.3em', textAlign: 'center', fontSize: '1.4rem' }} />
             </div>

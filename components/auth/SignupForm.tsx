@@ -135,7 +135,7 @@ export default function SignupForm() {
         ) : (
           <form onSubmit={handleVerifyOtp}>
             <p style={{ color: '#D4D4D4', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
-              We sent an 8-digit verification code to <strong style={{ color: '#C9A85C' }}>{email}</strong>.
+              We sent a 6-digit verification code to <strong style={{ color: '#C9A85C' }}>{email}</strong>.
               Enter it below to confirm your account.
             </p>
             <div className="form-group">
@@ -144,8 +144,8 @@ export default function SignupForm() {
                 type="text"
                 className="form-input"
                 required
-                maxLength={8}
-                placeholder="00000000"
+                maxLength={6}
+                placeholder="000000"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                 style={{ letterSpacing: '0.3em', textAlign: 'center', fontSize: '1.4rem' }}
