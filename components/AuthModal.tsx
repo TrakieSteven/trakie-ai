@@ -2,8 +2,9 @@
 
 import { useState, FormEvent, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import PasswordInput from './auth/PasswordInput';
 
-type View = 'login' | 'signup' | 'otp';
+type View = 'login' | 'signup' | 'otp' | 'success';
 
 interface AuthModalProps {
   initialView: 'login' | 'signup';
@@ -88,7 +89,8 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     });
-    onClose();
+    setLoading(false);
+    setView('success');
   }
 
   return (
@@ -106,6 +108,7 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
           {view === 'login' && 'Sign in to your account'}
           {view === 'signup' && 'Create your account'}
           {view === 'otp' && 'Check your email'}
+          {view === 'success' && 'Welcome to trakie.ai'}
         </p>
 
         {error && <div className="form-error">{error}</div>}
@@ -119,7 +122,7 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
             </div>
             <div className="form-group">
               <label className="form-label">Password</label>
-              <input type="password" className="form-input" required placeholder="Your password"
+              <PasswordInput required placeholder="Your password"
                 value={password} onChange={e => setPassword(e.target.value)} />
             </div>
             <button type="submit" className="form-submit" disabled={loading}>
@@ -137,13 +140,13 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
             </div>
             <div className="form-group">
               <label className="form-label">Password</label>
-              <input type="password" className="form-input" required minLength={6}
+              <PasswordInput required minLength={6}
                 placeholder="Min 6 characters" value={password}
                 onChange={e => setPassword(e.target.value)} />
             </div>
             <div className="form-group">
               <label className="form-label">Confirm Password</label>
-              <input type="password" className="form-input" required minLength={6}
+              <PasswordInput required minLength={6}
                 placeholder="Re-enter your password" value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)} />
             </div>
@@ -175,7 +178,21 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
           </form>
         )}
 
-        {view !== 'otp' && (
+        {view === 'success' && (
+          <div className="auth-success">
+            <div className="auth-success-check" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <p className="auth-success-message">Account created successfully</p>
+            <button type="button" className="form-submit" onClick={onClose}>
+              Continue
+            </button>
+          </div>
+        )}
+
+        {(view === 'login' || view === 'signup') && (
           <div className="auth-footer">
             {view === 'login' ? (
               <>Don&apos;t have an account?{' '}

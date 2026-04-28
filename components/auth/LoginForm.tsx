@@ -3,6 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import PasswordInput from './PasswordInput';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -51,9 +52,7 @@ export default function LoginForm() {
           </div>
           <div className="form-group">
             <label className="form-label">Password</label>
-            <input
-              type="password"
-              className="form-input"
+            <PasswordInput
               required
               placeholder="Your password"
               value={password}

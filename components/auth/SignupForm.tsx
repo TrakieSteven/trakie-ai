@@ -3,10 +3,11 @@
 import { useState, FormEvent } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import PasswordInput from './PasswordInput';
 
 export default function SignupForm() {
   const router = useRouter();
-  const [step, setStep] = useState<'form' | 'otp'>('form');
+  const [step, setStep] = useState<'form' | 'otp' | 'success'>('form');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -66,7 +67,8 @@ export default function SignupForm() {
       body: JSON.stringify({ email }),
     });
 
-    router.push('/');
+    setLoading(false);
+    setStep('success');
   }
 
   return (
@@ -74,12 +76,26 @@ export default function SignupForm() {
       <div className="auth-card">
         <h1 className="auth-title">trakie</h1>
         <p className="auth-subtitle">
-          {step === 'form' ? 'Create your account' : 'Check your email'}
+          {step === 'form' && 'Create your account'}
+          {step === 'otp' && 'Check your email'}
+          {step === 'success' && 'Welcome to trakie.ai'}
         </p>
 
         {error && <div className="form-error">{error}</div>}
 
-        {step === 'form' ? (
+        {step === 'success' ? (
+          <div className="auth-success">
+            <div className="auth-success-check" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <p className="auth-success-message">Account created successfully</p>
+            <button type="button" className="form-submit" onClick={() => router.push('/')}>
+              Continue
+            </button>
+          </div>
+        ) : step === 'form' ? (
           <form onSubmit={handleSignup}>
             <div className="form-group">
               <label className="form-label">Email</label>
@@ -94,9 +110,7 @@ export default function SignupForm() {
             </div>
             <div className="form-group">
               <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-input"
+              <PasswordInput
                 required
                 minLength={6}
                 placeholder="Min 6 characters"
@@ -106,9 +120,7 @@ export default function SignupForm() {
             </div>
             <div className="form-group">
               <label className="form-label">Confirm Password</label>
-              <input
-                type="password"
-                className="form-input"
+              <PasswordInput
                 required
                 minLength={6}
                 placeholder="Re-enter your password"
@@ -152,10 +164,12 @@ export default function SignupForm() {
           </form>
         )}
 
-        <div className="auth-footer">
-          Already have an account?{' '}
-          <a href="/login" className="auth-link">Sign in</a>
-        </div>
+        {step !== 'success' && (
+          <div className="auth-footer">
+            Already have an account?{' '}
+            <a href="/login" className="auth-link">Sign in</a>
+          </div>
+        )}
       </div>
     </div>
   );
