@@ -1,12 +1,20 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import PasswordInput from './PasswordInput';
 
+function safeNext(value: string | null): string {
+  if (!value) return '/';
+  if (!value.startsWith('/') || value.startsWith('//')) return '/';
+  return value;
+}
+
 export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = safeNext(searchParams.get('next'));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +34,7 @@ export default function LoginForm() {
       return;
     }
 
-    router.push('/');
+    router.push(next);
     router.refresh();
   }
 

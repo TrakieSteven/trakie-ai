@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { isActiveStatus } from '@/lib/subscription';
 
 export type SubscriptionRow = {
   user_id: string;
@@ -12,8 +13,6 @@ export type SubscriptionRow = {
   cancel_at_period_end: boolean | null;
   trial_end: string | null;
 };
-
-const ACTIVE_STATUSES = new Set(['trialing', 'active', 'past_due']);
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -45,7 +44,7 @@ export default function SubscriptionView({ email, subscription, checkoutSuccess 
   const [error, setError] = useState<string | null>(null);
 
   const status = subscription?.status ?? null;
-  const isActive = !!status && ACTIVE_STATUSES.has(status);
+  const isActive = isActiveStatus(status);
 
   async function openPortal() {
     setError(null);

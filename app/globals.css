@@ -4226,6 +4226,81 @@ body::before {
     }
 }
 
+/* ─── Extension connect (pairing code) ──────────────── */
+
+.extension-code-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(201, 168, 92, 0.4);
+    border-radius: 6px;
+    padding: 22px 24px;
+}
+
+.extension-code-value {
+    font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 30px;
+    letter-spacing: 0.18em;
+    color: #FAFAF8;
+    user-select: all;
+    flex: 1;
+    text-align: center;
+}
+
+.extension-code-copy {
+    background: rgba(201, 168, 92, 0.14);
+    border: 1px solid rgba(201, 168, 92, 0.5);
+    color: #E0C27A;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.extension-code-copy:hover {
+    background: rgba(201, 168, 92, 0.24);
+}
+
+.extension-code-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.extension-code-refresh {
+    background: none;
+    border: none;
+    color: #C9A85C;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.extension-code-refresh:disabled {
+    color: rgba(255, 255, 255, 0.4);
+    cursor: default;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .extension-code-block {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px 18px;
+    }
+    .extension-code-value {
+        font-size: 26px;
+    }
+}
+
 @keyframes auth-success-pop {
     0% { transform: scale(0.4); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
