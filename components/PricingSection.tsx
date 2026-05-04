@@ -119,12 +119,40 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
     <section className="pv2" ref={ref}>
       <div className="pv2-inner">
 
-        {/* ── SAVINGS HERO ── */}
-        <div className={`pv2-hero${active ? ' pv2-hero--visible' : ''}`}>
-          <div className="pv2-label">Monthly Savings Estimate</div>
-          <p className="pv2-context-secondary" style={{ textAlign: 'center', marginBottom: 20, marginTop: 4 }}>
-            Based on 30–45 min average manual receiving time per delivery, per month
+        {/* ── PRICE HERO (top) ── */}
+        <div className={`pv2-price-hero${active ? ' pv2-price-hero--visible' : ''}`}>
+          <div className="pv2-price-hero-number">
+            <span className="pv2-price-hero-currency">$</span>499
+            <span className="pv2-price-hero-period">/month</span>
+          </div>
+          <p className="pv2-price-hero-lock">
+            <LockIcon />
+            Locked for 3 years — regular price $799/month after founding period
           </p>
+          <div className="pv2-price-hero-badge">Now Accepting Founding Customers</div>
+          <button
+            className="pv2-cta"
+            onClick={handleCta}
+            disabled={subLoading || checkoutLoading}
+          >
+            {ctaLabel}
+          </button>
+        </div>
+
+        {/* ── CONTEXT ── */}
+        <div className={`pv2-context${active ? ' pv2-context--visible' : ''}`}>
+          <p className="pv2-context-primary">
+            Based on real inventory staffing costs at NYC dispensaries
+          </p>
+          <p className="pv2-context-secondary">
+            Most dispensaries recover the full cost in week one.
+          </p>
+        </div>
+
+        {/* ── CALCULATOR (bottom) ── */}
+        <div className={`pv2-calc${active ? ' pv2-calc--visible' : ''}`}>
+          <div className="pv2-calc-heading">Calculate your savings</div>
+
           <div className="pv2-slider-wrap">
             <label className="pv2-slider-label">
               <span className="pv2-slider-value">{deliveries}</span> deliveries per week
@@ -143,78 +171,55 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
               <span>10</span>
             </div>
           </div>
-          <div className="pv2-number">
-            <span className="pv2-currency">$</span>{low.toLocaleString()}
-            <span className="pv2-sep"> – </span>
-            <span className="pv2-currency">$</span>{high.toLocaleString()}
+
+          <div className="pv2-hero pv2-hero--visible">
+            <div className="pv2-label">Monthly Savings Estimate</div>
+            <div className="pv2-number">
+              <span className="pv2-approx">~</span>
+              <span className="pv2-currency">$</span>{Math.round((low + high) / 2).toLocaleString()}
+            </div>
+            <div className="pv2-unit">per month, per location</div>
+            <div className="pv2-range">
+              estimated range ${low.toLocaleString()} – ${high.toLocaleString()}
+            </div>
+            <p className="pv2-context-secondary" style={{ marginTop: 14 }}>
+              Based on 30–45 min average manual receiving time per delivery
+            </p>
           </div>
-          <div className="pv2-unit">per month, per location</div>
-        </div>
 
-        {/* ── CONTEXT ── */}
-        <div className={`pv2-context${active ? ' pv2-context--visible' : ''}`}>
-          <p className="pv2-context-primary">
-            Based on real inventory staffing costs at NYC dispensaries
-          </p>
-          <p className="pv2-context-secondary">
-            Projected savings not yet adjusted for Mayor Mamdani&apos;s proposed $30/hour minimum wage
-          </p>
-        </div>
-
-        {/* ── LABOR TABLE ── */}
-        <div className={`pv2-table-wrap${active ? ' pv2-table-wrap--visible' : ''}`}>
-          <div className="pv2-table-heading">Where the money goes — labor cost breakdown</div>
-          <div className="pv2-table-scroll">
-            <table className="pv2-table">
-              <thead>
-                <tr>
-                  <th className="pv2-th">Cost Category</th>
-                  <th className="pv2-th pv2-th--detail">Detail</th>
-                  <th className="pv2-th pv2-th--num">Low</th>
-                  <th className="pv2-th pv2-th--num">High</th>
-                </tr>
-              </thead>
-              <tbody>
-                {scaledRows.map((row, i) => (
-                  <tr key={i} className="pv2-tr">
-                    <td className="pv2-td pv2-td--role">{row.role}</td>
-                    <td className="pv2-td pv2-td--detail">{row.detail}</td>
-                    <td className="pv2-td pv2-td--num">${row.low.toLocaleString()}</td>
-                    <td className="pv2-td pv2-td--num">${row.high.toLocaleString()}</td>
+          <div className="pv2-table-wrap pv2-table-wrap--visible">
+            <div className="pv2-table-heading">Where the money goes — labor cost breakdown</div>
+            <div className="pv2-table-scroll">
+              <table className="pv2-table">
+                <thead>
+                  <tr>
+                    <th className="pv2-th">Cost Category</th>
+                    <th className="pv2-th pv2-th--detail">Detail</th>
+                    <th className="pv2-th pv2-th--num">Low</th>
+                    <th className="pv2-th pv2-th--num">High</th>
                   </tr>
-                ))}
-                <tr className="pv2-tr-total">
-                  <td className="pv2-td-total-label" colSpan={2}>Monthly Total</td>
-                  <td className="pv2-td-total-num">${totalLow.toLocaleString()}</td>
-                  <td className="pv2-td-total-num">${totalHigh.toLocaleString()}</td>
-                </tr>
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {scaledRows.map((row, i) => (
+                    <tr key={i} className="pv2-tr">
+                      <td className="pv2-td pv2-td--role">{row.role}</td>
+                      <td className="pv2-td pv2-td--detail">{row.detail}</td>
+                      <td className="pv2-td pv2-td--num">${row.low.toLocaleString()}</td>
+                      <td className="pv2-td pv2-td--num">${row.high.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                  <tr className="pv2-tr-total">
+                    <td className="pv2-td-total-label" colSpan={2}>Monthly Total</td>
+                    <td className="pv2-td-total-num">${totalLow.toLocaleString()}</td>
+                    <td className="pv2-td-total-num">${totalHigh.toLocaleString()}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="pv2-wage-note">
+              NYC minimum wage is expected to rise to $30/hour — these labor costs are only going up.
+            </p>
           </div>
-        </div>
-
-        {/* ── PRICE — DE-EMPHASIZED ── */}
-        <div className={`pv2-price-block${active ? ' pv2-price-block--visible' : ''}`}>
-          <div className="pv2-price-rule" />
-          <p className="pv2-price-main">Early Bird: $499/month</p>
-          <p className="pv2-price-sub">Most dispensaries recover the full cost in week one.</p>
-          <p className="pv2-price-lock">
-            <LockIcon />
-            Locked for 3 years — regular price $799/month after founding period
-          </p>
-        </div>
-
-        {/* ── LAUNCH + CTA ── */}
-        <div className={`pv2-launch${active ? ' pv2-launch--visible' : ''}`}>
-          <div className="pv2-launch-badge">Now Accepting Founding Customers</div>
-          <p className="pv2-launch-tagline">Reserve your founding customer spot now</p>
-          <button
-            className="pv2-cta"
-            onClick={handleCta}
-            disabled={subLoading || checkoutLoading}
-          >
-            {ctaLabel}
-          </button>
         </div>
 
       </div>
