@@ -5696,7 +5696,7 @@ body::before {
 
 .pv2-label {
     font-family: var(--font-dm-sans), sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 3px;
     color: rgba(74, 222, 128, 0.95);
@@ -5883,7 +5883,7 @@ body::before {
 
 .pv2-table-heading {
     font-family: var(--font-dm-sans), sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 2.5px;
     color: rgba(255, 255, 255, 0.6);
@@ -5995,7 +5995,7 @@ body::before {
 .pv2-calc-heading {
     text-align: center;
     font-family: var(--font-dm-sans), sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 3px;
     color: rgba(255, 255, 255, 0.55);
