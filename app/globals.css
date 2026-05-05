@@ -4,6 +4,7 @@ html {
     padding: 0 !important;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    background: linear-gradient(180deg, #070709 0%, #0F0F13 50%, #070709 100%);
 }
 
 * {
@@ -15,8 +16,6 @@ html {
 body {
     font-family: var(--font-outfit), -apple-system, system-ui, sans-serif;
     font-size: 17px;
-    background: linear-gradient(180deg, #070709 0%, #0F0F13 50%, #070709 100%);
-    background-attachment: fixed;
     color: #FAFAF8;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -36,6 +35,8 @@ body::before {
     background-position: center;
     pointer-events: none;
     z-index: 0;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 /* Welcome Screen */
