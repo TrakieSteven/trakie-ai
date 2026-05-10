@@ -4820,8 +4820,9 @@ body::before {
 }
 
 .dform-footer-note {
-    font-size: 13px;
-    color: #9ca3af;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4b5563;
 }
 
 @media (max-width: 600px) {

@@ -26,7 +26,7 @@ const FIELDS: FieldDef[] = [
   { label: 'Retail Price per Unit', value: '$25.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
   { label: 'Total Package Cost', value: '$576.00', type: 'text', section: 'items', confidence: 'high', width: 'full' },
   { label: 'Net Weight', value: '3.5g', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Strain Type', value: '', type: 'text', section: 'items', confidence: 'uncertain', width: 'half' },
+  { label: 'Strain Type', value: 'Hybrid', type: 'text', section: 'items', confidence: 'uncertain', width: 'half' },
 ];
 
 type FieldState = 'idle' | 'typing' | 'complete';
@@ -238,7 +238,7 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
             <div className="dform-footer">
               <span className="dform-footer-note">
                 {allDone
-                  ? '14 fields filled \u00b7 1 requires manual review'
+                  ? '15 fields filled \u00b7 1 requires manual review'
                   : 'Autofilling fields\u2026'}
               </span>
             </div>

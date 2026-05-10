@@ -16,7 +16,7 @@ export default function CompletionPhase() {
             <span className="completion-stat-value trakie">45 seconds</span>
           </div>
         </div>
-        <p className="completion-summary">14 fields filled &middot; METRC synced &middot; Dutchie updated</p>
+        <p className="completion-summary">15 fields filled &middot; METRC synced &middot; Dutchie updated</p>
       </div>
     </div>
   );
