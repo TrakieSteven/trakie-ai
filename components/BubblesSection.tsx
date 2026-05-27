@@ -110,6 +110,7 @@ function BubbleItem({ category, index, onCategoryClick }: {
         loop
         playsInline
         preload="auto"
+        aria-hidden="true"
         style={{
           width: '100%',
           height: '100%',

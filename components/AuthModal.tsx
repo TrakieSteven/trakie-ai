@@ -94,7 +94,13 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
   }
 
   return (
-    <div className="auth-modal-backdrop" onClick={onClose}>
+    <div
+      className="auth-modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="auth-modal-title"
+    >
       <div className="auth-modal-card" onClick={e => e.stopPropagation()}>
 
         <button className="auth-modal-close" onClick={onClose} aria-label="Close">✕</button>
@@ -103,7 +109,7 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
           <img src="/logo.png" alt="Trakie" />
         </div>
 
-        <h1 className="auth-title">trakie.ai</h1>
+        <h1 id="auth-modal-title" className="auth-title">trakie.ai</h1>
         <p className="auth-subtitle">
           {view === 'login' && 'Sign in to your account'}
           {view === 'signup' && 'Create your account'}
@@ -111,18 +117,18 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
           {view === 'success' && 'Welcome to trakie.ai'}
         </p>
 
-        {error && <div className="form-error">{error}</div>}
+        {error && <div className="form-error" role="alert" aria-live="polite">{error}</div>}
 
         {view === 'login' && (
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} noValidate>
             <div className="form-group">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-input" required placeholder="your@email.com"
+              <label htmlFor="auth-login-email" className="form-label">Email</label>
+              <input id="auth-login-email" type="email" className="form-input" required aria-required="true" autoComplete="email" placeholder="your@email.com"
                 value={email} onChange={e => setEmail(e.target.value)} />
             </div>
             <div className="form-group">
-              <label className="form-label">Password</label>
-              <PasswordInput required placeholder="Your password"
+              <label htmlFor="auth-login-password" className="form-label">Password</label>
+              <PasswordInput id="auth-login-password" required aria-required="true" autoComplete="current-password" placeholder="Your password"
                 value={password} onChange={e => setPassword(e.target.value)} />
             </div>
             <button type="submit" className="form-submit" disabled={loading}>
@@ -132,21 +138,21 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
         )}
 
         {view === 'signup' && (
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSignup} noValidate>
             <div className="form-group">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-input" required placeholder="your@email.com"
+              <label htmlFor="auth-signup-email" className="form-label">Email</label>
+              <input id="auth-signup-email" type="email" className="form-input" required aria-required="true" autoComplete="email" placeholder="your@email.com"
                 value={email} onChange={e => setEmail(e.target.value)} />
             </div>
             <div className="form-group">
-              <label className="form-label">Password</label>
-              <PasswordInput required minLength={6}
+              <label htmlFor="auth-signup-password" className="form-label">Password</label>
+              <PasswordInput id="auth-signup-password" required aria-required="true" autoComplete="new-password" minLength={6}
                 placeholder="Min 6 characters" value={password}
                 onChange={e => setPassword(e.target.value)} />
             </div>
             <div className="form-group">
-              <label className="form-label">Confirm Password</label>
-              <PasswordInput required minLength={6}
+              <label htmlFor="auth-signup-confirm" className="form-label">Confirm Password</label>
+              <PasswordInput id="auth-signup-confirm" required aria-required="true" autoComplete="new-password" minLength={6}
                 placeholder="Re-enter your password" value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)} />
             </div>
@@ -157,13 +163,13 @@ export default function AuthModal({ initialView, onClose }: AuthModalProps) {
         )}
 
         {view === 'otp' && (
-          <form onSubmit={handleVerifyOtp}>
+          <form onSubmit={handleVerifyOtp} noValidate>
             <p className="auth-otp-hint">
               We sent a verification code to <strong>{email}</strong>. Enter it below.
             </p>
             <div className="form-group">
-              <label className="form-label">Verification Code</label>
-              <input type="text" className="form-input" required maxLength={6}
+              <label htmlFor="auth-otp" className="form-label">Verification Code</label>
+              <input id="auth-otp" type="text" inputMode="numeric" className="form-input" required aria-required="true" autoComplete="one-time-code" maxLength={6}
                 placeholder="000000" value={otp}
                 onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
                 style={{ letterSpacing: '0.3em', textAlign: 'center', fontSize: '1.4rem' }} />

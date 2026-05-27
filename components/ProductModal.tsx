@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { Product } from '@/data/products';
 import { EffectTag, parseEffects } from './icons';
 
@@ -9,17 +10,47 @@ interface ProductModalProps {
 }
 
 export default function ProductModal({ product, onClose }: ProductModalProps) {
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!product) return;
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = 'hidden';
+    closeBtnRef.current?.focus();
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKey);
+
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+      previousFocusRef.current?.focus?.();
+    };
+  }, [product, onClose]);
+
   if (!product) return null;
 
   return (
     <div
       className="product-modal active"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${product.name} product details`}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div className="product-modal-content">
-        <button className="modal-close" onClick={onClose}>
+        <button
+          ref={closeBtnRef}
+          className="modal-close"
+          onClick={onClose}
+          type="button"
+          aria-label="Close product details"
+        >
           ×
         </button>
         <img

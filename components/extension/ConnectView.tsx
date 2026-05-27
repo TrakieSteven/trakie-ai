@@ -98,7 +98,7 @@ export default function ConnectView({ email, hasActiveSubscription }: Props) {
         <h1 className="account-title">Connect your extension</h1>
         <p className="account-email">{email}</p>
 
-        {error && <div className="form-error">{error}</div>}
+        {error && <div className="form-error" role="alert" aria-live="polite">{error}</div>}
 
         {hasActiveSubscription ? (
           <div className="account-section">
@@ -118,7 +118,12 @@ export default function ConnectView({ email, hasActiveSubscription }: Props) {
                   Paste this code into the Trakie extension popup. It expires in 10 minutes and can only be used once.
                 </p>
                 <div className="extension-code-block">
-                  <div className="extension-code-value" aria-label="Pairing code">{code}</div>
+                  <div
+                    className="extension-code-value"
+                    aria-label="Pairing code"
+                    role="status"
+                    aria-live="polite"
+                  >{code}</div>
                   <button
                     className="extension-code-copy"
                     onClick={copyCode}
@@ -135,6 +140,7 @@ export default function ConnectView({ email, hasActiveSubscription }: Props) {
                     onClick={issueCode}
                     disabled={loading}
                     type="button"
+                    aria-label="Generate a new pairing code"
                   >
                     {loading ? 'Generating…' : 'Generate a new code'}
                   </button>

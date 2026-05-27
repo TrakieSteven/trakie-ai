@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import WelcomeScreen from '@/components/WelcomeScreen';
 import Navbar from '@/components/Navbar';
 import HomeSection from '@/components/HomeSection';
 import CinematicDemo from '@/components/CinematicDemo';
@@ -40,31 +39,39 @@ export default function MainPage({ initialSection }: Props) {
 
   return (
     <>
-      <WelcomeScreen />
+      <a href="#main" className="skip-link">Skip to main content</a>
 
       <div className="main-site show" id="mainSite">
-        <Navbar onNavigate={showSection} />
+        <header>
+          <Navbar onNavigate={showSection} />
+        </header>
 
-        <div className={`page-section${s === 'home' ? ' active' : ''}`} id="homeSection">
-          <HomeSection onNavigate={showSection} />
-        </div>
+        <main id="main">
+          <div className={`page-section${s === 'home' ? ' active' : ''}`} id="homeSection">
+            <HomeSection onNavigate={showSection} />
+          </div>
 
-        <div className={`page-section${s === 'demo' ? ' active' : ''}`}>
-          <CinematicDemo />
-        </div>
+          <div className={`page-section${s === 'demo' ? ' active' : ''}`}>
+            <CinematicDemo />
+          </div>
 
-        <ProductModal
-          product={productModalIndex !== null ? products[productModalIndex] : null}
-          onClose={closeProductModal}
-        />
+          <ProductModal
+            product={productModalIndex !== null ? products[productModalIndex] : null}
+            onClose={closeProductModal}
+          />
 
-        <div className={`page-section${s === 'pricing' ? ' active' : ''}`} id="pricingSection">
-          <PricingSection onNavigate={showSection} />
-        </div>
+          <div className={`page-section${s === 'pricing' ? ' active' : ''}`} id="pricingSection">
+            <PricingSection onNavigate={showSection} />
+          </div>
 
-        <div className={`page-section${s === 'contact' ? ' active' : ''}`} id="contactSection">
-          <ContactSection />
-        </div>
+          <div className={`page-section${s === 'contact' ? ' active' : ''}`} id="contactSection">
+            <ContactSection />
+          </div>
+        </main>
+
+        <footer className="site-footer" aria-label="Site footer">
+          <span>&copy; {new Date().getFullYear()} Trakie.ai</span>
+        </footer>
       </div>
 
       <SecurityLayer />

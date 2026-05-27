@@ -30,6 +30,7 @@ export default function ProductGridScreen({ categoryName, onClose }: ProductGrid
     >
       <button
         onClick={onClose}
+        aria-label="Close product grid"
         style={{
           position: 'fixed',
           top: '20px',

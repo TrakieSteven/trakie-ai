@@ -112,7 +112,12 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
           <h2 className="vogue-demo-title">Experience trakie.ai</h2>
           <p className="vogue-demo-subtitle">Join NYC&apos;s most sophisticated dispensaries</p>
           <div className="vogue-demo-cta-row">
-            <button className="vogue-demo-button" onClick={() => onNavigate('demo')}>
+            <button
+              type="button"
+              className="vogue-demo-button"
+              onClick={() => onNavigate('demo')}
+              aria-label="View live receiving demo"
+            >
               View Live Demo
             </button>
             <button

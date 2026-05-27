@@ -71,7 +71,6 @@ The demo in `ReceiveSection.tsx` uses a `demoStep` state machine:
 
 ### Password / Security
 
-- WelcomeScreen is currently disabled (`style={{ display: 'none' }}`)
 - SecurityLayer handles anti-devtools, right-click block, key combos, console warnings
 - Watermark adds copyright overlay
 - `robots: noindex, nofollow` set in layout metadata

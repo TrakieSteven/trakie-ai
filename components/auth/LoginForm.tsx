@@ -44,24 +44,30 @@ export default function LoginForm() {
         <h1 className="auth-title">trakie</h1>
         <p className="auth-subtitle">Sign in to your account</p>
 
-        {error && <div className="form-error">{error}</div>}
+        {error && <div className="form-error" role="alert" aria-live="polite">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="form-group">
-            <label className="form-label">Email</label>
+            <label htmlFor="login-email" className="form-label">Email</label>
             <input
+              id="login-email"
               type="email"
               className="form-input"
               required
+              aria-required="true"
+              autoComplete="email"
               placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Password</label>
+            <label htmlFor="login-password" className="form-label">Password</label>
             <PasswordInput
+              id="login-password"
               required
+              aria-required="true"
+              autoComplete="current-password"
               placeholder="Your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

@@ -85,18 +85,23 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <nav className="nav">
         <div className="nav-content">
           <div className="nav-left">
-            <div className="nav-logo" onClick={() => navigate('home')}>
+            <button
+              type="button"
+              className="nav-logo"
+              onClick={() => navigate('home')}
+              aria-label="Trakie home"
+            >
               <div className="nav-logo-stack">
                 <img src="/logo.png" alt="Trakie" className="nav-logo-img" />
                 <div className="nav-logo-text">trakie.ai</div>
               </div>
-            </div>
+            </button>
           </div>
           <div className="nav-links">
-            <a onClick={() => navigate('home')}>Home</a>
-            <a onClick={() => navigate('demo')}>Demo</a>
-            <a onClick={() => navigate('pricing')}>Pricing</a>
-            <a onClick={() => navigate('contact')}>Contact</a>
+            <button type="button" onClick={() => navigate('home')}>Home</button>
+            <button type="button" onClick={() => navigate('demo')}>Demo</button>
+            <button type="button" onClick={() => navigate('pricing')}>Pricing</button>
+            <button type="button" onClick={() => navigate('contact')}>Contact</button>
           </div>
           <div className="nav-right">
             <button
@@ -164,10 +169,10 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       {/* Mobile full-screen menu */}
       <div className={`nav-mobile-menu${menuOpen ? ' open' : ''}`}>
         <div className="nav-mobile-links">
-          <a onClick={() => navigate('home')}>Home</a>
-          <a onClick={() => navigate('demo')}>Demo</a>
-          <a onClick={() => navigate('pricing')}>Pricing</a>
-          <a onClick={() => navigate('contact')}>Contact</a>
+          <button type="button" onClick={() => navigate('home')}>Home</button>
+          <button type="button" onClick={() => navigate('demo')}>Demo</button>
+          <button type="button" onClick={() => navigate('pricing')}>Pricing</button>
+          <button type="button" onClick={() => navigate('contact')}>Contact</button>
         </div>
         <div className="nav-mobile-actions">
           {user ? (

@@ -320,8 +320,12 @@ export default function HeroDemo() {
   }, []);
 
   return (
-    <div className="hero-demo-wrapper">
-      <div className="hero-demo-device">
+    <div
+      className="hero-demo-wrapper"
+      role="img"
+      aria-label="Animated demo showing Trakie scanning an invoice, reading it, and autofilling Dutchie POS fields"
+    >
+      <div className="hero-demo-device" aria-hidden="true">
         {/* Device frame chrome */}
         <div className="hero-demo-chrome">
           <div className="hero-demo-dots">

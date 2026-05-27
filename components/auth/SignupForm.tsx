@@ -81,7 +81,7 @@ export default function SignupForm() {
           {step === 'success' && 'Welcome to trakie.ai'}
         </p>
 
-        {error && <div className="form-error">{error}</div>}
+        {error && <div className="form-error" role="alert" aria-live="polite">{error}</div>}
 
         {step === 'success' ? (
           <div className="auth-success">
@@ -96,22 +96,28 @@ export default function SignupForm() {
             </button>
           </div>
         ) : step === 'form' ? (
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSignup} noValidate>
             <div className="form-group">
-              <label className="form-label">Email</label>
+              <label htmlFor="signup-email" className="form-label">Email</label>
               <input
+                id="signup-email"
                 type="email"
                 className="form-input"
                 required
+                aria-required="true"
+                autoComplete="email"
                 placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label className="form-label">Password</label>
+              <label htmlFor="signup-password" className="form-label">Password</label>
               <PasswordInput
+                id="signup-password"
                 required
+                aria-required="true"
+                autoComplete="new-password"
                 minLength={6}
                 placeholder="Min 6 characters"
                 value={password}
@@ -119,9 +125,12 @@ export default function SignupForm() {
               />
             </div>
             <div className="form-group">
-              <label className="form-label">Confirm Password</label>
+              <label htmlFor="signup-confirm" className="form-label">Confirm Password</label>
               <PasswordInput
+                id="signup-confirm"
                 required
+                aria-required="true"
+                autoComplete="new-password"
                 minLength={6}
                 placeholder="Re-enter your password"
                 value={confirmPassword}
@@ -133,17 +142,21 @@ export default function SignupForm() {
             </button>
           </form>
         ) : (
-          <form onSubmit={handleVerifyOtp}>
+          <form onSubmit={handleVerifyOtp} noValidate>
             <p style={{ color: '#D4D4D4', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
               We sent a 6-digit verification code to <strong style={{ color: '#C9A85C' }}>{email}</strong>.
               Enter it below to confirm your account.
             </p>
             <div className="form-group">
-              <label className="form-label">Verification Code</label>
+              <label htmlFor="signup-otp" className="form-label">Verification Code</label>
               <input
+                id="signup-otp"
                 type="text"
+                inputMode="numeric"
                 className="form-input"
                 required
+                aria-required="true"
+                autoComplete="one-time-code"
                 maxLength={6}
                 placeholder="000000"
                 value={otp}

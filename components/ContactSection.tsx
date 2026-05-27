@@ -51,30 +51,42 @@ export default function ContactSection() {
       ) : (
         <>
           {status === 'error' && (
-            <div className="form-error">{errorMsg}</div>
+            <div className="form-error" role="alert" aria-live="polite">{errorMsg}</div>
           )}
 
-          <form className="contact-form-minimal" onSubmit={handleSubmit}>
+          <form className="contact-form-minimal" onSubmit={handleSubmit} noValidate>
+            <label htmlFor="contact-name" className="sr-only">Your name</label>
             <input
+              id="contact-name"
               type="text"
               className="contact-input"
               required
+              aria-required="true"
+              autoComplete="name"
               placeholder="Your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            <label htmlFor="contact-dispensary" className="sr-only">Dispensary name</label>
             <input
+              id="contact-dispensary"
               type="text"
               className="contact-input"
               required
+              aria-required="true"
+              autoComplete="organization"
               placeholder="Dispensary name"
               value={dispensary}
               onChange={(e) => setDispensary(e.target.value)}
             />
+            <label htmlFor="contact-email" className="sr-only">Email address</label>
             <input
+              id="contact-email"
               type="email"
               className="contact-input"
               required
+              aria-required="true"
+              autoComplete="email"
               placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
