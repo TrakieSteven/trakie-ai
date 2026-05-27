@@ -30,13 +30,27 @@ const READ_ROWS = [
   { label: 'Total', value: '48 × $12.00 = $576.00', field: 'Total Package Cost', extracted: '$576.00' },
 ];
 
-const AUTOFILL_FIELDS = [
-  { label: 'Vendor / Supplier', value: 'Mary Jane Farms LLC', type: 'text' as const },
-  { label: 'Receiving Room', value: 'Vault', type: 'dropdown' as const },
-  { label: 'Product Name', value: 'Sour Diesel | Hybrid | 3.5g', type: 'text' as const },
-  { label: 'Package ID (METRC)', value: '1A4060300002F04000031847', type: 'text' as const },
-  { label: 'Quantity Received', value: '48', type: 'text' as const },
-  { label: 'Total Package Cost', value: '$576.00', type: 'text' as const },
+const AUTOFILL_DETAILS = [
+  { id: 'vendor', label: 'Vendor', value: 'Mary Jane Farms', type: 'text' as const },
+  { id: 'room', label: 'Room', value: 'Vault', type: 'dropdown' as const },
+  { id: 'delivered', label: 'Delivered on', value: '03/26/2026 02:14 PM', type: 'text' as const },
+  { id: 'cost', label: 'Total Package Cost', value: '$576.00', type: 'text' as const },
+];
+
+const AUTOFILL_ITEM_CELLS = [
+  { id: 'pkg', value: '1A4060\u20260031847', type: 'text' as const },
+  { id: 'product', value: 'Sour Diesel \u2014 Hybrid 3.5g', type: 'text' as const },
+  { id: 'qty', value: '48', type: 'text' as const },
+];
+
+const AUTOFILL_FIELDS = [...AUTOFILL_DETAILS, ...AUTOFILL_ITEM_CELLS];
+const AUTOFILL_DETAILS_COUNT = AUTOFILL_DETAILS.length;
+
+const HERO_RAIL_ITEMS: { label: string; active?: boolean }[] = [
+  { label: 'Inventory', active: true },
+  { label: 'Catalog' },
+  { label: 'Manifests' },
+  { label: 'Orders' },
 ];
 
 /* ═══════════════════════════════════════════════════════
@@ -219,6 +233,22 @@ function HeroAutofillMini({ onComplete }: { onComplete: () => void }) {
     return cleanup;
   }, []);
 
+  const renderInput = (idx: number) => {
+    const state = fieldStates[idx];
+    const text = displayTexts[idx];
+    const isTyping = state === 'typing';
+    const isDone = state === 'complete';
+    return (
+      <div className={`hero-af-input${isTyping ? ' typing' : ''}${isDone ? ' done' : ''}`}>
+        <span className="hero-af-value">
+          {text}
+          {isTyping && <span className="hero-af-cursor">|</span>}
+        </span>
+        {isDone && <span className="hero-af-badge">&#10003;</span>}
+      </div>
+    );
+  };
+
   return (
     <div className="hero-autofill">
       {/* macOS chrome */}
@@ -230,50 +260,79 @@ function HeroAutofillMini({ onComplete }: { onComplete: () => void }) {
         </div>
         <div className="hero-af-url">
           <span className="hero-af-lock">&#128274;</span>
-          pos.dutchie.com / receive-transfer
+          pos.dutchie.com / inventory / receive
         </div>
       </div>
 
-      {/* Dutchie app area */}
+      {/* POS app shell */}
       <div className="hero-af-app">
-        <div className="hero-af-nav">
-          <img src="/dutchie-logo.jpeg" alt="Dutchie" className="hero-af-nav-logo" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-          <span className="hero-af-nav-brand">Dutchie POS</span>
-          <span className="hero-af-nav-sep">&rsaquo;</span>
-          <span className="hero-af-nav-crumb">Receive Transfer</span>
-          <div className="hero-af-nav-live">
-            <span className="hero-af-live-dot" />
-            TRAKIE AI AUTOFILLING
+        <aside className="hero-af-rail" aria-hidden="true">
+          <div className="hero-af-rail-section">Products</div>
+          {HERO_RAIL_ITEMS.map(item => (
+            <div
+              key={item.label}
+              className={`hero-af-rail-item${item.active ? ' active' : ''}`}
+            >
+              {item.label}
+            </div>
+          ))}
+        </aside>
+
+        <div className="hero-af-main">
+          <div className="hero-af-page-bar">
+            <span className="hero-af-back">&lsaquo;</span>
+            <span className="hero-af-page-title">Receive Inventory</span>
+            <div className="hero-af-nav-live">
+              <span className="hero-af-live-dot" />
+              TRAKIE AI AUTOFILLING
+            </div>
           </div>
-        </div>
 
-        <div className="hero-af-fields">
-          {AUTOFILL_FIELDS.map((field, idx) => {
-            const state = fieldStates[idx];
-            const text = displayTexts[idx];
-            const isTyping = state === 'typing';
-            const isDone = state === 'complete';
+          <div className="hero-af-source-row">
+            <span className="hero-af-source-label">Source</span>
+            <span className="hero-af-source-pill">Pending transfer</span>
+            <span className="hero-af-source-pill">03/26/2026 &mdash; Inbound</span>
+          </div>
 
-            return (
-              <div key={idx} className={`hero-af-field${isDone ? ' done' : ''}${isTyping ? ' typing' : ''}`}>
+          <div className="hero-af-section-row">
+            <span className="hero-af-section-heading">Receiving details</span>
+            <span className="hero-af-action-btn primary">Receive</span>
+          </div>
+
+          <div className="hero-af-grid">
+            {AUTOFILL_DETAILS.map((field, idx) => (
+              <div key={field.id} className="hero-af-field">
                 <label className="hero-af-label">
                   {field.label}
                   {field.type === 'dropdown' && <span className="hero-af-dd-icon">&#9662;</span>}
                 </label>
-                <div className={`hero-af-input${isTyping ? ' typing' : ''}${isDone ? ' done' : ''}`}>
-                  <span className="hero-af-value">
-                    {text}
-                    {isTyping && <span className="hero-af-cursor">|</span>}
-                  </span>
-                  {isDone && <span className="hero-af-badge">&#10003;</span>}
-                </div>
+                {renderInput(idx)}
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        <div className="hero-af-footer">
-          {allDone ? '6 fields filled · Ready for review' : 'Autofilling fields…'}
+          <div className="hero-af-items-table">
+            <div className="hero-af-items-head">
+              <div>Status</div>
+              <div>Package ID</div>
+              <div>Product</div>
+              <div>Qty</div>
+            </div>
+            <div className="hero-af-items-row">
+              <div className="hero-af-items-cell">
+                <span className="hero-af-items-status">&#10003;</span>
+              </div>
+              {AUTOFILL_ITEM_CELLS.map((cell, i) => (
+                <div key={cell.id} className="hero-af-items-cell">
+                  {renderInput(AUTOFILL_DETAILS_COUNT + i)}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="hero-af-footer">
+            {allDone ? '7 fields filled \u00b7 Ready for review' : 'Autofilling fields\u2026'}
+          </div>
         </div>
       </div>
     </div>
@@ -826,21 +885,22 @@ export default function HeroDemo() {
         }
 
         /* ═══════════════════════════════════════════════════════
-           AUTOFILL MINI
+           AUTOFILL MINI (Dutchie-mirror, hero-scale)
         ═══════════════════════════════════════════════════════ */
         .hero-autofill {
           height: 100%;
           display: flex;
           flex-direction: column;
           overflow: hidden;
+          background: #fff;
         }
         .hero-af-chrome {
           display: flex;
           align-items: center;
-          padding: 8px 14px;
-          background: #1a1a1a;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          padding: 7px 12px;
+          background: #2c2c2e;
           gap: 10px;
+          flex-shrink: 0;
         }
         .hero-af-dots {
           display: flex;
@@ -853,13 +913,13 @@ export default function HeroDemo() {
         }
         .hero-af-url {
           flex: 1;
-          background: rgba(255,255,255,0.06);
+          background: #3a3a3c;
           border-radius: 5px;
-          padding: 4px 10px;
-          font-family: var(--font-outfit), sans-serif;
+          padding: 3px 10px;
+          font-family: ui-monospace, 'SF Mono', monospace;
           font-size: 10px;
-          color: rgba(255,255,255,0.35);
-          letter-spacing: 0.3px;
+          color: #aeaeb2;
+          letter-spacing: 0.2px;
         }
         .hero-af-lock {
           font-size: 9px;
@@ -868,76 +928,165 @@ export default function HeroDemo() {
 
         .hero-af-app {
           flex: 1;
-          background: #0d0d0d;
+          background: #fff;
           display: flex;
-          flex-direction: column;
+          overflow: hidden;
+          min-height: 0;
+        }
+
+        /* Left rail */
+        .hero-af-rail {
+          width: 110px;
+          flex-shrink: 0;
+          background: #fff;
+          border-right: 1px solid #e5e7eb;
+          padding: 8px 0;
+          font-family: var(--font-outfit), sans-serif;
           overflow: hidden;
         }
-        .hero-af-nav {
+        .hero-af-rail-section {
+          font-size: 8px;
+          font-weight: 700;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          padding: 2px 12px 6px;
+        }
+        .hero-af-rail-item {
+          padding: 5px 12px;
+          font-size: 11px;
+          color: #4b5563;
+          border-left: 2px solid transparent;
+          line-height: 1.4;
+          user-select: none;
+        }
+        .hero-af-rail-item.active {
+          color: #111827;
+          font-weight: 600;
+          background: #f3f4f6;
+          border-left-color: #111827;
+        }
+
+        /* Main content column */
+        .hero-af-main {
+          flex: 1;
+          min-width: 0;
+          background: #f7f8fa;
+          display: flex;
+          flex-direction: column;
+          padding: 8px 12px 0;
+          gap: 6px;
+          overflow: hidden;
+        }
+        .hero-af-page-bar {
           display: flex;
           align-items: center;
           gap: 8px;
-          padding: 8px 16px;
-          background: rgba(255,255,255,0.03);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
+          font-family: var(--font-outfit), sans-serif;
           flex-shrink: 0;
         }
-        .hero-af-nav-logo {
-          height: 18px;
-          width: auto;
-          border-radius: 3px;
-          object-fit: contain;
+        .hero-af-back {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          border: 1px solid #d1d5db;
+          background: #fff;
+          color: #6b7280;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          line-height: 1;
         }
-        .hero-af-nav-brand {
-          font-family: var(--font-outfit), sans-serif;
-          font-size: 12px;
-          font-weight: 600;
-          color: rgba(255,255,255,0.6);
-        }
-        .hero-af-nav-sep {
-          color: rgba(255,255,255,0.15);
-          font-size: 14px;
-        }
-        .hero-af-nav-crumb {
-          font-family: var(--font-outfit), sans-serif;
-          font-size: 11px;
-          color: rgba(255,255,255,0.35);
+        .hero-af-page-title {
+          font-size: 13px;
+          font-weight: 700;
+          color: #111827;
         }
         .hero-af-nav-live {
           margin-left: auto;
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 5px;
           font-family: var(--font-outfit), sans-serif;
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 1.2px;
-          color: #4ade80;
-          background: rgba(74,222,128,0.1);
-          padding: 4px 10px;
-          border-radius: 4px;
-          border: 1px solid rgba(74,222,128,0.2);
+          font-size: 8.5px;
+          font-weight: 700;
+          letter-spacing: 0.7px;
+          color: #2d9d78;
+          background: #d1fae5;
+          padding: 3px 8px;
+          border-radius: 12px;
         }
         .hero-af-live-dot {
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
-          background: #4ade80;
+          background: #2d9d78;
           animation: heroAfPulse 1.2s ease infinite;
         }
         @keyframes heroAfPulse {
-          0%, 100% { opacity: 0.6; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
-          50% { opacity: 1; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.4; transform: scale(0.7); }
         }
 
-        .hero-af-fields {
-          flex: 1;
-          padding: 12px 16px;
+        /* Compact source row */
+        .hero-af-source-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 5px 10px;
+          background: #fff;
+          border: 1px solid #e5e7eb;
+          border-radius: 6px;
+          font-family: var(--font-outfit), sans-serif;
+          flex-shrink: 0;
+        }
+        .hero-af-source-label {
+          font-size: 9.5px;
+          font-weight: 700;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 0.7px;
+          margin-right: 4px;
+        }
+        .hero-af-source-pill {
+          background: #fff;
+          border: 1px solid #d1d5db;
+          border-radius: 5px;
+          padding: 3px 8px;
+          font-size: 10px;
+          color: #111827;
+        }
+
+        .hero-af-section-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 2px;
+          flex-shrink: 0;
+        }
+        .hero-af-section-heading {
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          color: #111827;
+        }
+        .hero-af-action-btn {
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 10px;
+          font-weight: 700;
+          color: #fff;
+          background: #C9A961;
+          padding: 3px 12px;
+          border-radius: 5px;
+          letter-spacing: 0.2px;
+        }
+
+        .hero-af-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 8px;
-          align-content: start;
-          overflow: hidden;
+          gap: 6px 8px;
+          flex-shrink: 0;
         }
         .hero-af-field {
           min-width: 0;
@@ -947,67 +1096,145 @@ export default function HeroDemo() {
           align-items: center;
           gap: 4px;
           font-family: var(--font-outfit), sans-serif;
-          font-size: 9px;
-          color: rgba(255,255,255,0.3);
-          letter-spacing: 0.8px;
+          font-size: 8.5px;
+          font-weight: 600;
+          color: #9ca3af;
+          letter-spacing: 0.6px;
           text-transform: uppercase;
-          margin-bottom: 3px;
+          margin-bottom: 2px;
         }
         .hero-af-dd-icon {
           font-size: 8px;
-          color: rgba(255,255,255,0.2);
+          color: #d1d5db;
         }
         .hero-af-input {
-          padding: 7px 10px;
+          padding: 4px 8px;
           border-radius: 5px;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: rgba(255,255,255,0.03);
-          min-height: 30px;
+          border: 1px solid #e5e7eb;
+          background: #f9fafb;
+          min-height: 24px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          transition: all 0.3s ease;
+          transition: all 0.25s ease;
+          color: #6b7280;
         }
         .hero-af-input.typing {
-          border-color: rgba(74,222,128,0.5);
-          background: rgba(74,222,128,0.05);
-          box-shadow: 0 0 12px rgba(74,222,128,0.08);
+          border-color: #2d9d78;
+          background: #f0fdf8;
+          color: #111827;
         }
         .hero-af-input.done {
-          border-color: rgba(74,222,128,0.3);
-          background: rgba(74,222,128,0.04);
+          border-color: #bbf7d0;
+          background: #fff;
+          color: #111827;
         }
         .hero-af-value {
           font-family: var(--font-outfit), sans-serif;
-          font-size: 11px;
-          color: rgba(255,255,255,0.85);
+          font-size: 10.5px;
+          font-weight: 500;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          min-width: 0;
+          flex: 1;
         }
         .hero-af-cursor {
-          color: #4ade80;
-          animation: heroCursorBlink 0.6s step-end infinite;
+          color: #2d9d78;
+          animation: heroCursorBlink 0.55s step-end infinite;
           margin-left: 1px;
+          font-weight: 300;
         }
         @keyframes heroCursorBlink {
           0%, 50% { opacity: 1; }
           51%, 100% { opacity: 0; }
         }
         .hero-af-badge {
-          color: #4ade80;
-          font-size: 10px;
+          color: #059669;
+          background: #d1fae5;
+          font-size: 9px;
+          font-weight: 800;
           flex-shrink: 0;
           margin-left: 6px;
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* Items received table */
+        .hero-af-items-table {
+          background: #fff;
+          border: 1px solid #e5e7eb;
+          border-radius: 6px;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+        .hero-af-items-head,
+        .hero-af-items-row {
+          display: grid;
+          grid-template-columns: 36px 1.3fr 1.6fr 0.6fr;
+          align-items: center;
+        }
+        .hero-af-items-head {
+          background: #f9fafb;
+          border-bottom: 1px solid #e5e7eb;
+        }
+        .hero-af-items-head > div {
+          padding: 4px 6px;
+          font-family: var(--font-outfit), sans-serif;
+          font-size: 8px;
+          font-weight: 700;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 0.7px;
+        }
+        .hero-af-items-row {
+          padding: 3px 0;
+        }
+        .hero-af-items-cell {
+          padding: 2px 6px;
+          min-width: 0;
+          display: flex;
+          align-items: center;
+        }
+        .hero-af-items-cell .hero-af-input {
+          width: 100%;
+          min-height: 20px;
+          padding: 2px 6px;
+        }
+        .hero-af-items-cell .hero-af-value {
+          font-size: 9.5px;
+        }
+        .hero-af-items-cell .hero-af-badge {
+          width: 12px;
+          height: 12px;
+          font-size: 8px;
+          margin-left: 4px;
+        }
+        .hero-af-items-status {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #d1fae5;
+          color: #059669;
+          font-weight: 800;
+          font-size: 9px;
         }
 
         .hero-af-footer {
-          padding: 8px 16px;
-          border-top: 1px solid rgba(255,255,255,0.05);
+          margin-top: auto;
+          padding: 6px 0 7px;
           font-family: var(--font-outfit), sans-serif;
           font-size: 10px;
-          color: rgba(255,255,255,0.35);
-          letter-spacing: 0.3px;
+          font-weight: 500;
+          color: #4b5563;
+          letter-spacing: 0.2px;
           flex-shrink: 0;
         }
 
@@ -1043,10 +1270,32 @@ export default function HeroDemo() {
           .hero-read-status {
             padding: 6px 10px;
           }
-          .hero-af-fields {
-            grid-template-columns: 1fr;
-            gap: 6px;
-            padding: 8px 12px;
+          .hero-af-rail {
+            width: 88px;
+          }
+          .hero-af-rail-item {
+            font-size: 10px;
+            padding: 4px 10px;
+          }
+          .hero-af-main {
+            padding: 6px 10px 0;
+            gap: 5px;
+          }
+          .hero-af-page-title {
+            font-size: 12px;
+          }
+          .hero-af-source-row {
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 4px 8px;
+          }
+          .hero-af-source-pill {
+            font-size: 9.5px;
+            padding: 2px 6px;
+          }
+          .hero-af-items-head,
+          .hero-af-items-row {
+            grid-template-columns: 30px 1.3fr 1.5fr 0.6fr;
           }
           .hero-scan-doc {
             top: 24px;
@@ -1105,18 +1354,41 @@ export default function HeroDemo() {
             font-size: 10px;
           }
           .hero-af-nav-live {
-            font-size: 8px;
-            padding: 3px 6px;
+            font-size: 7px;
+            padding: 2px 6px;
+            letter-spacing: 0.4px;
+          }
+          .hero-af-rail {
+            display: none;
+          }
+          .hero-af-main {
+            padding: 6px 8px 0;
           }
           .hero-af-label {
-            font-size: 8px;
+            font-size: 7.5px;
           }
           .hero-af-value {
-            font-size: 10px;
+            font-size: 9.5px;
           }
           .hero-af-input {
-            padding: 5px 8px;
-            min-height: 24px;
+            padding: 3px 6px;
+            min-height: 20px;
+          }
+          .hero-af-section-heading {
+            font-size: 10px;
+          }
+          .hero-af-action-btn {
+            font-size: 9px;
+            padding: 2px 8px;
+          }
+          .hero-af-items-head > div {
+            font-size: 7px;
+          }
+          .hero-af-items-cell .hero-af-value {
+            font-size: 8.5px;
+          }
+          .hero-af-footer {
+            font-size: 9px;
           }
         }
       `}</style>
