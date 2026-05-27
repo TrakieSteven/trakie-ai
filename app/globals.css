@@ -6134,3 +6134,375 @@ select:focus-visible,
         padding: 18px 24px;
     }
 }
+
+/* ============================================================
+   AUTOFILL — Dutchie-mirror layout (left rail + cards + table)
+   Scoped under .cinematic-autofill to avoid leaking.
+   ============================================================ */
+
+.cinematic-autofill .dlive-window {
+    max-width: 1180px;
+}
+
+.cinematic-autofill .dlive-shell {
+    display: flex;
+    background: #fff;
+    min-height: 620px;
+}
+
+.cinematic-autofill .dlive-rail {
+    width: 188px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-rail-section {
+    font-size: 10px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 22px 10px;
+}
+
+.cinematic-autofill .dlive-rail-item {
+    padding: 9px 22px;
+    font-size: 14px;
+    color: #4b5563;
+    cursor: default;
+    border-left: 3px solid transparent;
+    user-select: none;
+}
+
+.cinematic-autofill .dlive-rail-item.active {
+    color: #111827;
+    font-weight: 600;
+    background: #f3f4f6;
+    border-left-color: #111827;
+}
+
+.cinematic-autofill .dlive-rail-divider {
+    margin: 14px 22px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cinematic-autofill .dlive-rail-footer {
+    margin-top: auto;
+    padding-bottom: 6px;
+}
+
+.cinematic-autofill .dlive-main {
+    flex: 1;
+    background: #f7f8fa;
+    padding: 22px 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    overflow: auto;
+}
+
+.cinematic-autofill .dlive-page-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cinematic-autofill .dlive-back {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #6b7280;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.cinematic-autofill .dlive-page-title-lg {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-page-bar .dlive-nav-live {
+    margin-left: auto;
+}
+
+.cinematic-autofill .dlive-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px 20px;
+}
+
+.cinematic-autofill .dlive-source-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.cinematic-autofill .dlive-source-text {
+    flex: 1;
+    min-width: 220px;
+}
+
+.cinematic-autofill .dlive-source-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 2px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-source-sub {
+    font-size: 13px;
+    color: #6b7280;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-source-selects {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cinematic-autofill .dlive-select {
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    padding: 9px 30px 9px 14px;
+    font-size: 13px;
+    color: #111827;
+    position: relative;
+    min-width: 180px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-select::after {
+    content: '\25BE';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+.cinematic-autofill .dlive-section-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.cinematic-autofill .dlive-section-heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.cinematic-autofill .dlive-action-btn {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #374151;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-outfit), sans-serif;
+    cursor: default;
+    user-select: none;
+}
+
+.cinematic-autofill .dlive-action-btn.primary {
+    background: #C9A961;
+    border-color: #C9A961;
+    color: #fff;
+}
+
+.cinematic-autofill .dform-grid--quarters {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.cinematic-autofill .dform-grid--quarters .dform-field {
+    width: auto;
+}
+
+.cinematic-autofill .dform-grid--quarters .dform-field.half {
+    grid-column: span 2;
+}
+
+.cinematic-autofill .dform-grid--quarters .dform-field.full {
+    grid-column: 1 / -1;
+}
+
+.cinematic-autofill .dlive-items-card {
+    padding-bottom: 18px;
+}
+
+.cinematic-autofill .dlive-items-total {
+    color: #6b7280;
+    font-weight: 500;
+    margin-left: 6px;
+    font-size: 14px;
+}
+
+.cinematic-autofill .dlive-items-table {
+    margin-top: 4px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.cinematic-autofill .dlive-items-head,
+.cinematic-autofill .dlive-items-row {
+    display: grid;
+    grid-template-columns: 52px 1.5fr 1.8fr 0.9fr 0.6fr 0.6fr 1.2fr 1.1fr 0.8fr;
+    align-items: center;
+    min-width: 880px;
+}
+
+.cinematic-autofill .dlive-items-head {
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.cinematic-autofill .dlive-items-head > div {
+    padding: 10px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-family: var(--font-outfit), sans-serif;
+}
+
+.cinematic-autofill .dlive-items-row {
+    padding: 8px 0;
+}
+
+.cinematic-autofill .dlive-items-cell {
+    padding: 4px 8px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.cinematic-autofill .dlive-items-cell .dform-input {
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    width: 100%;
+}
+
+.cinematic-autofill .dlive-items-cell .dform-value {
+    min-height: 18px;
+    font-size: 12.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cinematic-autofill .dlive-items-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #d1fae5;
+    color: #059669;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.cinematic-autofill .dlive-add-item {
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #374151;
+    border-radius: 7px;
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: var(--font-outfit), sans-serif;
+    cursor: default;
+    user-select: none;
+}
+
+.cinematic-autofill .dlive-main .dform-footer {
+    margin: 4px -24px 0;
+    padding: 14px 24px;
+    border-top: 1px solid #e5e7eb;
+    background: #f7f8fa;
+}
+
+@media (max-width: 980px) {
+    .cinematic-autofill .dform-grid--quarters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .cinematic-autofill .dlive-shell {
+        flex-direction: column;
+    }
+    .cinematic-autofill .dlive-rail {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 8px;
+        gap: 4px;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .cinematic-autofill .dlive-rail-section,
+    .cinematic-autofill .dlive-rail-divider {
+        display: none;
+    }
+    .cinematic-autofill .dlive-rail-footer {
+        display: flex;
+        margin-top: 0;
+    }
+    .cinematic-autofill .dlive-rail-item {
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        padding: 6px 12px;
+        white-space: nowrap;
+        font-size: 13px;
+    }
+    .cinematic-autofill .dlive-rail-item.active {
+        background: transparent;
+        border-bottom-color: #111827;
+    }
+}
+
+@media (max-width: 640px) {
+    .cinematic-autofill .dlive-source-selects {
+        width: 100%;
+    }
+    .cinematic-autofill .dlive-select {
+        flex: 1;
+        min-width: 0;
+    }
+    .cinematic-autofill .dlive-section-row {
+        flex-wrap: wrap;
+    }
+}

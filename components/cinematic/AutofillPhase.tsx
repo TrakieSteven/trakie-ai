@@ -2,31 +2,74 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-interface FieldDef {
+type Confidence = 'high' | 'uncertain' | 'missing';
+type Width = 'quarter' | 'half' | 'full';
+
+interface DetailField {
+  id: string;
   label: string;
   value: string;
   type: 'text' | 'dropdown';
-  section: 'details' | 'items';
-  confidence: 'high' | 'uncertain' | 'missing';
-  width?: 'full' | 'half';
+  confidence: Confidence;
+  width: Width;
 }
 
-const FIELDS: FieldDef[] = [
-  { label: 'Vendor / Supplier', value: 'Mary Jane Farms LLC', type: 'text', section: 'details', confidence: 'high', width: 'half' },
-  { label: 'Receiving Room', value: 'Vault', type: 'dropdown', section: 'details', confidence: 'high', width: 'half' },
-  { label: 'Inventory Status', value: 'Ready for Sale', type: 'dropdown', section: 'details', confidence: 'high', width: 'full' },
-  { label: 'Product Name', value: 'Sour Diesel | Hybrid | Flower | 3.5g', type: 'text', section: 'items', confidence: 'high', width: 'full' },
-  { label: 'Batch / Lot ID', value: 'LOT-SD-0326-B', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Package ID (METRC)', value: '1A4060300002F04000031847', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Quantity Received', value: '48', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Expiration Date', value: '12/2026', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'THC %', value: '24.5%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'CBD %', value: '0.12%', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Cost per Unit', value: '$12.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Retail Price per Unit', value: '$25.00', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Total Package Cost', value: '$576.00', type: 'text', section: 'items', confidence: 'high', width: 'full' },
-  { label: 'Net Weight', value: '3.5g', type: 'text', section: 'items', confidence: 'high', width: 'half' },
-  { label: 'Strain Type', value: 'Hybrid', type: 'text', section: 'items', confidence: 'uncertain', width: 'half' },
+interface ItemCellDef {
+  id: string;
+  column: 'packageId' | 'product' | 'type' | 'qty' | 'units' | 'vendor' | 'producer' | 'room';
+  value: string;
+  type: 'text' | 'dropdown';
+  confidence: Confidence;
+}
+
+const DETAILS_FIELDS: DetailField[] = [
+  { id: 'vendor', label: 'Vendor', value: 'Mary Jane Farms LLC', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'producer', label: 'Producer', value: 'MJF Cultivation', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'delivered_by', label: 'Delivered by', value: 'A. Reyes', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'license', label: 'Vendor license #', value: 'C11-0001234-LIC', type: 'text', confidence: 'high', width: 'quarter' },
+
+  { id: 'order_title', label: 'Order title', value: '03/26/2026 \u2014 Inbound Transfer', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'delivered_on', label: 'Delivered on', value: '03/26/2026 02:14 PM', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'txn_id', label: 'Transaction ID', value: '1596163', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'room', label: 'Room', value: 'Vault', type: 'dropdown', confidence: 'high', width: 'quarter' },
+
+  { id: 'subroom', label: 'Subroom', value: 'Flower Shelf B', type: 'dropdown', confidence: 'high', width: 'quarter' },
+  { id: 'inv_status', label: 'Inventory status', value: 'Ready for Sale', type: 'dropdown', confidence: 'high', width: 'quarter' },
+  { id: 'total_credits', label: 'Total credits', value: '$0', type: 'text', confidence: 'high', width: 'quarter' },
+  { id: 'shipping', label: 'Shipping charges', value: '$0', type: 'text', confidence: 'high', width: 'quarter' },
+
+  { id: 'notes', label: 'Notes', value: 'Awaiting QC sign-off.', type: 'text', confidence: 'uncertain', width: 'full' },
+];
+
+const ITEM_CELLS: ItemCellDef[] = [
+  { id: 'item_package', column: 'packageId', value: '1A4060\u20260031847', type: 'text', confidence: 'high' },
+  { id: 'item_product', column: 'product', value: 'Sour Diesel \u2014 Hybrid Flower 3.5g', type: 'text', confidence: 'high' },
+  { id: 'item_type', column: 'type', value: 'Quantity', type: 'dropdown', confidence: 'high' },
+  { id: 'item_qty', column: 'qty', value: '48', type: 'text', confidence: 'high' },
+  { id: 'item_units', column: 'units', value: 'ea', type: 'dropdown', confidence: 'high' },
+  { id: 'item_vendor', column: 'vendor', value: 'Mary Jane Farms', type: 'text', confidence: 'high' },
+  { id: 'item_producer', column: 'producer', value: 'MJF Cultivation', type: 'text', confidence: 'high' },
+  { id: 'item_room', column: 'room', value: 'Vault', type: 'dropdown', confidence: 'high' },
+];
+
+type AnyField = DetailField | ItemCellDef;
+const ALL_FIELDS: AnyField[] = [...DETAILS_FIELDS, ...ITEM_CELLS];
+const ITEM_START = DETAILS_FIELDS.length;
+const TOTAL = ALL_FIELDS.length;
+const UNCERTAIN_COUNT = ALL_FIELDS.filter(f => f.confidence === 'uncertain').length;
+
+const RAIL_ITEMS: { label: string; active?: boolean }[] = [
+  { label: 'Inventory', active: true },
+  { label: 'Catalog' },
+  { label: 'Manifests' },
+  { label: 'Purchase orders' },
+  { label: 'Orders' },
+  { label: 'Audits' },
+  { label: 'Journal' },
+  { label: 'Vendors' },
+  { label: 'Manufacturers' },
+  { label: 'Brands' },
+  { label: 'Strains' },
 ];
 
 type FieldState = 'idle' | 'typing' | 'complete';
@@ -36,8 +79,8 @@ interface AutofillPhaseProps {
 }
 
 export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
-  const [fieldStates, setFieldStates] = useState<FieldState[]>(() => FIELDS.map(() => 'idle'));
-  const [displayTexts, setDisplayTexts] = useState<string[]>(() => FIELDS.map(() => ''));
+  const [fieldStates, setFieldStates] = useState<FieldState[]>(() => ALL_FIELDS.map(() => 'idle'));
+  const [displayTexts, setDisplayTexts] = useState<string[]>(() => ALL_FIELDS.map(() => ''));
   const [allDone, setAllDone] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const intervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
@@ -54,15 +97,15 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
 
   useEffect(() => {
     cleanup();
-    setFieldStates(FIELDS.map(() => 'idle'));
-    setDisplayTexts(FIELDS.map(() => ''));
+    setFieldStates(ALL_FIELDS.map(() => 'idle'));
+    setDisplayTexts(ALL_FIELDS.map(() => ''));
     setAllDone(false);
 
     let delay = 600;
-    const CHAR_INTERVAL = 65;
-    const FIELD_GAP = 500;
+    const CHAR_INTERVAL = 55;
+    const FIELD_GAP = 380;
 
-    FIELDS.forEach((field, idx) => {
+    ALL_FIELDS.forEach((field, idx) => {
       const startDelay = delay;
 
       if (field.type === 'dropdown' || field.value === '') {
@@ -99,7 +142,6 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
       }
     });
 
-    // Fire onComplete 1.5s after last field finishes
     timersRef.current.push(setTimeout(() => {
       setAllDone(true);
       timersRef.current.push(setTimeout(() => {
@@ -110,7 +152,6 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
     return cleanup;
   }, [cleanup]);
 
-  // Auto-scroll to the field currently being typed
   useEffect(() => {
     const typingIdx = fieldStates.findIndex(s => s === 'typing');
     if (typingIdx < 0 || !appRef.current) return;
@@ -122,7 +163,6 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
     const fieldRect = fieldEl.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
 
-    // If the field is below the visible area, scroll down to reveal it
     if (fieldRect.bottom > containerRect.bottom - 20) {
       container.scrollTo({
         top: container.scrollTop + (fieldRect.bottom - containerRect.bottom) + 60,
@@ -131,12 +171,9 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
     }
   }, [fieldStates]);
 
-  const detailFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'details');
-  const itemFields = FIELDS.map((f, i) => ({ ...f, idx: i })).filter(f => f.section === 'items');
-
-  const renderField = (field: FieldDef & { idx: number }) => {
-    const state = fieldStates[field.idx];
-    const text = displayTexts[field.idx];
+  const renderDetailField = (field: DetailField, idx: number) => {
+    const state = fieldStates[idx];
+    const text = displayTexts[idx];
     const isTyping = state === 'typing';
     const isDone = state === 'complete';
 
@@ -147,15 +184,21 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
       isDone ? `conf-${field.confidence}` : '',
     ].filter(Boolean).join(' ');
 
+    const widthClass = field.width === 'full' ? ' full' : field.width === 'half' ? ' half' : '';
+
     return (
-      <div key={field.idx} data-field-idx={field.idx} className={`dform-field${field.width === 'full' ? ' full' : ''}`}>
+      <div
+        key={field.id}
+        data-field-idx={idx}
+        className={`dform-field${widthClass}`}
+      >
         <label className="dform-label">
           {field.label}
           {field.type === 'dropdown' && <span className="dform-dropdown-icon">&#9662;</span>}
         </label>
         <div className={inputClass}>
           <span className="dform-value">
-            {text || (isDone && field.value === '' ? <span className="dform-empty">Not detected</span> : null)}
+            {text}
             {isTyping && <span className="dform-cursor">|</span>}
           </span>
           {isDone && (
@@ -170,6 +213,33 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
     );
   };
 
+  const renderItemCell = (cell: ItemCellDef, idx: number) => {
+    const state = fieldStates[idx];
+    const text = displayTexts[idx];
+    const isTyping = state === 'typing';
+    const isDone = state === 'complete';
+
+    const inputClass = [
+      'dform-input',
+      isTyping ? 'typing' : '',
+      isDone ? 'done' : '',
+      isDone ? `conf-${cell.confidence}` : '',
+    ].filter(Boolean).join(' ');
+
+    return (
+      <div key={cell.id} data-field-idx={idx} className="dlive-items-cell">
+        <div className={inputClass}>
+          <span className="dform-value">
+            {text}
+            {isTyping && <span className="dform-cursor">|</span>}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
+  const filledCountLabel = `${TOTAL} fields filled${UNCERTAIN_COUNT > 0 ? ` \u00b7 ${UNCERTAIN_COUNT} requires manual review` : ''}`;
+
   return (
     <div className="cinematic-phase cinematic-autofill">
       <div className="demo-container">
@@ -183,64 +253,102 @@ export default function AutofillPhase({ onComplete }: AutofillPhaseProps) {
             </div>
             <div className="dlive-url-bar">
               <span className="dlive-url-lock">&#128274;</span>
-              pos.dutchie.com / inventory / receive-transfer
+              pos.trakie.ai / inventory / receive
             </div>
           </div>
 
-          {/* Dutchie app */}
-          <div className="dlive-app" ref={appRef}>
-            <div className="dlive-nav">
-              <div className="dlive-nav-logo">
-                <img
-                  src="/dutchie-logo.jpeg"
-                  alt="Dutchie"
-                  style={{ height: 24, marginRight: 7 }}
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                />
-                <span>Dutchie POS</span>
+          <div className="dlive-shell">
+            {/* Left rail */}
+            <aside className="dlive-rail" aria-hidden="true">
+              <div className="dlive-rail-section">Products</div>
+              {RAIL_ITEMS.map(item => (
+                <div
+                  key={item.label}
+                  className={`dlive-rail-item${item.active ? ' active' : ''}`}
+                >
+                  {item.label}
+                </div>
+              ))}
+              <div className="dlive-rail-divider" />
+              <div className="dlive-rail-footer">
+                <div className="dlive-rail-item">Configure</div>
+                <div className="dlive-rail-item">Help center</div>
               </div>
-              <span className="dlive-nav-sep">&rsaquo;</span>
-              <span className="dlive-nav-crumb">Inventory</span>
-              <span className="dlive-nav-sep">&rsaquo;</span>
-              <span className="dlive-nav-crumb active">Receive Transfer</span>
-              <div className="dlive-nav-live">
-                <span className="dlive-live-dot" />
-                TRAKIE AI AUTOFILLING
-              </div>
-            </div>
+            </aside>
 
-            <div className="dlive-page-header">
-              <div>
-                <h2 className="dlive-page-title">Receive Inbound Transfer</h2>
-                <p className="dlive-page-sub">trakie.ai is reading your invoice and labels</p>
-              </div>
-              <span className="dlive-processing-badge">
-                <span className="dlive-badge-dot" />
-                {allDone ? 'Complete' : 'Processing'}
-              </span>
-            </div>
-
-            <div className="dform-body">
-              <div className="dform-section">
-                <div className="dform-section-title">Receiving Details</div>
-                <div className="dform-grid">
-                  {detailFields.map(f => renderField(f))}
+            {/* Main content */}
+            <div className="dlive-main" ref={appRef}>
+              <div className="dlive-page-bar">
+                <span className="dlive-back">&lsaquo;</span>
+                <span className="dlive-page-title-lg">Receive Inventory</span>
+                <div className="dlive-nav-live">
+                  <span className="dlive-live-dot" />
+                  TRAKIE AI AUTOFILLING
                 </div>
               </div>
-              <div className="dform-section">
-                <div className="dform-section-title">Item Details</div>
-                <div className="dform-grid">
-                  {itemFields.map(f => renderField(f))}
+
+              {/* Source card (static / prefilled) */}
+              <div className="dlive-card dlive-source-card">
+                <div className="dlive-source-text">
+                  <div className="dlive-source-title">Source</div>
+                  <div className="dlive-source-sub">Select the source the inventory will come from.</div>
+                </div>
+                <div className="dlive-source-selects">
+                  <div className="dlive-select">Pending transfer</div>
+                  <div className="dlive-select">03/26/2026 &mdash; Inbound Transfer</div>
                 </div>
               </div>
-            </div>
 
-            <div className="dform-footer">
-              <span className="dform-footer-note">
-                {allDone
-                  ? '15 fields filled \u00b7 1 requires manual review'
-                  : 'Autofilling fields\u2026'}
-              </span>
+              {/* Receiving details card */}
+              <div className="dlive-card">
+                <div className="dlive-section-row">
+                  <div className="dlive-section-heading">Receiving details</div>
+                  <div className="dlive-actions">
+                    <span className="dlive-action-btn">Actions &#9662;</span>
+                    <span className="dlive-action-btn">Save</span>
+                    <span className="dlive-action-btn primary">Receive</span>
+                  </div>
+                </div>
+                <div className="dform-grid dform-grid--quarters">
+                  {DETAILS_FIELDS.map((f, i) => renderDetailField(f, i))}
+                </div>
+              </div>
+
+              {/* Items received card */}
+              <div className="dlive-card dlive-items-card">
+                <div className="dlive-section-row">
+                  <div className="dlive-section-heading">
+                    Items received
+                    <span className="dlive-items-total">&mdash; Total: $576.00</span>
+                  </div>
+                  <span className="dlive-add-item">Add item</span>
+                </div>
+                <div className="dlive-items-table">
+                  <div className="dlive-items-head">
+                    <div>Status</div>
+                    <div>Package ID</div>
+                    <div>Product</div>
+                    <div>Type</div>
+                    <div>Quant.</div>
+                    <div>Units</div>
+                    <div>Vendor</div>
+                    <div>Producer</div>
+                    <div>Room</div>
+                  </div>
+                  <div className="dlive-items-row">
+                    <div className="dlive-items-cell">
+                      <span className="dlive-items-status">&#10003;</span>
+                    </div>
+                    {ITEM_CELLS.map((c, i) => renderItemCell(c, ITEM_START + i))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="dform-footer">
+                <span className="dform-footer-note">
+                  {allDone ? filledCountLabel : 'Autofilling fields\u2026'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
