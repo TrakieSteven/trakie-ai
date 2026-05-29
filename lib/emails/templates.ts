@@ -76,7 +76,7 @@ export function welcomeEmail(): EmailContent {
     <p style="margin:0 0 32px;font-size:15px;line-height:1.7;color:#9aad9a;">
       Ready to put it to work? Start your 30-day free trial — no charge until day 31, cancel anytime.
     </p>
-    ${ctaButton('Start Your 30-Day Trial', `${SITE_URL}/pricing`)}
+    ${ctaButton('Start Your 30-Day Trial', `${SITE_URL}`)}
     <p style="margin:24px 0 0;font-size:14px;color:#6b8f6b;">
       ${secondaryLink('Or explore the demo first', SITE_URL)}
     </p>`;

@@ -100,7 +100,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           <div className="nav-links">
             <button type="button" onClick={() => navigate('home')}>Home</button>
             <button type="button" onClick={() => navigate('demo')}>Demo</button>
-            <button type="button" onClick={() => navigate('pricing')}>Pricing</button>
             <button type="button" onClick={() => navigate('contact')}>Contact</button>
           </div>
           <div className="nav-right">
@@ -171,7 +170,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         <div className="nav-mobile-links">
           <button type="button" onClick={() => navigate('home')}>Home</button>
           <button type="button" onClick={() => navigate('demo')}>Demo</button>
-          <button type="button" onClick={() => navigate('pricing')}>Pricing</button>
           <button type="button" onClick={() => navigate('contact')}>Contact</button>
         </div>
         <div className="nav-mobile-actions">

@@ -47,7 +47,7 @@ export async function POST(request: Request) {
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: { trial_period_days: 30 },
       success_url: `${origin}/account/subscription?checkout=success`,
-      cancel_url: `${origin}/pricing?checkout=cancelled`,
+      cancel_url: `${origin}/?checkout=cancelled`,
       allow_promotion_codes: true,
     });
 

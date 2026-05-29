@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import HomeSection from '@/components/HomeSection';
 import CinematicDemo from '@/components/CinematicDemo';
-import PricingSection from '@/components/PricingSection';
 import ContactSection from '@/components/ContactSection';
 import ProductModal from '@/components/ProductModal';
 import SecurityLayer from '@/components/SecurityLayer';
@@ -59,10 +58,6 @@ export default function MainPage({ initialSection }: Props) {
             product={productModalIndex !== null ? products[productModalIndex] : null}
             onClose={closeProductModal}
           />
-
-          <div className={`page-section${s === 'pricing' ? ' active' : ''}`} id="pricingSection">
-            <PricingSection onNavigate={showSection} />
-          </div>
 
           <div className={`page-section${s === 'contact' ? ' active' : ''}`} id="contactSection">
             <ContactSection />

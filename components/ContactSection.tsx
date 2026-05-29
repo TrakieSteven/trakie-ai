@@ -40,7 +40,7 @@ export default function ContactSection() {
     <section className="contact-section">
       <div className="contact-header">
         <h2 className="contact-title">Get in Touch</h2>
-        <p className="contact-subtitle">Leave your email and we&apos;ll reach out.</p>
+        <p className="contact-subtitle">Contact us for pricing and to book a meeting or demo.</p>
       </div>
 
       {status === 'success' ? (
